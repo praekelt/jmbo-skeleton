@@ -1,4 +1,4 @@
-from foundrydemo.settings import *
+from jmbodemo.settings import *
 
 
 DEBUG = False
@@ -7,9 +7,9 @@ TEMPLATE_DEBUG = DEBUG
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'foundrydemo_live',
-        'USER': 'foundrydemo_live',
-        'PASSWORD': 'foundrydemo_live',
+        'NAME': 'jmbodemo_live',
+        'USER': 'jmbodemo_live',
+        'PASSWORD': 'jmbodemo_live',
         'HOST': '',
         'PORT': '',
     }
@@ -21,7 +21,7 @@ CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
         'LOCATION': '127.0.0.1:11211',
-        'KEY_PREFIX': 'foundrydemo_live',
+        'KEY_PREFIX': 'jmbodemo_live',
     }
 }
 

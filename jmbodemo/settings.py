@@ -20,7 +20,7 @@ FOUNDRY = {
 SCRIPT_PATH =  path.abspath(path.dirname(__file__))
 BUILDOUT_PATH =  path.split(path.abspath(path.join(path.dirname(sys.argv[0]))))[0]
 
-PROJECT_MODULE = 'foundrydemo'
+PROJECT_MODULE = 'jmbodemo'
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -28,9 +28,9 @@ TEMPLATE_DEBUG = DEBUG
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '/tmp/foundrydemo.sql', # Or path to database file if using sqlite3.
-        'USER': 'foundrydemo', # Not used with sqlite3.
-        'PASSWORD': 'foundrydemo', # Not used with sqlite3.
+        'NAME': '/tmp/jmbodemo.sql', # Or path to database file if using sqlite3.
+        'USER': 'jmbodemo', # Not used with sqlite3.
+        'PASSWORD': 'jmbodemo', # Not used with sqlite3.
         'HOST': '', # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '', # Set to empty string for default. Not used with sqlite3.
     }
@@ -112,11 +112,11 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.load_template_source',
 )
 
-ROOT_URLCONF = 'foundrydemo.urls'
+ROOT_URLCONF = 'jmbodemo.urls'
 
 INSTALLED_APPS = (
     # The order is important else template resolution may not work
-    'foundrydemo',
+    'jmbodemo',
     'foundry',
     'downloads',
     'friends',

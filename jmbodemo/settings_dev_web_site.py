@@ -1,6 +1,6 @@
 from foundry import settings as foundry_settings
 
-from foundrydemo.settings import *
+from jmbodemo.settings import *
 
 
 FOUNDRY['layers'] = ('web', 'basic',)
