@@ -65,8 +65,8 @@ fi
 
 # Change strings in the newly copied source
 sed -i s/name=\'jmbodemo\'/name=\'${EGG}\'/ ${PROJECT_DIR}/setup.py
-sed -i '15s/.*/    ${EGG}/' dev_base.cfg
-sed -i '15s/.*/    ${EGG}/' live_base.cfg
-sed -i '15s/.*/    ${EGG}/' qa_base.cfg
+sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/dev_base.cfg
+sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/live_base.cfg
+sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base.cfg
 sed -i s/jmbodemo/${APP}/g ${PROJECT_DIR}/*.cfg
 sed -i s/jmbodemo/${APP}/g ${APP_DIR}/*.py
