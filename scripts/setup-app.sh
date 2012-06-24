@@ -11,6 +11,9 @@
 # 3: Remove existing source code and update. Buildout.
 
 # Default values
+DEPLOY_DIR=/var/praekelt
+DEPLOY_USER=praekeltdeploy
+DEPLOY_PASSWORD=g55trw7th
 USER=www-data
 LEVEL=1
 
@@ -45,7 +48,7 @@ if [ -d $REPO ]; then
     git checkout $BRANCH
     git pull
 else
-    git clone -b $BRANCH https://praekeltdeploy:g55trw7th@github.com/praekelt/$REPO.git
+    git clone -b $BRANCH https://${DEPLOY_USER}:${DEPLOY_PASSWORD}@github.com/praekelt/$REPO.git
 fi
 
 # Stop processes
@@ -77,7 +80,7 @@ do
         THEDIR=$PREFIX-${FTMP//_/-}
 
         # Clone, bootstrap, buildout
-        cd /var/praekelt/
+        cd ${DEPLOY_DIR}/
         IS_NEW=0
         if [ -d $THEDIR ]; then
             cd $THEDIR
@@ -89,7 +92,7 @@ do
             sudo -u $USER git pull
         else
             IS_NEW=1
-            sudo -u $USER git clone -b $BRANCH https://praekeltdeploy:g55trw7th@github.com/praekelt/$REPO.git $THEDIR
+            sudo -u $USER git clone -b $BRANCH https://${DEPLOY_USER}:${DEPLOY_PASSWORD}@github.com/praekelt/$REPO.git $THEDIR
             cd $THEDIR
             sudo chown -R $USER:$USER .git/
         fi
@@ -116,10 +119,10 @@ do
         sudo -u $USER ./bin/$THEDIR collectstatic --noinput
 
         # Create nginx symlink if required
-        sudo ln -s /var/praekelt/${THEDIR}/nginx/gunicorn-${THEDIR}.conf /etc/nginx/sites-enabled/
+        sudo ln -s ${DEPLOY_DIR}/${THEDIR}/nginx/gunicorn-${THEDIR}.conf /etc/nginx/sites-enabled/
 
         # Create supervisor symlink if required
-        sudo ln -s /var/praekelt/${THEDIR}/supervisor/gunicorn-${THEDIR}.conf /etc/supervisor/conf.d/
+        sudo ln -s ${DEPLOY_DIR}/${THEDIR}/supervisor/gunicorn-${THEDIR}.conf /etc/supervisor/conf.d/
 
         let INDEX++
     fi

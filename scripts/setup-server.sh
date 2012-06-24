@@ -1,6 +1,6 @@
 #! /bin/bash
 
-DJANGO_DIR=praekelt
+DEPLOY_DIR=/var/praekelt
 
 echo "Prepare a clean Ubuntu 12.04 server to serve Jmbo sites"
 
@@ -18,6 +18,9 @@ echo "Configuring PostgreSQL..."
 sudo sed -i "s/local   all             all                                     peer/local   all             all                                     trust/" /etc/postgresql/9.1/main/
 sudo /etc/init.d/postgresql start
 
+echo "Configuring nginx..."
+# todo. Set max bucket size.
+
 echo "Setting up the www-data user..."
 sudo mkdir /var/www
 sudo mkdir /var/www/.buildout
@@ -28,9 +31,9 @@ sudo chown -R www-data:www-data /var/www
 sudo usermod www-data -s /bin/bash
 
 echo "Setting up the Django directory..."
-sudo mkdir /var/${DJANGO_DIR}
-sudo virtualenv /var/praekelt/python --no-site-packages
-sudo chown -R www-data:www-data /var/praekelt
+sudo mkdir ${DEPLOY_DIR}
+sudo virtualenv ${DEPLOY_DIR}/python --no-site-packages
+sudo chown -R www-data:www-data ${DEPLOY_DIR}
 
 echo ""
 echo "All done! You probably want to run the setup-app.sh script now."
