@@ -50,11 +50,23 @@ cp qa_basic_site.cfg ${PROJECT_DIR}/qa_basic_${SITE}.cfg
 cp qa_web_site.cfg ${PROJECT_DIR}/qa_basic_${SITE}.cfg
 cp setup.py ${PROJECT_DIR}/
 cp versions.cfg ${PROJECT_DIR}/
-mv ${APP_DIR}/settings_dev_basic_site.py ${APP_DIR}/settings_dev_basic_${SITE}.py
-mv ${APP_DIR}/settings_dev_web_site.py ${APP_DIR}/settings_dev_web_${SITE}.py
-mv ${APP_DIR}/settings_live_basic_site.py ${APP_DIR}/settings_live_basic_${SITE}.py
-mv ${APP_DIR}/settings_live_web_site.py ${APP_DIR}/settings_live_web_${SITE}.py
-mv ${APP_DIR}/settings_qa_basic_site.py ${APP_DIR}/settings_qa_basic_${SITE}.py
-mv ${APP_DIR}/settings_qa_web_site.py ${APP_DIR}/settings_qa_web_${SITE}.py
+touch ${PROJECT_DIR}/AUTHORS.rst
+touch ${PROJECT_DIR}/CHANGELOG.rst
+touch ${PROJECT_DIR}/README.rst
+if [ "$SITE" != "site" ];
+then
+    mv ${APP_DIR}/settings_dev_basic_site.py ${APP_DIR}/settings_dev_basic_${SITE}.py
+    mv ${APP_DIR}/settings_dev_web_site.py ${APP_DIR}/settings_dev_web_${SITE}.py
+    mv ${APP_DIR}/settings_live_basic_site.py ${APP_DIR}/settings_live_basic_${SITE}.py
+    mv ${APP_DIR}/settings_live_web_site.py ${APP_DIR}/settings_live_web_${SITE}.py
+    mv ${APP_DIR}/settings_qa_basic_site.py ${APP_DIR}/settings_qa_basic_${SITE}.py
+    mv ${APP_DIR}/settings_qa_web_site.py ${APP_DIR}/settings_qa_web_${SITE}.py
+fi
 
 # Change strings in the newly copied source
+sed -i s/name=\'jmbodemo\'/name=\'${EGG}\'/ ${PROJECT_DIR}/setup.py
+sed -i '15s/.*/    ${EGG}/' dev_base.cfg
+sed -i '15s/.*/    ${EGG}/' live_base.cfg
+sed -i '15s/.*/    ${EGG}/' qa_base.cfg
+sed -i s/jmbodemo/${APP}/g ${PROJECT_DIR}/*.cfg
+sed -i s/jmbodemo/${APP}/g ${APP_DIR}/*.py
