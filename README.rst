@@ -1,32 +1,19 @@
-Jmbo Foundry Demo Setup
-=======================
+Jmbo Skeleton Readme
+====================
 
-Getting started with a Jmbo Foundry App.
+Create a Jmbo project environment quickly. Includes a Jmbo demo application. 
 
-
-Installation
-------------
-
-From the terminal::
-
- cd /tmp
- wget https://github.com/downloads/praekelt/jmbo-foundry/demo.tar.gz
- tar -xvzf demo.tar.gz
- cd demo
- ./install-app
-
-
-Running the app
----------------
+Demo
+----
 
 From the terminal::
 
- ./bin/foundry runserver
+ ./demo
 
 
-Browse
-------
+Jmbo project environment
+------------------------
 
-Browse to the public site at http://localhost:8000/. The admin interface is at
-http://localhost:8000/admin/.
+From the terminal::
 
+ ./scripts/create-jmbo-project.sh
