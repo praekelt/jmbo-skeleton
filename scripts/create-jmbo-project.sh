@@ -41,7 +41,7 @@ cp -r buildout_templates ${PROJECT_DIR}/
 cp dev_base.cfg ${PROJECT_DIR}/
 cp dev_basic_site.cfg ${PROJECT_DIR}/dev_basic_${SITE}.cfg
 cp dev_web_site.cfg ${PROJECT_DIR}/dev_web_${SITE}.cfg
-cp -r jmbodemo ${PROJECT_DIR}/${APP}
+cp -r skeleton ${PROJECT_DIR}/${APP}
 cp live_base.cfg ${PROJECT_DIR}/
 cp live_basic_site.cfg ${PROJECT_DIR}/live_basic_${SITE}.cfg
 cp live_web_site.cfg ${PROJECT_DIR}/live_basic_${SITE}.cfg
@@ -64,9 +64,15 @@ then
 fi
 
 # Change strings in the newly copied source
-sed -i s/name=\'jmbodemo\'/name=\'${EGG}\'/ ${PROJECT_DIR}/setup.py
+sed -i s/name=\'jmbo-skeleton\'/name=\'${EGG}\'/ ${PROJECT_DIR}/setup.py
 sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/dev_base.cfg
 sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/live_base.cfg
 sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base.cfg
-sed -i s/jmbodemo/${APP}/g ${PROJECT_DIR}/*.cfg
-sed -i s/jmbodemo/${APP}/g ${APP_DIR}/*.py
+sed -i s/skeleton/${APP}/g ${PROJECT_DIR}/*.cfg
+sed -i s/skeleton/${APP}/g ${APP_DIR}/*.py
+if [ "$SITE" != "site" ];
+then
+    sed -i s/_site/_${SITE}/g ${PROJECT_DIR}/*_${SITE}.cfg
+    sed -i s/-site/-${SITE}/g ${PROJECT_DIR}/*_${SITE}.cfg
+fi
+

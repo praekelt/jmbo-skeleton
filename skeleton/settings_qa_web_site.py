@@ -1,8 +1,8 @@
 from foundry import settings as foundry_settings
 
-from jmbodemo.settings import *
+from skeleton.settings_qa_base import *
 
 
-FOUNDRY['layers'] = ('basic',)
+FOUNDRY['layers'] = ('web', 'basic',)
 
 foundry_settings.compute_settings(sys.modules[__name__])

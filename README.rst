@@ -17,3 +17,4 @@ Jmbo project environment
 From the terminal::
 
  ./scripts/create-jmbo-project.sh
+

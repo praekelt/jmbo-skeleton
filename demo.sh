@@ -48,21 +48,21 @@ while [ $choice -eq 3 ]; do
 done
 
 # Remove stale database
-if [ -f /tmp/jmbodemo.sql ];
+if [ -f /tmp/skeleton.sql ];
 then
-    rm /tmp/jmbodemo.sql
+    rm /tmp/skeleton.sql
 fi
 
 read -p "Create a superuser when prompted. Do not generate default content. [enter]" y
-./bin/jmbodemo-dev-$SITE_TYPE-site syncdb
-./bin/jmbodemo-dev-$SITE_TYPE-site migrate
-./bin/jmbodemo-dev-$SITE_TYPE-site loaddata src/jmbo-downloads/downloads/fixtures/photosizes.json
-./bin/jmbodemo-dev-$SITE_TYPE-site loaddata src/jmbo-foundry/foundry/fixtures/photosizes.json
-./bin/jmbodemo-dev-$SITE_TYPE-site loaddata src/jmbo-post/post/fixtures/photosizes.json
-./bin/jmbodemo-dev-$SITE_TYPE-site loaddata src/jmbo-gallery/gallery/fixtures/photosizes.json
-./bin/jmbodemo-dev-$SITE_TYPE-site loaddata src/jmbo/jmbo/fixtures/photosizes.json
+./bin/skeleton-dev-$SITE_TYPE-site syncdb
+./bin/skeleton-dev-$SITE_TYPE-site migrate
+./bin/skeleton-dev-$SITE_TYPE-site loaddata src/jmbo-downloads/downloads/fixtures/photosizes.json
+./bin/skeleton-dev-$SITE_TYPE-site loaddata src/jmbo-foundry/foundry/fixtures/photosizes.json
+./bin/skeleton-dev-$SITE_TYPE-site loaddata src/jmbo-post/post/fixtures/photosizes.json
+./bin/skeleton-dev-$SITE_TYPE-site loaddata src/jmbo-gallery/gallery/fixtures/photosizes.json
+./bin/skeleton-dev-$SITE_TYPE-site loaddata src/jmbo/jmbo/fixtures/photosizes.json
 rm -rf static
-./bin/jmbodemo-dev-$SITE_TYPE-site collectstatic --noinput
-echo "You may now start up the site with ./bin/jmbodemo-dev-$SITE_TYPE-site runserver 0.0.0.0:8000"
+./bin/skeleton-dev-$SITE_TYPE-site collectstatic --noinput
+echo "You may now start up the site with ./bin/skeleton-dev-$SITE_TYPE-site runserver 0.0.0.0:8000"
 echo "Browse to http://localhost:8000/ for the public site."
 echo "Browse to http://localhost:8000/admin for the admin interface."
