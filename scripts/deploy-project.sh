@@ -13,7 +13,7 @@
 # Default values
 DEPLOY_DIR=/var/praekelt
 DEPLOY_USER=praekeltdeploy
-DEPLOY_PASSWORD=g55trw7th
+DEPLOY_PASSWORD=password
 USER=www-data
 LEVEL=1
 
