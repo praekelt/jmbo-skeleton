@@ -8,7 +8,7 @@ Demo
 
 From the terminal::
 
- ./demo
+ ./demo.sh
 
 
 Jmbo project environment

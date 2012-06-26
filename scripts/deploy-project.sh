@@ -109,10 +109,7 @@ do
             read -p "Create a superuser if prompted. Do not generate default content. [enter]" y
             sudo -u $USER ./bin/$THEDIR syncdb
             sudo -u $USER ./bin/$THEDIR migrate
-            sudo -u $USER ./bin/$THEDIR loaddata src/jmbo-foundry/foundry/fixtures/photosizes.json
-            sudo -u $USER ./bin/$THEDIR loaddata src/jmbo-post/post/fixtures/photosizes.json
-            sudo -u $USER ./bin/$THEDIR loaddata src/jmbo-gallery/gallery/fixtures/photosizes.json
-            sudo -u $USER ./bin/$THEDIR loaddata src/jmbo/jmbo/fixtures/photosizes.json
+            sudo -u $USER ./bin/$THEDIR load_photosizes
         fi
 
         sudo -u $USER rm -rf static

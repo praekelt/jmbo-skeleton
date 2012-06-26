@@ -56,11 +56,7 @@ fi
 read -p "Create a superuser when prompted. Do not generate default content. [enter]" y
 ./bin/skeleton-dev-$SITE_TYPE-site syncdb
 ./bin/skeleton-dev-$SITE_TYPE-site migrate
-./bin/skeleton-dev-$SITE_TYPE-site loaddata src/jmbo-downloads/downloads/fixtures/photosizes.json
-./bin/skeleton-dev-$SITE_TYPE-site loaddata src/jmbo-foundry/foundry/fixtures/photosizes.json
-./bin/skeleton-dev-$SITE_TYPE-site loaddata src/jmbo-post/post/fixtures/photosizes.json
-./bin/skeleton-dev-$SITE_TYPE-site loaddata src/jmbo-gallery/gallery/fixtures/photosizes.json
-./bin/skeleton-dev-$SITE_TYPE-site loaddata src/jmbo/jmbo/fixtures/photosizes.json
+./bin/skeleton-dev-$SITE_TYPE-site load_photosizes
 rm -rf static
 ./bin/skeleton-dev-$SITE_TYPE-site collectstatic --noinput
 echo "You may now start up the site with ./bin/skeleton-dev-$SITE_TYPE-site runserver 0.0.0.0:8000"
