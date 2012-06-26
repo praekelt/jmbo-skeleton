@@ -44,10 +44,10 @@ cp dev_web_site.cfg ${PROJECT_DIR}/dev_web_${SITE}.cfg
 cp -r skeleton ${PROJECT_DIR}/${APP}
 cp live_base.cfg ${PROJECT_DIR}/
 cp live_basic_site.cfg ${PROJECT_DIR}/live_basic_${SITE}.cfg
-cp live_web_site.cfg ${PROJECT_DIR}/live_basic_${SITE}.cfg
+cp live_web_site.cfg ${PROJECT_DIR}/live_web_${SITE}.cfg
 cp qa_base.cfg ${PROJECT_DIR}/
 cp qa_basic_site.cfg ${PROJECT_DIR}/qa_basic_${SITE}.cfg
-cp qa_web_site.cfg ${PROJECT_DIR}/qa_basic_${SITE}.cfg
+cp qa_web_site.cfg ${PROJECT_DIR}/qa_web_${SITE}.cfg
 cp setup.py ${PROJECT_DIR}/
 cp versions.cfg ${PROJECT_DIR}/
 touch ${PROJECT_DIR}/AUTHORS.rst
