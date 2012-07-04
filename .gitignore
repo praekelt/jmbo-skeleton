@@ -4,7 +4,10 @@
 build/
 dist/
 *.swo
-.pydevproject
-.project
-.settings/
-*~
+.installed.cfg
+.mr.developer.cfg
+bin/
+develop-eggs/
+media/
+parts/
+src/
