@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.2.4
+-----
+#. Fix manifest and up minimum jmbo-foundry to 0.4.
+
 0.2.2
 -----
 #. Fix typos.
