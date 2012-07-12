@@ -15,8 +15,8 @@ memcached supervisor nginx postgresql-server-dev-all libxslt1-dev --no-upgrade
 
 echo "Configuring PostgreSQL..."
 # xxx: regexes would be better
-sudo sed -i "s/local   all             all                                     peer/local   all             all                                     trust/" /etc/postgresql/9.1/main/
-sudo /etc/init.d/postgresql start
+sudo sed -i "s/local   all             all                                     peer/local   all             all                                     trust/" /etc/postgresql/9.1/main/pg_hba.conf
+sudo /etc/init.d/postgresql restart
 
 echo "Configuring nginx..."
 # todo. Set max bucket size.
@@ -36,4 +36,4 @@ sudo virtualenv ${DEPLOY_DIR}/python --no-site-packages
 sudo chown -R www-data:www-data ${DEPLOY_DIR}
 
 echo ""
-echo "All done! You probably want to run the setup-app.sh script now."
+echo "All done! You probably want to run the deploy-project.sh script now."
