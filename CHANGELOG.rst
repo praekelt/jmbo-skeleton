@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.3
+---
+#. Templates for mid and smart layers.
+#. Server setup bug fixes.
+
 0.2.4
 -----
 #. Fix manifest and up minimum jmbo-foundry to 0.4.

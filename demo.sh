@@ -31,15 +31,25 @@ done
 echo "Downloading distribute"
 ve/bin/python bootstrap.py
 echo "Choose the type of demo site:"
-choice=3
+choice=5
 echo "1. Basic (mobi for low-end handsets)"
-echo "2. Web"
+echo "2. Mid (mid for mid-range handsets)"
+echo "3. Smart (mobi for smart handsets)"
+echo "4. Web"
 SITE_TYPE=basic
-while [ $choice -eq 3 ]; do
+while [ $choice -eq 5 ]; do
     read choice
     if [ $choice -eq 1 ] ; then
         read -p "This part may take a while. If it fails with 'connection reset by peer' run ./install-app again. [enter]" y
         ./bin/buildout -nv -c dev_basic_site.cfg
+    elif [ $choice -eq 2 ] ; then
+        read -p "This part may take a while. If it fails with 'connection reset by peer' run ./install-app again. [enter]" y
+        ./bin/buildout -nv -c dev_mid_site.cfg
+        SITE_TYPE=mid
+    elif [ $choice -eq 3 ] ; then
+        read -p "This part may take a while. If it fails with 'connection reset by peer' run ./install-app again. [enter]" y
+        ./bin/buildout -nv -c dev_smart_site.cfg
+        SITE_TYPE=smart
     else
         read -p "This part may take a while. If it fails with 'connection reset by peer' run ./install-app again. [enter]" y
         ./bin/buildout -nv -c dev_web_site.cfg
