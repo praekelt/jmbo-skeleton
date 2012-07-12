@@ -31,10 +31,10 @@ done
 echo "Downloading distribute"
 ve/bin/python bootstrap.py
 echo "Choose the type of demo site:"
-choice=3
+choice=5
 echo "1. Basic (mobi for low-end handsets)"
-echo "2. Basic (mobi for low-end handsets)"
-echo "3. Basic (mobi for low-end handsets)"
+echo "2. Mid (mid for mid-range handsets)"
+echo "3. Smart (mobi for smart handsets)"
 echo "4. Web"
 SITE_TYPE=basic
 while [ $choice -eq 5 ]; do
