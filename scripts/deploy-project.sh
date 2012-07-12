@@ -81,13 +81,14 @@ do
 
         # Clone, bootstrap, buildout
         cd ${DEPLOY_DIR}/
+
+        # Nuke source when level 3
+        if [ $LEVEL == 3 ]; then
+            sudo -u $USER rm -rf $THEDIR
+        fi
+
         IS_NEW=0
         if [ -d $THEDIR ]; then
-            cd $THEDIR
-            if [ $LEVEL == 3 ]; then
-                sudo -u $USER rm -rf src
-                sudo -u $USER rm -rf $PREFIX
-            fi
             sudo -u $USER git checkout $BRANCH
             sudo -u $USER git pull
         else
