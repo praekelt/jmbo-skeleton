@@ -89,6 +89,7 @@ do
 
         IS_NEW=0
         if [ -d $THEDIR ]; then
+            cd $THEDIR
             sudo -u $USER git checkout $BRANCH
             sudo -u $USER git pull
         else
