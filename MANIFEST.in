@@ -8,3 +8,4 @@ include bootstrap.py
 recursive-include buildout_templates *
 recursive-include scripts *
 recursive-include skeleton/static *
+recursive-include skeleton/fixtures *

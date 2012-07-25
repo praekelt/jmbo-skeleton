@@ -40,18 +40,18 @@ SITE_TYPE=basic
 while [ $choice -eq 5 ]; do
     read choice
     if [ $choice -eq 1 ] ; then
-        read -p "This part may take a while. If it fails with 'connection reset by peer' run ./install-app again. [enter]" y
+        read -p "This part may take a while. If it fails with 'connection reset by peer' run ./demo again. [enter]" y
         ./bin/buildout -nv -c dev_basic_site.cfg
     elif [ $choice -eq 2 ] ; then
-        read -p "This part may take a while. If it fails with 'connection reset by peer' run ./install-app again. [enter]" y
+        read -p "This part may take a while. If it fails with 'connection reset by peer' run ./demo again. [enter]" y
         ./bin/buildout -nv -c dev_mid_site.cfg
         SITE_TYPE=mid
     elif [ $choice -eq 3 ] ; then
-        read -p "This part may take a while. If it fails with 'connection reset by peer' run ./install-app again. [enter]" y
+        read -p "This part may take a while. If it fails with 'connection reset by peer' run ./demo again. [enter]" y
         ./bin/buildout -nv -c dev_smart_site.cfg
         SITE_TYPE=smart
     else
-        read -p "This part may take a while. If it fails with 'connection reset by peer' run ./install-app again. [enter]" y
+        read -p "This part may take a while. If it fails with 'connection reset by peer' run ./demo again. [enter]" y
         ./bin/buildout -nv -c dev_web_site.cfg
         SITE_TYPE=web
     fi
@@ -67,6 +67,7 @@ read -p "Create a superuser when prompted. Do not generate default content. [ent
 ./bin/skeleton-dev-$SITE_TYPE-site syncdb
 ./bin/skeleton-dev-$SITE_TYPE-site migrate
 ./bin/skeleton-dev-$SITE_TYPE-site load_photosizes
+./bin/skeleton-dev-$SITE_TYPE-site loaddata skeleton/fixtures/sites.json
 rm -rf static
 ./bin/skeleton-dev-$SITE_TYPE-site collectstatic --noinput
 echo "You may now start up the site with ./bin/skeleton-dev-$SITE_TYPE-site runserver 0.0.0.0:8000"
