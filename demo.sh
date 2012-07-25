@@ -40,18 +40,18 @@ SITE_TYPE=basic
 while [ $choice -eq 5 ]; do
     read choice
     if [ $choice -eq 1 ] ; then
-        read -p "This part may take a while. If it fails with 'connection reset by peer' run ./install-app again. [enter]" y
+        read -p "This part may take a while. If it fails with 'connection reset by peer' run ./demo again. [enter]" y
         ./bin/buildout -nv -c dev_basic_site.cfg
     elif [ $choice -eq 2 ] ; then
-        read -p "This part may take a while. If it fails with 'connection reset by peer' run ./install-app again. [enter]" y
+        read -p "This part may take a while. If it fails with 'connection reset by peer' run ./demo again. [enter]" y
         ./bin/buildout -nv -c dev_mid_site.cfg
         SITE_TYPE=mid
     elif [ $choice -eq 3 ] ; then
-        read -p "This part may take a while. If it fails with 'connection reset by peer' run ./install-app again. [enter]" y
+        read -p "This part may take a while. If it fails with 'connection reset by peer' run ./demo again. [enter]" y
         ./bin/buildout -nv -c dev_smart_site.cfg
         SITE_TYPE=smart
     else
-        read -p "This part may take a while. If it fails with 'connection reset by peer' run ./install-app again. [enter]" y
+        read -p "This part may take a while. If it fails with 'connection reset by peer' run ./demo again. [enter]" y
         ./bin/buildout -nv -c dev_web_site.cfg
         SITE_TYPE=web
     fi
