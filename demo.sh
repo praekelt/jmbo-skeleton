@@ -67,6 +67,7 @@ read -p "Create a superuser when prompted. Do not generate default content. [ent
 ./bin/skeleton-dev-$SITE_TYPE-site syncdb
 ./bin/skeleton-dev-$SITE_TYPE-site migrate
 ./bin/skeleton-dev-$SITE_TYPE-site load_photosizes
+./bin/skeleton-dev-$SITE_TYPE-site loaddata skeleton/fixtures/sites.json
 rm -rf static
 ./bin/skeleton-dev-$SITE_TYPE-site collectstatic --noinput
 echo "You may now start up the site with ./bin/skeleton-dev-$SITE_TYPE-site runserver 0.0.0.0:8000"

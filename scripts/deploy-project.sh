@@ -112,6 +112,7 @@ do
             sudo -u $USER ./bin/$THEDIR syncdb
             sudo -u $USER ./bin/$THEDIR migrate
             sudo -u $USER ./bin/$THEDIR load_photosizes
+            sudo -u $USER ./bin/$THEDIR loaddata skeleton/fixtures/sites.json
         fi
 
         sudo -u $USER rm -rf static
