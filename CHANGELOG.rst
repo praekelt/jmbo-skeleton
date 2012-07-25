@@ -1,6 +1,10 @@
 Changelog
 =========
 
+next
+----
+#. Remove flup since it is currently broken. 
+
 0.3
 ---
 #. Templates for mid and smart layers.
