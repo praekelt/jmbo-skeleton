@@ -4,6 +4,7 @@ Changelog
 next
 ----
 #. Remove flup since it is currently broken. 
+#. Create different sites for mobi and web.
 
 0.3
 ---

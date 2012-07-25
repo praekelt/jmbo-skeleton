@@ -4,5 +4,6 @@ from skeleton.settings import *
 
 
 FOUNDRY['layers'] = ('basic',)
+SITE_ID = 2
 
 foundry_settings.compute_settings(sys.modules[__name__])
