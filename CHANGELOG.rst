@@ -1,6 +1,10 @@
 Changelog
 =========
 
+next
+----
+#. Dev buildout now uses git instead of https.
+
 0.3.1
 -----
 #. Remove flup since it is currently broken. 
