@@ -1,8 +1,8 @@
 Changelog
 =========
 
-next
-----
+0.3.2
+-----
 #. Dev buildout now uses git instead of https.
 
 0.3.1
