@@ -1,8 +1,8 @@
 Changelog
 =========
 
-next
-----
+0.4
+---
 #. Up minimum jmbo-foundry to 0.5.
 #. Create a trivial south migration so order of migrations is correct.
 
