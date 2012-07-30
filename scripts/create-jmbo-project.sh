@@ -82,6 +82,7 @@ sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/live_base.cfg
 sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base.cfg
 sed -i s/skeleton/${APP}/g ${PROJECT_DIR}/*.cfg
 sed -i s/skeleton/${APP}/g ${APP_DIR}/*.py
+sed -i s/skeleton/${APP}/g ${APP_DIR}/migrations/*.py
 if [ "$SITE" != "site" ];
 then
     sed -i s/_site/_${SITE}/g ${PROJECT_DIR}/*_${SITE}.cfg
