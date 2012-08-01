@@ -16,7 +16,7 @@ USER=www-data
 LEVEL=1
 
 # Parse arguments
-while getopts "p:d:r:b:u:l:c" opt; do
+while getopts "p:d:r:b:c:u:l" opt; do
     case $opt in
         p)
             PREFIX=$OPTARG;;
@@ -26,12 +26,12 @@ while getopts "p:d:r:b:u:l:c" opt; do
             OWNER_AND_REPO=$OPTARG;;
         b)
             BRANCH=$OPTARG;;
+        c)
+            CREDENTIALS=$OPTARG;;
         u)
             USER=$OPTARG;;
         l)
             LEVEL=$OPTARG;;
-        c)
-            CREDENTIALS=$OPTARG;;
     esac    
 done
 
