@@ -16,7 +16,7 @@ USER=www-data
 LEVEL=1
 
 # Parse arguments
-while getopts "p:d:r:b:u:l:" opt; do
+while getopts "p:d:r:b:u:l:c" opt; do
     case $opt in
         p)
             PREFIX=$OPTARG;;
