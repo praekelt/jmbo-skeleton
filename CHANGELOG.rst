@@ -4,6 +4,7 @@ Changelog
 next
 ----
 #. Webdav access now enabled. It is useful for changing CSS on QA sites on the fly.
+#. Removed Praekelt assumption from deploy script.
 
 0.4
 ---

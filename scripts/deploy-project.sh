@@ -47,8 +47,8 @@ INDEX=`expr index "$OWNER_AND_REPO" /`
 REPO_OWNER=${OWNER_AND_REPO:0:(${INDEX}-1)}
 REPO=${OWNER_AND_REPO:${INDEX}}
 
-# Extract app name. Convention is repo has form jmbo-foo.
-INDEX=`expr index "$REPO" -`
+# Extract app name. Convention is repo has form jmbo-foo or jmbo.foo.
+INDEX=`expr index "$REPO" [-.]`
 APP_NAME=${REPO:${INDEX}}
 
 # Compute deploy directory
