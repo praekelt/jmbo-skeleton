@@ -5,7 +5,7 @@ DEPLOY_DIR=/var/praekelt
 echo "Prepare a clean Ubuntu 12.04 server to serve Jmbo sites"
 
 # Parse arguments
-while getopts "p" opt; do
+while getopts "p:" opt; do
     case $opt in
         p)
             WEBDAV_PASSWORD=$OPTARG;;
@@ -55,9 +55,9 @@ sudo rm /etc/apache2/sites-enabled/default
 DIRNAME=`dirname $0`
 sudo cp ${DIRNAME}/apache2-webdav.conf /etc/apache2/sites-enabled/000-default
 # Replace servername
-SERVERNAME=sed "2q;d" /etc/hosts | awk '{print $2}'
-sudo sed -i s/SERVERNAME/${SERVERNAME} /etc/apache2/sites-enabled/000-default
-sudo htpasswd -b $WEBDAV_PASSWORD -c /var/www/passwd.dav webdav
+SERVERNAME=`sed "2q;d" /etc/hosts | awk '{print $2}'`
+sudo sed -i s/SERVERNAME/${SERVERNAME}/ /etc/apache2/sites-enabled/000-default
+sudo htpasswd -b -c /var/www/passwd.dav webdav $WEBDAV_PASSWORD
 sudo /etc/init.d/apache2 restart
 
 echo "Setting up the Django directory..."
@@ -67,3 +67,4 @@ sudo chown -R www-data:www-data ${DEPLOY_DIR}
 
 echo ""
 echo "All done! You probably want to run the deploy-project.sh script now."
+echo "You can open a Webdav connection to $SERVERNAME on port 81 for the /praekelt folder. Username is webdav, password is $WEBDAV_PASSWORD."
