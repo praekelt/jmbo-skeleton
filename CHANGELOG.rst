@@ -1,6 +1,10 @@
 Changelog
 =========
 
+next
+----
+#. Webdav access now enabled. It is useful for changing CSS on QA sites on the fly.
+
 0.4
 ---
 #. Up minimum jmbo-foundry to 0.5.
