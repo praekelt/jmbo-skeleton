@@ -11,7 +11,7 @@ setup(
     url='',
     packages = find_packages(),
     install_requires = [
-        'jmbo-foundry>=0.5',
+        'jmbo-foundry>=0.5.1',
     ],
     include_package_data=True,
     tests_require=[
