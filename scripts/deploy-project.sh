@@ -94,6 +94,15 @@ do
 
         # Clone, bootstrap, buildout
         cd ${DEPLOY_DIR}/
+        sudo -u $USER mkdir ${DEPLOY_DIR}/static-backups
+
+        # Backup existing static directory if it exists
+        if [ -d ${THEDIR}/static ]; then
+            ADATE=`date +"%Y%m%dT%H%M"`
+            STATIC_BACKUP=${DEPLOY_DIR}/static-backups/${THEDIR}/${ADATE}
+            sudo -u $USER mkdir -p $STATIC_BACKUP
+            sudo -u $USER cp -r ${THEDIR}/static ${STATIC_BACKUP}/
+        fi
 
         # Nuke source when level 3
         if [ $LEVEL == 3 ]; then

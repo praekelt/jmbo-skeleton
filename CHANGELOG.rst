@@ -4,6 +4,7 @@ Changelog
 next
 ----
 #. Webdav access now enabled. It is useful for changing CSS on QA sites on the fly.
+#. Webdav requires we backup static resources on each deploy. Added to deploy_project.sh.
 #. Removed Praekelt assumption from deploy script.
 #. Up required jmbo-foundry to 0.6. Django 1.4 is now implicitly required.
 
