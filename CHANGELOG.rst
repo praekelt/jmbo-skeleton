@@ -6,7 +6,8 @@ next
 #. Webdav access now enabled. It is useful for changing CSS on QA sites on the fly.
 #. Webdav requires we backup static resources on each deploy. Added to deploy_project.sh.
 #. Removed Praekelt assumption from deploy script.
-#. Up required jmbo-foundry to 0.6. Django 1.4 is now implicitly required.
+#. Up required jmbo-foundry to 0.6.3. Django 1.4 is now implicitly required.
+#. Up djangorecipe to 1.2.1 and handle case where Django name is suddenly case-sensitive when pinning.
 
 0.4
 ---
