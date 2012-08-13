@@ -16,5 +16,5 @@ ve/bin/python bootstrap.py
 ./bin/skeleton-dev-$SITE_TYPE-site collectstatic --noinput
 
 cd src/jmbo-foundry
-....//bin/setuptest-runner setup.py test
+../../bin/setuptest-runner setup.py test
 cd -
