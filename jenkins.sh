@@ -6,7 +6,7 @@ SITE_TYPE=basic
 virtualenv --no-site-packages ve
 ve/bin/python bootstrap.py
 
-./bin/buildout -c dev_${SITE_TYPE}_site.cfg
+./bin/buildout -N -c dev_${SITE_TYPE}_site.cfg
 
 ./bin/skeleton-dev-$SITE_TYPE-site syncdb --noinput
 ./bin/skeleton-dev-$SITE_TYPE-site migrate
@@ -16,5 +16,5 @@ ve/bin/python bootstrap.py
 ./bin/skeleton-dev-$SITE_TYPE-site collectstatic --noinput
 
 cd src/jmbo-foundry
-../bin/setuptest-runner setup.py test
+....//bin/setuptest-runner setup.py test
 cd -
