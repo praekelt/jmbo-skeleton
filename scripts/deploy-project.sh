@@ -11,23 +11,23 @@
 # 3: Remove existing source code and update. Buildout.
 
 # Default values
-DEPLOY_DIR=/var/praekelt
-DEPLOY_USER=praekeltdeploy
-DEPLOY_PASSWORD=password
+CREDENTIALS=praekeltdeploy:password
 USER=www-data
 LEVEL=1
 
 # Parse arguments
-while getopts "p:d:r:b:u:l:" opt; do
+while getopts "p:d:r:b:c:u:l:" opt; do
     case $opt in
         p)
             PREFIX=$OPTARG;;
         d)
             DEPLOY_TYPE=$OPTARG;;
         r)
-            REPO=$OPTARG;;
+            OWNER_AND_REPO=$OPTARG;;
         b)
             BRANCH=$OPTARG;;
+        c)
+            CREDENTIALS=$OPTARG;;
         u)
             USER=$OPTARG;;
         l)
@@ -35,11 +35,24 @@ while getopts "p:d:r:b:u:l:" opt; do
     esac    
 done
 
-if [[ -z "$PREFIX" || -z "$DEPLOY_TYPE" || -z "$REPO" || -z "$BRANCH" ]];
+if [[ -z "$PREFIX" || -z "$DEPLOY_TYPE" || -z "$OWNER_AND_REPO" || -z "$BRANCH" || -z "$CREDENTIALS" ]];
 then
-    echo "Usage: upgrade.sh -p (prefix) -d (deploy_type) -r (repo) -b (branch) [-u (user) -l (level)]"
+    echo "Usage: deploy-project.sh -p (prefix) -d (deploy_type) -r (repo) -b (branch) -c (credentials) [-u (user) -l (level)]"
+    echo "Example: deploy-project.sh -p praekelt -d qa -r praekelt/jmbo-foo -b develop -c praekeltdeploy:mypassword"
     exit 1
 fi
+
+# Split OWNER_AND_REPO
+INDEX=`expr index "$OWNER_AND_REPO" /`
+REPO_OWNER=${OWNER_AND_REPO:0:(${INDEX}-1)}
+REPO=${OWNER_AND_REPO:${INDEX}}
+
+# Extract app name. Convention is repo has form jmbo-foo or jmbo.foo.
+INDEX=`expr index "$REPO" [-.]`
+APP_NAME=${REPO:${INDEX}}
+
+# Compute deploy directory
+DEPLOY_DIR=/var/${REPO_OWNER}
 
 # Checkout / update repo to /tmp
 cd /tmp
@@ -48,7 +61,7 @@ if [ -d $REPO ]; then
     git checkout $BRANCH
     git pull
 else
-    git clone -b $BRANCH https://${DEPLOY_USER}:${DEPLOY_PASSWORD}@github.com/praekelt/$REPO.git
+    git clone -b $BRANCH https://${CREDENTIALS}@github.com/$REPO_OWNER/$REPO.git
 fi
 
 # Stop processes
@@ -81,6 +94,15 @@ do
 
         # Clone, bootstrap, buildout
         cd ${DEPLOY_DIR}/
+        sudo -u $USER mkdir ${DEPLOY_DIR}/static-backups
+
+        # Backup existing static directory if it exists
+        if [ -d ${THEDIR}/static ]; then
+            ADATE=`date +"%Y%m%dT%H%M"`
+            STATIC_BACKUP=${DEPLOY_DIR}/static-backups/${THEDIR}/${ADATE}
+            sudo -u $USER mkdir -p $STATIC_BACKUP
+            sudo -u $USER cp -r ${THEDIR}/static ${STATIC_BACKUP}/
+        fi
 
         # Nuke source when level 3
         if [ $LEVEL == 3 ]; then
@@ -94,7 +116,7 @@ do
             sudo -u $USER git pull
         else
             IS_NEW=1
-            sudo -u $USER git clone -b $BRANCH https://${DEPLOY_USER}:${DEPLOY_PASSWORD}@github.com/praekelt/$REPO.git $THEDIR
+            sudo -u $USER git clone -b $BRANCH https://${CREDENTIALS}@github.com/$REPO_OWNER/$REPO.git $THEDIR
             cd $THEDIR
             sudo chown -R $USER:$USER .git/
         fi
@@ -112,7 +134,7 @@ do
             sudo -u $USER ./bin/$THEDIR syncdb
             sudo -u $USER ./bin/$THEDIR migrate
             sudo -u $USER ./bin/$THEDIR load_photosizes
-            sudo -u $USER ./bin/$THEDIR loaddata skeleton/fixtures/sites.json
+            sudo -u $USER ./bin/$THEDIR loaddata ${APP_NAME}/fixtures/sites.json
         fi
 
         sudo -u $USER rm -rf static
