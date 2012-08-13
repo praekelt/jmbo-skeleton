@@ -1,8 +1,8 @@
 Changelog
 =========
 
-next
-----
+0.4.1
+-----
 #. Webdav access now enabled. It is useful for changing CSS on QA sites on the fly.
 #. Webdav requires we backup static resources on each deploy. Added to deploy_project.sh.
 #. Removed Praekelt assumption from deploy script.
