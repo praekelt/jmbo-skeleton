@@ -2,7 +2,9 @@
 
 SITE_TYPE=basic
 
-#rm -rf ve bin	
+rm /tmp/skeleton.sql
+
+rm -rf ve bin	
 virtualenv --no-site-packages ve
 ve/bin/python bootstrap.py
 
@@ -12,7 +14,7 @@ ve/bin/python bootstrap.py
 ./bin/skeleton-dev-$SITE_TYPE-site migrate
 ./bin/skeleton-dev-$SITE_TYPE-site load_photosizes
 ./bin/skeleton-dev-$SITE_TYPE-site loaddata skeleton/fixtures/sites.json
-#rm -rf static
+rm -rf static
 ./bin/skeleton-dev-$SITE_TYPE-site collectstatic --noinput
 
 cd src/jmbo-foundry
