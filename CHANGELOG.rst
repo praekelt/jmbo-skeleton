@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.4.3
+-----
+#. Up django-setuptest to 0.1.2.
+#. Up jmbo-foundry to 0.7.1.
+#. Copy .gitignore when creating a new project.
+
 0.4.1
 -----
 #. Webdav access now enabled. It is useful for changing CSS on QA sites on the fly.

@@ -37,6 +37,7 @@ APP_DIR=${PROJECT_DIR}/${APP}
 mkdir $PROJECT_DIR
 cp bootstrap.py ${PROJECT_DIR}/
 cp buildout.cfg ${PROJECT_DIR}/
+cp .gitignore ${PROJECT_DIR}/
 cp -r buildout_templates ${PROJECT_DIR}/
 cp dev_base.cfg ${PROJECT_DIR}/
 cp dev_basic_site.cfg ${PROJECT_DIR}/dev_basic_${SITE}.cfg

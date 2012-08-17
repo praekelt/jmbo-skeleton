@@ -2,8 +2,6 @@ import os
 import sys
 from os import path
 
-from foundry import settings as foundry_settings
-
 
 FOUNDRY = {
     'has_javascript': True,
@@ -21,6 +19,16 @@ PROJECT_MODULE = 'skeleton'
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+
+# For Postgres do from command line
+# echo "CREATE USER skeleton WITH PASSWORD 'skeleton'" | sudo -u postgres psql
+# echo "CREATE DATABASE skeleton WITH OWNER skeleton ENCODING 'UTF8'" | sudo -u postgres psql
+
+# For MySQL remember to first do from a MySQL shell:
+# CREATE database skeleton;
+# GRANT ALL ON skeleton.* TO 'skeleton'@'localhost' IDENTIFIED BY 'skeleton';
+# GRANT ALL ON test_skeleton.* TO 'skeleton'@'localhost' IDENTIFIED BY 'skeleton';
+# FLUSH PRIVILEGES;
 
 DATABASES = {
     'default': {
@@ -197,6 +205,7 @@ SIMPLE_AUTOCOMPLETE = {
 }
 
 STATICFILES_FINDERS = ( 
+    'foundry.finders.FileSystemLayerAwareFinder',
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
@@ -222,5 +231,3 @@ ADMIN_MODELS_EXCLUDE = (
 JMBO_ANALYTICS = {
     'google_analytics_id': 'xxx',
 }
-
-foundry_settings.compute_settings(sys.modules[__name__])
