@@ -2,8 +2,6 @@ import os
 import sys
 from os import path
 
-from foundry import settings as foundry_settings
-
 
 FOUNDRY = {
     'has_javascript': True,
@@ -197,6 +195,7 @@ SIMPLE_AUTOCOMPLETE = {
 }
 
 STATICFILES_FINDERS = ( 
+    'foundry.finders.FileSystemLayerAwareFinder',
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
@@ -222,5 +221,3 @@ ADMIN_MODELS_EXCLUDE = (
 JMBO_ANALYTICS = {
     'google_analytics_id': 'xxx',
 }
-
-foundry_settings.compute_settings(sys.modules[__name__])
