@@ -20,6 +20,16 @@ PROJECT_MODULE = 'skeleton'
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+# For Postgres do from command line
+# echo "CREATE USER skeleton WITH PASSWORD 'skeleton'" | sudo -u postgres psql
+# echo "CREATE DATABASE skeleton WITH OWNER skeleton ENCODING 'UTF8'" | sudo -u postgres psql
+
+# For MySQL remember to first do from a MySQL shell:
+# CREATE database skeleton;
+# GRANT ALL ON skeleton.* TO 'skeleton'@'localhost' IDENTIFIED BY 'skeleton';
+# GRANT ALL ON test_skeleton.* TO 'skeleton'@'localhost' IDENTIFIED BY 'skeleton';
+# FLUSH PRIVILEGES;
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.

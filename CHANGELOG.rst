@@ -4,7 +4,8 @@ Changelog
 next
 ----
 #. Up django-setuptest to 0.1.2.
-# Up jmbo-foundry to 0.7.
+#. Up jmbo-foundry to 0.7.1.
+#. Copy .gitignore when creating a new project.
 
 0.4.1
 -----
