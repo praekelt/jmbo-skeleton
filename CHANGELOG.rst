@@ -1,6 +1,10 @@
 Changelog
 =========
 
+next
+----
+#. Up jmbo-foundry to 0.7.2.
+
 0.4.3
 -----
 #. Up django-setuptest to 0.1.2.
