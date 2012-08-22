@@ -3,7 +3,7 @@
         "pk": 1, 
         "model": "sites.site", 
         "fields": {
-            "domain": "site.com", 
+            "domain": "www.site.com", 
             "name": "Web site"
         }
     },
@@ -12,7 +12,45 @@
         "model": "sites.site", 
         "fields": {
             "domain": "m.site.com", 
-            "name": "Mobi site"
+            "name": "Mobi site (basic)"
         }
-    }
+    },
+    {
+        "pk": 3, 
+        "model": "sites.site", 
+        "fields": {
+            "domain": "m.site.com", 
+            "name": "Mobi site (mid)"
+        }
+    },
+    {
+        "pk": 4, 
+        "model": "sites.site", 
+        "fields": {
+            "domain": "m.site.com", 
+            "name": "Mobi site (smart)"
+        }
+    },
+    {
+        "pk": 1, 
+        "model": "sites.sitesgroup", 
+        "fields": {
+            "sites": [
+                1
+            ], 
+            "title": "Web"
+        }
+    },
+    {
+        "pk": 2, 
+        "model": "sites.sitesgroup", 
+        "fields": {
+            "sites": [
+                2, 
+                3, 
+                4
+            ], 
+            "title": "Mobi"
+        }
+    } 
 ]
