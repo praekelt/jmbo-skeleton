@@ -8,7 +8,8 @@ rm -rf ve bin
 virtualenv --no-site-packages ve
 ve/bin/python bootstrap.py
 
-./bin/buildout -N -c dev_${SITE_TYPE}_site.cfg
+rm -rf src
+./bin/buildout -v -c dev_${SITE_TYPE}_site.cfg
 
 ./bin/skeleton-dev-$SITE_TYPE-site syncdb --noinput
 ./bin/skeleton-dev-$SITE_TYPE-site migrate

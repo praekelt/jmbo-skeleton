@@ -1,6 +1,11 @@
 Changelog
 =========
 
+next
+----
+#. Up jmbo-foundry to 0.7.2.
+#. There are now four sites since page layouts may differ between eg. basic and smart.
+
 0.4.3
 -----
 #. Up django-setuptest to 0.1.2.

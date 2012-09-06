@@ -58,10 +58,10 @@ DEPLOY_DIR=/var/${REPO_OWNER}
 cd /tmp
 if [ -d $REPO ]; then
     cd $REPO
-    git checkout $BRANCH
-    git pull
+    sudo -u $USER git checkout $BRANCH
+    sudo -u $USER git pull
 else
-    git clone -b $BRANCH https://${CREDENTIALS}@github.com/$REPO_OWNER/$REPO.git
+    sudo -u $USER git clone -b $BRANCH https://${CREDENTIALS}@github.com/$REPO_OWNER/$REPO.git
 fi
 
 # Stop processes
