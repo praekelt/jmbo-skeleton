@@ -31,6 +31,10 @@ then
     CREATE_DIR=$adir
 fi    
 
+# Clean up possibly polluted migrations directory
+rm skeleton/migrations/*.py
+rm skeleton/migrations/*.pyc
+
 # Create the project
 PROJECT_DIR=${CREATE_DIR}/${APP}
 APP_DIR=${PROJECT_DIR}/${APP}
@@ -41,18 +45,15 @@ cp .gitignore ${PROJECT_DIR}/
 cp -r buildout_templates ${PROJECT_DIR}/
 cp dev_base.cfg ${PROJECT_DIR}/
 cp dev_basic_site.cfg ${PROJECT_DIR}/dev_basic_${SITE}.cfg
-cp dev_mid_site.cfg ${PROJECT_DIR}/dev_mid_${SITE}.cfg
 cp dev_smart_site.cfg ${PROJECT_DIR}/dev_smart_${SITE}.cfg
 cp dev_web_site.cfg ${PROJECT_DIR}/dev_web_${SITE}.cfg
 cp -r skeleton ${PROJECT_DIR}/${APP}
 cp live_base.cfg ${PROJECT_DIR}/
 cp live_basic_site.cfg ${PROJECT_DIR}/live_basic_${SITE}.cfg
-cp live_mid_site.cfg ${PROJECT_DIR}/live_mid_${SITE}.cfg
 cp live_smart_site.cfg ${PROJECT_DIR}/live_smart_${SITE}.cfg
 cp live_web_site.cfg ${PROJECT_DIR}/live_web_${SITE}.cfg
 cp qa_base.cfg ${PROJECT_DIR}/
 cp qa_basic_site.cfg ${PROJECT_DIR}/qa_basic_${SITE}.cfg
-cp qa_mid_site.cfg ${PROJECT_DIR}/qa_mid_${SITE}.cfg
 cp qa_smart_site.cfg ${PROJECT_DIR}/qa_smart_${SITE}.cfg
 cp qa_web_site.cfg ${PROJECT_DIR}/qa_web_${SITE}.cfg
 cp setup.py ${PROJECT_DIR}/
@@ -63,15 +64,12 @@ touch ${PROJECT_DIR}/README.rst
 if [ "$SITE" != "site" ];
 then
     mv ${APP_DIR}/settings_dev_basic_site.py ${APP_DIR}/settings_dev_basic_${SITE}.py
-    mv ${APP_DIR}/settings_dev_mid_site.py ${APP_DIR}/settings_dev_mid_${SITE}.py
     mv ${APP_DIR}/settings_dev_smart_site.py ${APP_DIR}/settings_dev_smart_${SITE}.py
     mv ${APP_DIR}/settings_dev_web_site.py ${APP_DIR}/settings_dev_web_${SITE}.py
     mv ${APP_DIR}/settings_live_basic_site.py ${APP_DIR}/settings_live_basic_${SITE}.py
-    mv ${APP_DIR}/settings_live_mid_site.py ${APP_DIR}/settings_live_mid_${SITE}.py
     mv ${APP_DIR}/settings_live_smart_site.py ${APP_DIR}/settings_live_smart_${SITE}.py
     mv ${APP_DIR}/settings_live_web_site.py ${APP_DIR}/settings_live_web_${SITE}.py
     mv ${APP_DIR}/settings_qa_basic_site.py ${APP_DIR}/settings_qa_basic_${SITE}.py
-    mv ${APP_DIR}/settings_qa_mid_site.py ${APP_DIR}/settings_qa_mid_${SITE}.py
     mv ${APP_DIR}/settings_qa_smart_site.py ${APP_DIR}/settings_qa_smart_${SITE}.py
     mv ${APP_DIR}/settings_qa_web_site.py ${APP_DIR}/settings_qa_web_${SITE}.py
 fi
@@ -83,7 +81,6 @@ sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/live_base.cfg
 sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base.cfg
 sed -i s/skeleton/${APP}/g ${PROJECT_DIR}/*.cfg
 sed -i s/skeleton/${APP}/g ${APP_DIR}/*.py
-sed -i s/skeleton/${APP}/g ${APP_DIR}/migrations/*.py
 if [ "$SITE" != "site" ];
 then
     sed -i s/_site/_${SITE}/g ${PROJECT_DIR}/*_${SITE}.cfg

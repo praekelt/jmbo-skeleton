@@ -16,14 +16,6 @@
         }
     },
     {
-        "pk": 3, 
-        "model": "sites.site", 
-        "fields": {
-            "domain": "m.site.com", 
-            "name": "Mobi site (mid)"
-        }
-    },
-    {
         "pk": 4, 
         "model": "sites.site", 
         "fields": {
@@ -47,7 +39,6 @@
         "fields": {
             "sites": [
                 2, 
-                3, 
                 4
             ], 
             "title": "Mobi"

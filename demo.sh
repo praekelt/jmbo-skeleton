@@ -31,22 +31,17 @@ done
 echo "Downloading distribute"
 ve/bin/python bootstrap.py
 echo "Choose the type of demo site:"
-choice=5
-echo "1. Basic (mobi for low-end handsets)"
-echo "2. Mid (mid for mid-range handsets)"
-echo "3. Smart (mobi for smart handsets)"
-echo "4. Web"
+choice=4
+echo "1. Basic (mobi for low-end and mid handsets)"
+echo "2. Smart (mobi for smart handsets)"
+echo "3. Web"
 SITE_TYPE=basic
-while [ $choice -eq 5 ]; do
+while [ $choice -eq 4 ]; do
     read choice
     if [ $choice -eq 1 ] ; then
         read -p "This part may take a while. If it fails with 'connection reset by peer' run ./demo again. [enter]" y
         ./bin/buildout -Nv -c dev_basic_site.cfg
     elif [ $choice -eq 2 ] ; then
-        read -p "This part may take a while. If it fails with 'connection reset by peer' run ./demo again. [enter]" y
-        ./bin/buildout -Nv -c dev_mid_site.cfg
-        SITE_TYPE=mid
-    elif [ $choice -eq 3 ] ; then
         read -p "This part may take a while. If it fails with 'connection reset by peer' run ./demo again. [enter]" y
         ./bin/buildout -Nv -c dev_smart_site.cfg
         SITE_TYPE=smart
@@ -58,18 +53,29 @@ while [ $choice -eq 5 ]; do
 done
 
 # Remove stale database
-if [ -f /tmp/skeleton.sql ];
+if [ -f skeleton.db ];
 then
-    rm /tmp/skeleton.sql
+    rm skeleton.db
 fi
 
 read -p "Create a superuser when prompted. Do not generate default content. [enter]" y
 ./bin/skeleton-dev-$SITE_TYPE-site syncdb
 ./bin/skeleton-dev-$SITE_TYPE-site migrate
+
+# Convert the app to South. This cannot be done in advance.
+rm skeleton/migrations/*.py
+rm skeleton/migrations/*.pyc
+./bin/skeleton-dev-$SITE_TYPE-site convert_to_south skeleton
+# Add in a migration dependency on Foundry.
+MIGRATION=`./bin/skeleton-dev-$SITE_TYPE-site get_last_foundry_migration`
+sed -i s/"class Migration(SchemaMigration):"/"class Migration(SchemaMigration):\n    depends_on = (('foundry', '${MIGRATION}'),)"/ skeleton/migrations/0001_initial.py
+
+./bin/skeleton-dev-$SITE_TYPE-site migrate
 ./bin/skeleton-dev-$SITE_TYPE-site load_photosizes
 ./bin/skeleton-dev-$SITE_TYPE-site loaddata skeleton/fixtures/sites.json
 rm -rf static
 ./bin/skeleton-dev-$SITE_TYPE-site collectstatic --noinput
+
 echo "You may now start up the site with ./bin/skeleton-dev-$SITE_TYPE-site runserver 0.0.0.0:8000"
 echo "Browse to http://localhost:8000/ for the public site."
 echo "Browse to http://localhost:8000/admin for the admin interface."
