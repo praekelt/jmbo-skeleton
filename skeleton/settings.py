@@ -226,7 +226,6 @@ ADMIN_APPS_EXCLUDE = (
 ADMIN_MODELS_EXCLUDE = (
     'Groups',
     'Code banners',
-    'Video embeds',
     'Video files',
     'Competition preferences',
 )
