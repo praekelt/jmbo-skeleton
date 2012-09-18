@@ -2,7 +2,7 @@
 
 SITE_TYPE=basic
 
-rm /tmp/skeleton.sql
+rm skeleton.db
 
 rm -rf ve bin	
 virtualenv --no-site-packages ve
