@@ -12,6 +12,7 @@ setup(
     packages = find_packages(),
     install_requires = [
         'jmbo-foundry>=0.7.2',
+        'django-atlas',
     ],
     include_package_data=True,
     tests_require=[

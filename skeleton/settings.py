@@ -32,7 +32,7 @@ TEMPLATE_DEBUG = DEBUG
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.contrib.gis.db.backends.spatialite', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'skeleton.db', # Or path to database file if using sqlite3.
         'USER': 'skeleton', # Not used with sqlite3.
         'PASSWORD': 'skeleton', # Not used with sqlite3.
@@ -157,6 +157,7 @@ INSTALLED_APPS = (
     'analytics',
     'gunicorn',
     'sites_groups',
+    'atlas',        # NEW
     'tastypie',
     'django.contrib.auth',
     'django.contrib.comments',
@@ -165,6 +166,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.staticfiles',
+    'django.contrib.gis', # NEW
     'django.contrib.admin',
 )
 
@@ -235,3 +237,7 @@ JMBO_ANALYTICS = {
 }
 
 PHOTOLOGUE_MAXBLOCK = 2 ** 20
+
+DJANGO_ATLAS = {
+    'google_maps_api_key': 'AIzaSyBvdwGsAn2h6tNI75M5cAcryln7rrTYqkk',
+}
