@@ -17,7 +17,7 @@ while [ $choice -eq 3 ]; do
             sudo rm -rf ve/lib/python2.6/site-packages/distribute*
 	    fi
         sudo apt-get install python-virtualenv python2.6-dev \
-	    libjpeg62-dev zlib1g-dev build-essential git-core \
+	    libjpeg-dev zlib1g-dev build-essential git-core \
         sqlite3 libproj0 libproj-dev libgeos-3.2.2 libgdal1-dev \
         libgdal1-1.7.0 libspatialite3 spatialite-bin --no-upgrade
     	echo "Setting up sandboxed Python environment with Python 2.6"
