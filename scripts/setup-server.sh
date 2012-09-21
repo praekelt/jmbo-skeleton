@@ -28,7 +28,7 @@ sudo apt-get --no-upgrade install python-virtualenv python-dev \
 postgresql-9.1 libjpeg-dev zlib1g-dev build-essential git-core \
 memcached supervisor nginx postgresql-server-dev-all libxslt1-dev \
 apache2 libproj0 libproj-dev libgeos-3.2.2 libgdal1-dev \
-libgdal1-1.7.0 postgis --no-upgrade
+libgdal1-1.7.0 postgis postgresql-9.1-postgis --no-upgrade
 
 echo "Configuring PostgreSQL..."
 # xxx: regexes would be better
@@ -36,14 +36,14 @@ sudo sed -i "s/local   all             all                                     p
 sudo /etc/init.d/postgresql restart
 
 echo "Configuring PostGIS..."
-sudo -u postgres createdb -E UTF8 template_postgis && \
-( createlang -d template_postgis -l | grep plpgsql || createlang -d template_postgis plpgsql ) && \
-psql -d postgres -c "UPDATE pg_database SET datistemplate='true' WHERE datname='template_postgis';" && \
-psql -d template_postgis -f /usr/share/postgresql/9.1/contrib/postgis-1.5/postgis.sql && \
-psql -d template_postgis -f /usr/share/postgresql/9.1/contrib/postgis-1.5/spatial_ref_sys.sql && \
-psql -d template_postgis -c "GRANT ALL ON geometry_columns TO PUBLIC;" && \
-psql -d template_postgis -c "GRANT ALL ON spatial_ref_sys TO PUBLIC;"
-psql -d template_postgis -c "GRANT ALL ON geography_columns TO PUBLIC;"
+sudo -u postgres createdb -E UTF8 template_postgis 
+sudo -u postgres createlang -d template_postgis plpgsql
+sudo -u postgres psql -d postgres -c "UPDATE pg_database SET datistemplate='true' WHERE datname='template_postgis';" 
+sudo -u postgres psql -d template_postgis -f /usr/share/postgresql/9.1/contrib/postgis-1.5/postgis.sql 
+sudo -u postgres psql -d template_postgis -f /usr/share/postgresql/9.1/contrib/postgis-1.5/spatial_ref_sys.sql 
+sudo -u postgres psql -d template_postgis -c "GRANT ALL ON geometry_columns TO PUBLIC;"
+sudo -u postgres psql -d template_postgis -c "GRANT ALL ON spatial_ref_sys TO PUBLIC;"
+sudo -u postgres psql -d template_postgis -c "GRANT ALL ON geography_columns TO PUBLIC;"
 
 echo "Configuring nginx..."
 # todo. Set max bucket size.
