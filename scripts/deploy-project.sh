@@ -139,7 +139,14 @@ do
                 read -p "Create a superuser if prompted. Do not generate default content. [enter]" y
                 sudo -u $USER ./bin/$THEDIR syncdb
 	        else
-	            sudo -u $USER ./bin/$THEDIR syncdb --noinput
+	            sudo -u $USER ./bin/$THEDIR syncdb --noinput                
+                # Jmbo apps that got South migrations later need fake initial migrations
+                for APP in "competitions"; do 
+                    RESULT=`sudo -u $USER ./bin/$THEDIR migrate --list | grep -w ${APP}`
+                    if [ "$RESULT" == "" ]; then
+                        sudo -u $USER ./bin/$THEDIR migrate ${APP} 0001_initial --fake
+                    fi
+                done
             fi
             sudo -u $USER ./bin/$THEDIR syncdb
             sudo -u $USER ./bin/$THEDIR migrate
