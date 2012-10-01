@@ -142,13 +142,12 @@ do
 	            sudo -u $USER ./bin/$THEDIR syncdb --noinput                
                 # Jmbo apps that got South migrations later need fake initial migrations
                 for APP in "competition"; do 
-                    RESULT=`sudo -u $USER ./bin/$THEDIR migrate --list | grep -w ${APP}`
-                    if [ "$RESULT" == "" ]; then
+                    RESULT=`sudo -u $USER ./bin/$THEDIR migrate ${APP} --list | grep "( ) 0001_initial"`
+                    if [ "$RESULT" != "" ]; then
                         sudo -u $USER ./bin/$THEDIR migrate ${APP} 0001_initial --fake
                     fi
                 done
             fi
-            sudo -u $USER ./bin/$THEDIR syncdb
             sudo -u $USER ./bin/$THEDIR migrate
             sudo -u $USER ./bin/$THEDIR load_photosizes
             sudo -u $USER ./bin/$THEDIR loaddata ${APP_NAME}/fixtures/sites.json
