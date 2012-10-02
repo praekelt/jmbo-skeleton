@@ -4,8 +4,6 @@ from os import path
 
 
 FOUNDRY = {
-    'has_javascript': True,
-    'has_ajax': True,
     'sms_gateway_api_key': '',
     'sms_gateway_password': '',
     'layers': ('basic',)
@@ -130,6 +128,7 @@ INSTALLED_APPS = (
     'snippetscream',
     'generate',
     'cal',
+    'jmbo_calendar',
     'jmbo',
     'photologue',
     'captcha',
@@ -229,7 +228,6 @@ ADMIN_MODELS_EXCLUDE = (
     'Groups',
     'Code banners',
     'Video files',
-    'Competition preferences',
 )
 
 JMBO_ANALYTICS = {
