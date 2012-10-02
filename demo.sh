@@ -39,59 +39,11 @@ while [ $choice -eq 3 ]; do
     fi
 done
 
-: <<'END'
-# GeoDjango libs. Inspired by https://docs.djangoproject.com/en/dev/ref/contrib/gis/install/.
-read -p "Your system may already be capable of supporting a spatial SQLite database. Should I install the required libraries? If unsure answer 'y'.(y/n)? "
-if [ $REPLY == "y" ]; then
-    wget http://download.osgeo.org/geos/geos-3.3.0.tar.bz2
-    tar xjf geos-3.3.0.tar.bz2
-    cd geos-3.3.0
-    ./configure
-    make
-    sudo make install
-    cd ..
-    wget http://download.osgeo.org/proj/proj-4.7.0.tar.gz
-    wget http://download.osgeo.org/proj/proj-datumgrid-1.5.zip
-    tar xzf proj-4.7.0.tar.gz
-    cd proj-4.7.0/nad
-    unzip ../../proj-datumgrid-1.5.zip
-    cd ..
-    ./configure
-    make
-    sudo make install
-    cd ..
-    wget http://download.osgeo.org/gdal/gdal-1.9.1.tar.gz
-    tar xzf gdal-1.9.1.tar.gz
-    cd gdal-1.9.1
-    ./configure
-     make # Go get some coffee, this takes a while.
-    sudo make install
-    cd ..
-    wget http://sqlite.org/sqlite-amalgamation-3.6.23.1.tar.gz
-    tar xzf sqlite-amalgamation-3.6.23.1.tar.gz
-    cd sqlite-3.6.23.1
-    CFLAGS="-DSQLITE_ENABLE_RTREE=1" ./configure
-    make
-    sudo make install
-    cd ..
-    wget http://www.gaia-gis.it/gaia-sins/libspatialite-sources/libspatialite-amalgamation-2.4.0-5.tar.gz
-    wget http://www.gaia-gis.it/gaia-sins/spatialite-tools-sources/spatialite-tools-2.4.0-5.tar.gz
-    tar xzf libspatialite-amalgamation-2.4.0-5.tar.gz
-    tar xzf spatialite-tools-2.4.0-5.tar.gz
-    cd libspatialite-amalgamation-2.4.0
-    ./configure # May need to modified, see notes below.
-    make
-    sudo make install
-    cd ..
-    cd spatialite-tools-2.4.0
-    ./configure # May need to modified, see notes below.
-    make
-    sudo make install
-    cd ..
-    wget http://pysqlite.googlecode.com/files/pysqlite-2.6.0.tar.gz
-    tar xzf pysqlite-2.6.0.tar.gz
-    cd pysqlite-2.6.0
-    echo "[build_ext]\
+# We must do a custom build of pysqlite
+wget http://pysqlite.googlecode.com/files/pysqlite-2.6.0.tar.gz
+tar xzf pysqlite-2.6.0.tar.gz
+cd pysqlite-2.6.0
+echo "[build_ext]\
     
 #define=\
     
@@ -102,11 +54,9 @@ library_dirs=/usr/local/lib\
 libraries=sqlite3\
     
 #define=SQLITE_OMIT_LOAD_EXTENSION" > setup.cfg
-    ../ve/bin/python setup.py install
-    sudo /sbin/ldconfig
-    cd ..
-fi
-END
+../ve/bin/python setup.py install
+sudo /sbin/ldconfig
+cd ..
 
 echo "Downloading distribute"
 ve/bin/python bootstrap.py

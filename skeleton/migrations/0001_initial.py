@@ -6,7 +6,7 @@ from django.db import models
 
 
 class Migration(SchemaMigration):
-    depends_on = (('foundry', '0039_auto__add_field_listing_view_modifier'),)
+    depends_on = (('foundry', '0044_auto__add_field_member_address__add_field_member_city__add_field_membe'),)
 
     def forwards(self, orm):
         # Adding model 'TrivialContent'
