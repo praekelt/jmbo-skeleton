@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.5
+---
+#. Demo now uses location aware SQLite database.
+#. versions.cfg is updated from this version onwards.
+#. Up jmbo-foundry to 1.0, and jmbo to 1.0 since we now use a location aware database by default.
+
 0.4.4
 -----
 #. Up jmbo-foundry to 0.7.2.

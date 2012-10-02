@@ -6,16 +6,20 @@ from django.db import models
 
 
 class Migration(SchemaMigration):
-
-    depends_on = (
-        ("foundry", "0036_auto__add_field_listing_pinned"),
-    )
+    depends_on = (('foundry', '0044_auto__add_field_member_address__add_field_member_city__add_field_membe'),)
 
     def forwards(self, orm):
-        pass
+        # Adding model 'TrivialContent'
+        db.create_table('skeleton_trivialcontent', (
+            ('modelbase_ptr', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['jmbo.ModelBase'], unique=True, primary_key=True)),
+        ))
+        db.send_create_signal('skeleton', ['TrivialContent'])
+
 
     def backwards(self, orm):
-        pass
+        # Deleting model 'TrivialContent'
+        db.delete_table('skeleton_trivialcontent')
+
 
     models = {
         'auth.group': {
@@ -89,9 +93,9 @@ class Migration(SchemaMigration):
             'modified': ('django.db.models.fields.DateTimeField', [], {}),
             'owner': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['auth.User']", 'null': 'True', 'blank': 'True'}),
             'primary_category': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'primary_modelbase_set'", 'null': 'True', 'to': "orm['category.Category']"}),
-            'publish_on': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'publish_on': ('django.db.models.fields.DateTimeField', [], {'db_index': 'True', 'null': 'True', 'blank': 'True'}),
             'publishers': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': "orm['publisher.Publisher']", 'null': 'True', 'blank': 'True'}),
-            'retract_on': ('django.db.models.fields.DateTimeField', [], {'null': 'True', 'blank': 'True'}),
+            'retract_on': ('django.db.models.fields.DateTimeField', [], {'db_index': 'True', 'null': 'True', 'blank': 'True'}),
             'sites': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': "orm['sites.Site']", 'null': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '255'}),
             'state': ('django.db.models.fields.CharField', [], {'default': "'unpublished'", 'max_length': '32', 'null': 'True', 'blank': 'True'}),
@@ -111,7 +115,7 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'}),
             'reflection_size': ('django.db.models.fields.FloatField', [], {'default': '0'}),
-            'reflection_strength': ('django.db.models.fields.FloatField', [], {'default': '0.59999999999999998'}),
+            'reflection_strength': ('django.db.models.fields.FloatField', [], {'default': '0.6'}),
             'sharpness': ('django.db.models.fields.FloatField', [], {'default': '1.0'}),
             'transpose_method': ('django.db.models.fields.CharField', [], {'max_length': '15', 'blank': 'True'})
         },
@@ -136,6 +140,10 @@ class Migration(SchemaMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         },
+        'skeleton.trivialcontent': {
+            'Meta': {'ordering': "('-created',)", 'object_name': 'TrivialContent', '_ormbases': ['jmbo.ModelBase']},
+            'modelbase_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['jmbo.ModelBase']", 'unique': 'True', 'primary_key': 'True'})
+        }
     }
 
     complete_apps = ['skeleton']
