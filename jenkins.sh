@@ -24,7 +24,6 @@ libraries=sqlite3\
     
 #define=SQLITE_OMIT_LOAD_EXTENSION" > setup.cfg
 ../ve/bin/python setup.py install
-sudo /sbin/ldconfig
 cd ..
 
 rm -rf src
@@ -37,7 +36,8 @@ rm -rf src
 rm -rf static
 ./bin/skeleton-dev-$SITE_TYPE-site collectstatic --noinput
 
-PTH=`./bin/skeleton-dev-$SITE_TYPE-site get_foundry_source_path`
-cd $PTH
+# Checkout jmbo-foundry explicitly so we can run tests
+git clone git@github.com:praekelt/jmbo-foundry.git src/jmbo-foundry
+cd src/jmbo-foundry
 ../../bin/setuptest-runner setup.py test
 cd -
