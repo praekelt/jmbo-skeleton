@@ -37,6 +37,7 @@ rm -rf src
 rm -rf static
 ./bin/skeleton-dev-$SITE_TYPE-site collectstatic --noinput
 
-cd src/jmbo-foundry
+PTH=`./bin/skeleton-dev-$SITE_TYPE-site get_foundry_source_path`
+cd $PTH
 ../../bin/setuptest-runner setup.py test
 cd -
