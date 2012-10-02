@@ -78,9 +78,14 @@ do
 done
 
 # Create database. Safe to run even if database already exists.
+IS_NEW_DATABASE=0
 DB_NAME=${PREFIX}_${DEPLOY_TYPE}
-echo "CREATE USER $DB_NAME WITH PASSWORD '$DB_NAME'" | sudo -u postgres psql
-echo "CREATE DATABASE $DB_NAME WITH OWNER $DB_NAME ENCODING 'UTF8'" | sudo -u postgres psql
+RESULT=`sudo -u postgres psql -l | grep ${DB_NAME}`
+if [ "$RESULT" == "" ]; then
+	echo "CREATE USER $DB_NAME WITH PASSWORD '$DB_NAME'" | sudo -u postgres psql
+	echo "CREATE DATABASE $DB_NAME WITH OWNER $DB_NAME ENCODING 'UTF8' TEMPLATE template_postgis" | sudo -u postgres psql
+	IS_NEW_DATABASE=1
+fi
 
 # Checkouts
 INDEX=0
@@ -130,8 +135,19 @@ do
 
         # Database setup on first loop
         if [ $INDEX == 0 ]; then
-            read -p "Create a superuser if prompted. Do not generate default content. [enter]" y
-            sudo -u $USER ./bin/$THEDIR syncdb
+            if [ $IS_NEW_DATABASE -eq 1 ]; then
+                read -p "Create a superuser if prompted. Do not generate default content. [enter]" y
+                sudo -u $USER ./bin/$THEDIR syncdb
+	        else
+	            sudo -u $USER ./bin/$THEDIR syncdb --noinput                
+                # Jmbo apps that got South migrations later need fake initial migrations
+                for APP in "competition"; do 
+                    RESULT=`sudo -u $USER ./bin/$THEDIR migrate ${APP} --list | grep "( ) 0001_initial"`
+                    if [ "$RESULT" != "" ]; then
+                        sudo -u $USER ./bin/$THEDIR migrate ${APP} 0001_initial --fake
+                    fi
+                done
+            fi
             sudo -u $USER ./bin/$THEDIR migrate
             sudo -u $USER ./bin/$THEDIR load_photosizes
             sudo -u $USER ./bin/$THEDIR loaddata ${APP_NAME}/fixtures/sites.json
