@@ -19,7 +19,7 @@ while [ $choice -eq 3 ]; do
         sudo apt-get install python-virtualenv python2.6-dev \
 	    libjpeg62-dev zlib1g-dev build-essential git-core \
         sqlite3 libproj0 libproj-dev libgeos-3.2.2 libgdal1-dev \
-        libgdal1-1.7.0 libspatialite3 spatialite-bin --no-upgrade
+        libgdal1-1.7.0 libspatialite3 spatialite-bin libgeoip1 libgeoip-dev --no-upgrade
     	echo "Setting up sandboxed Python environment with Python 2.6"
 	    virtualenv --python=python2.6 --no-site-packages ve
     else
@@ -33,7 +33,7 @@ while [ $choice -eq 3 ]; do
 	    sudo apt-get install python-virtualenv python2.7-dev \
     	libjpeg-dev zlib1g-dev build-essential git-core \
         sqlite3 libproj0 libproj-dev libgeos-3.2.2 libgdal1-dev \
-        libgdal1-1.7.0 libspatialite3 spatialite-bin --no-upgrade
+        libgdal1-1.7.0 libspatialite3 spatialite-bin libgeoip1 libgeoip-dev --no-upgrade
 	    echo "Setting up sandboxed Python environment with Python 2.7"
     	virtualenv --python=python2.7 --no-site-packages ve
     fi
@@ -92,16 +92,6 @@ read -p "Create a superuser when prompted. Do not generate default content. [ent
 ./bin/skeleton-dev-$SITE_TYPE-site syncdb
 spatialite skeleton.db "SELECT InitSpatialMetaData();"
 ./bin/skeleton-dev-$SITE_TYPE-site migrate
-
-# Convert the app to South. This cannot be done in advance.
-#rm skeleton/migrations/*.py
-#rm skeleton/migrations/*.pyc
-#./bin/skeleton-dev-$SITE_TYPE-site convert_to_south skeleton
-## Add in a migration dependency on Foundry.
-#MIGRATION=`./bin/skeleton-dev-$SITE_TYPE-site get_last_foundry_migration`
-#sed -i s/"class Migration(SchemaMigration):"/"class Migration(SchemaMigration):\n    depends_on = (('foundry', '${MIGRATION}'),)"/ skeleton/migrations/0001_initial.py
-#./bin/skeleton-dev-$SITE_TYPE-site migrate
-
 ./bin/skeleton-dev-$SITE_TYPE-site load_photosizes
 ./bin/skeleton-dev-$SITE_TYPE-site loaddata skeleton/fixtures/sites.json
 rm -rf static

@@ -1,5 +1,5 @@
 from skeleton.settings import *
 
 
-FOUNDRY['layers'] = ('smart', 'mid', 'basic')
+FOUNDRY['layers'] = ('smart', 'basic')
 SITE_ID = 4
