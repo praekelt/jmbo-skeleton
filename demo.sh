@@ -92,16 +92,6 @@ read -p "Create a superuser when prompted. Do not generate default content. [ent
 ./bin/skeleton-dev-$SITE_TYPE-site syncdb
 spatialite skeleton.db "SELECT InitSpatialMetaData();"
 ./bin/skeleton-dev-$SITE_TYPE-site migrate
-
-# Convert the app to South. This cannot be done in advance.
-#rm skeleton/migrations/*.py
-#rm skeleton/migrations/*.pyc
-#./bin/skeleton-dev-$SITE_TYPE-site convert_to_south skeleton
-## Add in a migration dependency on Foundry.
-#MIGRATION=`./bin/skeleton-dev-$SITE_TYPE-site get_last_foundry_migration`
-#sed -i s/"class Migration(SchemaMigration):"/"class Migration(SchemaMigration):\n    depends_on = (('foundry', '${MIGRATION}'),)"/ skeleton/migrations/0001_initial.py
-#./bin/skeleton-dev-$SITE_TYPE-site migrate
-
 ./bin/skeleton-dev-$SITE_TYPE-site load_photosizes
 ./bin/skeleton-dev-$SITE_TYPE-site loaddata skeleton/fixtures/sites.json
 rm -rf static
