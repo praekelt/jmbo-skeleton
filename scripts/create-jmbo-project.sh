@@ -54,6 +54,7 @@ cp qa_smart_site.cfg ${PROJECT_DIR}/qa_smart_${SITE}.cfg
 cp qa_web_site.cfg ${PROJECT_DIR}/qa_web_${SITE}.cfg
 cp setup.py ${PROJECT_DIR}/
 cp versions.cfg ${PROJECT_DIR}/
+cp setup-development.sh ${PROJECT_DIR}/
 touch ${PROJECT_DIR}/AUTHORS.rst
 touch ${PROJECT_DIR}/CHANGELOG.rst
 touch ${PROJECT_DIR}/README.rst
