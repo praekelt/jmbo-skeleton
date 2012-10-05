@@ -27,8 +27,8 @@ sudo apt-get remove "postgresql-8.4"
 sudo apt-get --no-upgrade install python-virtualenv python-dev \
 postgresql-9.1 libjpeg-dev zlib1g-dev build-essential git-core \
 memcached supervisor nginx postgresql-server-dev-all libxslt1-dev \
-apache2 libproj0 libproj-dev libgeos-3.2.2 libgdal1-dev \
-libgdal1-1.7.0 postgis postgresql-9.1-postgis --no-upgrade
+apache2 libproj0 libproj-dev libgeos-3.2.2 libgdal1-dev libgeoip1 \
+libgeoip-dev libgdal1-1.7.0 postgis postgresql-9.1-postgis --no-upgrade
 
 echo "Configuring PostgreSQL..."
 # xxx: regexes would be better
