@@ -11,7 +11,7 @@ sudo rm -rf ve/lib/python2.7/site-packages/distribute*
 sudo apt-get install python-virtualenv python2.7-dev \
 libjpeg-dev zlib1g-dev build-essential git-core \
 sqlite3 libproj0 libproj-dev libgeos-3.2.2 libgdal1-dev \
-libgdal1-1.7.0 libspatialite3 spatialite-bin --no-upgrade
+libgdal1-1.7.0 libspatialite3 spatialite-bin libgeoip1 libgeoip-dev --no-upgrade
 echo "Setting up sandboxed Python environment with Python 2.7"
 virtualenv --python=python2.7 --no-site-packages ve
 
