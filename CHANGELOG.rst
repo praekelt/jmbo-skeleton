@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.5.1
+-----
+#. `setup-development.sh` makes getting a development environment running easy.
+
 0.5
 ---
 #. Demo now uses location aware SQLite database.
