@@ -16,7 +16,9 @@ echo "Setting up sandboxed Python environment with Python 2.7"
 virtualenv --python=python2.7 --no-site-packages ve
 
 # We must do a custom build of pysqlite
-wget http://pysqlite.googlecode.com/files/pysqlite-2.6.0.tar.gz
+if [ ! -f pysqlite-2.6.0.tar.gz ]; then
+    wget http://pysqlite.googlecode.com/files/pysqlite-2.6.0.tar.gz
+fi
 tar xzf pysqlite-2.6.0.tar.gz
 cd pysqlite-2.6.0
 echo "[build_ext]\
