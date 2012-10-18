@@ -3,6 +3,6 @@ A new release of skeleton typically requires:
 1.  New minimum version of jmbo-foundry in setup.py
 2.  Up depends_on in skeleton/migrations/0001_initial.py to latest foundry 
     migration.
-3.  Run ./bin/buildout -Nv -c dev_basic_site.cfg and update versions.cfg with 
-    info printed to stdout. Ensure buildout and distribute are not in 
-    versions.cfg.
+3.  Run ./bin/buildout -Nv -c dev_basic_site.cfg and update versions.cfg with
+    info printed to stdout. Ensure buildout, setuptools and distribute are not 
+    in versions.cfg.

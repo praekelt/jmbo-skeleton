@@ -1,6 +1,10 @@
 Changelog
 =========
 
+next
+----
+#. `south` lowercase pin added.
+
 0.5.1
 -----
 #. `setup-development.sh` makes getting a development environment running easy.
