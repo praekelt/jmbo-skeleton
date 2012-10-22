@@ -4,6 +4,7 @@ Changelog
 next
 ----
 #. `south` lowercase pin added.
+#. `deploy-project.sh` now creates necessary cron entries.
 
 0.5.1
 -----
