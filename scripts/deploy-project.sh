@@ -159,10 +159,10 @@ do
         # Cron entries
         touch /tmp/acron
         sudo -u $USER crontab -l > /tmp/acron
-        for LINE in "0 6 * * * ${DEPLOY_DIR}/${THEDIR}/bin report_naughty_words" "0 * * * * ${DEPLOY_DIR}/${THEDIR}/bin jmbo_publish"; do
-            RESULT=`grep "$LINE" /tmp/acron`
+        for COMMAND in report_naughty_words jmbo_publish; do
+            RESULT=`grep "${THEDIR} ${COMMAND}" /tmp/acron`
             if [ "$RESULT" == "" ]; then
-                echo "$LINE" >> /tmp/acron
+                echo "${DEPLOY_DIR}/${THEDIR}/bin/${THEDIR} ${COMMAND" >> /tmp/acron
             fi
         done
         sudo -u $USER crontab /tmp/acron
