@@ -157,13 +157,15 @@ do
         sudo -u $USER ./bin/$THEDIR collectstatic --noinput
 
         # Cron entries
+        touch /tmp/acron
         sudo -u $USER crontab -l > /tmp/acron
         for LINE in "0 6 * * * ${DEPLOY_DIR}/${THEDIR}/bin report_naughty_words" "0 * * * * ${DEPLOY_DIR}/${THEDIR}/bin jmbo_publish"; do
-            RESULT=`grep /tmp/acron "$KEY"`
+            RESULT=`grep "$LINE" /tmp/acron`
             if [ "$RESULT" == "" ]; then
-                echo "$KEY" >> /tmp/acron
+                echo "$LINE" >> /tmp/acron
             fi
         done
+        sudo -u $USER crontab /tmp/acron
         rm /tmp/acron
 
         # Create nginx symlink if required
