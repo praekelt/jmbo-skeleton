@@ -162,7 +162,7 @@ do
         for COMMAND in report_naughty_words jmbo_publish; do
             RESULT=`grep "${THEDIR} ${COMMAND}" /tmp/acron`
             if [ "$RESULT" == "" ]; then
-                echo "${DEPLOY_DIR}/${THEDIR}/bin/${THEDIR} ${COMMAND}" >> /tmp/acron
+                echo "0 * * * * ${DEPLOY_DIR}/${THEDIR}/bin/${THEDIR} ${COMMAND}" >> /tmp/acron
             fi
         done
         sudo -u $USER crontab /tmp/acron
