@@ -156,6 +156,16 @@ do
         sudo -u $USER rm -rf static
         sudo -u $USER ./bin/$THEDIR collectstatic --noinput
 
+        # Cron entries
+        sudo -u $USER crontab -l > /tmp/acron
+        for LINE in "0 6 * * * ${DEPLOY_DIR}/${THEDIR}/bin report_naughty_words" "0 * * * * ${DEPLOY_DIR}/${THEDIR}/bin jmbo_publish"; do
+            RESULT=`grep /tmp/acron "$KEY"`
+            if [ "$RESULT" == "" ]; then
+                echo "$KEY" >> /tmp/acron
+            fi
+        done
+        rm /tmp/acron
+
         # Create nginx symlink if required
         sudo ln -s ${DEPLOY_DIR}/${THEDIR}/nginx/gunicorn-${THEDIR}.conf /etc/nginx/sites-enabled/
 
