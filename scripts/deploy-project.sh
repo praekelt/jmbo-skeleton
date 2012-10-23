@@ -156,6 +156,18 @@ do
         sudo -u $USER rm -rf static
         sudo -u $USER ./bin/$THEDIR collectstatic --noinput
 
+        # Cron entries
+        touch /tmp/acron
+        sudo -u $USER crontab -l > /tmp/acron
+        for COMMAND in report_naughty_words jmbo_publish; do
+            RESULT=`grep "${THEDIR} ${COMMAND}" /tmp/acron`
+            if [ "$RESULT" == "" ]; then
+                echo "0 * * * * ${DEPLOY_DIR}/${THEDIR}/bin/${THEDIR} ${COMMAND}" >> /tmp/acron
+            fi
+        done
+        sudo -u $USER crontab /tmp/acron
+        rm /tmp/acron
+
         # Create nginx symlink if required
         sudo ln -s ${DEPLOY_DIR}/${THEDIR}/nginx/gunicorn-${THEDIR}.conf /etc/nginx/sites-enabled/
 
