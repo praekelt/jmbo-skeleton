@@ -34,7 +34,7 @@ TEMPLATE_DEBUG = DEBUG
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.spatialite', # Options are spatialite, postgresql, mysql.
+        'ENGINE': 'django.contrib.gis.db.backends.spatialite', # Options are spatialite, postgis, mysql.
         'NAME': 'skeleton.db', # Or path to database file if using sqlite3.
         'USER': 'skeleton', # Not used with sqlite3.
         'PASSWORD': 'skeleton', # Not used with sqlite3.
