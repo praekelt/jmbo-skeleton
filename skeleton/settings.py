@@ -18,9 +18,13 @@ PROJECT_MODULE = 'skeleton'
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-# For Postgres do from command line
+# For Postgres (not location aware) do from command line
 # echo "CREATE USER skeleton WITH PASSWORD 'skeleton'" | sudo -u postgres psql
 # echo "CREATE DATABASE skeleton WITH OWNER skeleton ENCODING 'UTF8'" | sudo -u postgres psql
+
+# For Postgres (location aware) do from command line
+# echo "CREATE USER skeleton WITH PASSWORD 'skeleton'" | sudo -u postgres psql
+# echo "CREATE DATABASE skeleton WITH OWNER skeleton ENCODING 'UTF8' TEMLATE template_postgis" | sudo -u postgres psql
 
 # For MySQL remember to first do from a MySQL shell:
 # CREATE database skeleton;
@@ -30,7 +34,7 @@ TEMPLATE_DEBUG = DEBUG
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.spatialite', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.contrib.gis.db.backends.spatialite', # Options are spatialite, postgresql, mysql.
         'NAME': 'skeleton.db', # Or path to database file if using sqlite3.
         'USER': 'skeleton', # Not used with sqlite3.
         'PASSWORD': 'skeleton', # Not used with sqlite3.
