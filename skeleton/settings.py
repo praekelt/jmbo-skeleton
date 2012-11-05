@@ -24,7 +24,7 @@ TEMPLATE_DEBUG = DEBUG
 
 # For Postgres (location aware) do from command line
 # echo "CREATE USER skeleton WITH PASSWORD 'skeleton'" | sudo -u postgres psql
-# echo "CREATE DATABASE skeleton WITH OWNER skeleton ENCODING 'UTF8' TEMLATE template_postgis" | sudo -u postgres psql
+# echo "CREATE DATABASE skeleton WITH OWNER skeleton ENCODING 'UTF8' TEMPLATE template_postgis" | sudo -u postgres psql
 
 # For MySQL remember to first do from a MySQL shell:
 # CREATE database skeleton;
