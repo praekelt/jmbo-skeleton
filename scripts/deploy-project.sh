@@ -141,7 +141,7 @@ do
 	        else
 	            sudo -u $USER ./bin/$THEDIR syncdb --noinput                
                 # Jmbo apps that got South migrations later need fake initial migrations
-                for APP in "competition"; do 
+                for APP in competition music; do 
                     RESULT=`sudo -u $USER ./bin/$THEDIR migrate ${APP} --list | grep "( ) 0001_initial"`
                     if [ "$RESULT" != "" ]; then
                         sudo -u $USER ./bin/$THEDIR migrate ${APP} 0001_initial --fake
