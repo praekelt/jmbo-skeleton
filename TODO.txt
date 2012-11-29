@@ -1,1 +1,2 @@
 chartupdate Cron job
+jmbo-twitter and jmbo-facebook
