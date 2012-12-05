@@ -219,7 +219,6 @@ STATICFILES_FINDERS = (
 
 ADMIN_APPS_EXCLUDE = (
     'Cal',
-    'Competition',
     'Event',
     'Photologue',
     'Publisher',

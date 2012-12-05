@@ -1,2 +1,4 @@
 chartupdate Cron job
 jmbo-twitter and jmbo-facebook
+Need latest releases of all products.
+Move media dir for dev into buildout path.
