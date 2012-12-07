@@ -139,13 +139,28 @@ do
                 read -p "Create a superuser if prompted. Do not generate default content. [enter]" y
                 sudo -u $USER ./bin/$THEDIR syncdb
 	        else
-	            sudo -u $USER ./bin/$THEDIR syncdb --noinput                
-                # Jmbo apps that got South migrations later need fake initial migrations
+                # Some Jmbo apps only got South migrations at a later stage. Scenarios:
+                # 1. CT not in DB - migrate
+                # 2. CT in DB, 0001 migration does not exist - fake migrate 0001
+                # 3. CT in DB, 0001 migration exists - migrate
+                FAKE_MIGRATE=""
                 for APP in competition music; do 
-                    RESULT=`sudo -u $USER ./bin/$THEDIR migrate ${APP} --list | grep "( ) 0001_initial"`
-                    if [ "$RESULT" != "" ]; then
-                        sudo -u $USER ./bin/$THEDIR migrate ${APP} 0001_initial --fake
+                    RESULT=`sudo -u postgres psql $DB_NAME -c "select 'count'||count(*) from django_content_type where app_label='$APP'" | grep count0`
+                    if [ "$RESULT" == "" ]; then
+                        # CT is in DB. Now check for 0001 migration.
+                        RESULT=`sudo -u postgres psql $DB_NAME -c "select 'count'||count(*) from south_migrationhistory where app_name='$APP' and migration='0001_initial'" | grep count0`
+                        if [ "$RESULT" != "" ]; then
+                            # Migration is not in db. Add to fake migrate list.
+                            FAKE_MIGRATE="$FAKE_MIGRATE $APP"
+                        fi
                     fi
+                done
+
+	            sudo -u $USER ./bin/$THEDIR syncdb --noinput                
+
+                # Appky fake migrations
+                for APP in $FAKE_MIGRATE; do 
+                    sudo -u $USER ./bin/$THEDIR migrate ${APP} 0001_initial --fake
                 done
             fi
             sudo -u $USER ./bin/$THEDIR migrate
