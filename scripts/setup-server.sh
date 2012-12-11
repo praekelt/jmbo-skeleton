@@ -78,7 +78,7 @@ sudo chown -R www-data:www-data ${DEPLOY_DIR}
 
 # Sentry server
 # Own virtualenv because Sentry installs eggs in it
-sudo virtualenv ${DEPLOY_DIR}/python-sentry --no-site-packages
+sudo -u www-data virtualenv ${DEPLOY_DIR}/python-sentry --no-site-packages
 SENTRY_CONFIG=${DEPLOY_DIR}/sentry/sentry.conf.py
 sudo -u www-data ${DEPLOY_DIR}/python-sentry/bin/easy_install sentry
 sudo -u www-data ${DEPLOY_DIR}/python-sentry/bin/sentry init $SENTRY_CONFIG
