@@ -24,7 +24,7 @@ echo "Installing required Ubuntu packages..."
 # install different versions side by side.
 sudo /etc/init.d/postgresql stop
 sudo apt-get remove "postgresql-8.4"
-sudo apt-get --no-upgrade install python-virtualenv python-dev \
+sudo apt-get install python-virtualenv python-dev \
 postgresql-9.1 libjpeg-dev zlib1g-dev build-essential git-core \
 memcached supervisor nginx postgresql-server-dev-all libxslt1-dev \
 apache2 libproj0 libproj-dev libgeos-3.2.2 libgdal1-dev libgeoip1 \
@@ -64,7 +64,7 @@ sudo a2enmod dav
 sudo sed -i "s/80/81/g" /etc/apache2/ports.conf 
 sudo rm /etc/apache2/sites-enabled/default
 DIRNAME=`dirname $0`
-sudo cp ${DIRNAME}/apache2-webdav.conf /etc/apache2/sites-enabled/000-default
+sudo cp ${DIRNAME}/resources/apache2-webdav.conf /etc/apache2/sites-enabled/000-default
 # Replace servername
 SERVERNAME=`sed "2q;d" /etc/hosts | awk '{print $2}'`
 sudo sed -i s/SERVERNAME/${SERVERNAME}/ /etc/apache2/sites-enabled/000-default
@@ -75,6 +75,19 @@ echo "Setting up the Django directory..."
 sudo mkdir ${DEPLOY_DIR}
 sudo virtualenv ${DEPLOY_DIR}/python --no-site-packages
 sudo chown -R www-data:www-data ${DEPLOY_DIR}
+
+# Sentry server
+SENTRY_CONFIG=${DEPLOY_DIR}/sentry/sentry.conf.py
+sudo -u www-data ${DEPLOY_DIR}/python/bin/easy_install sentry
+sudo -u www-data ${DEPLOY_DIR}/python/bin/sentry init $SENTRY_CONFIG
+# Use our own conf file
+sudo -u www-data cp ${DIRNAME}/resources/sentry.conf.py $SENTRY_CONFIG
+# Replace secret key
+SECRET_KEY=`date +%s | sha256sum | base64 | head -56`
+sudo -u www-data sed -i s/SECRET_KEY_PLACEHOLDER/${SECRET_KEY}/ $SENTRY_CONFIG
+sudo -u www-data ${DEPLOY_DIR}/python/bin/sentry upgrade $SENTRY_CONFIG
+sudo cp ${DIRNAME}/resources/supervisor.sentry.conf /etc/supervisor/conf.d/sentry.conf
+sudo supervisorctl update
 
 echo ""
 echo "All done! You probably want to run the deploy-project.sh script now."
