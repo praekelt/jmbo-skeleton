@@ -5,4 +5,4 @@ A new release of skeleton typically requires:
     migration.
 3.  Run ./bin/buildout -Nv -c dev_basic_site.cfg and update versions.cfg with
     info printed to stdout. Ensure buildout, setuptools and distribute are not 
-    in versions.cfg.
+    in versions.cfg. Add lowercase entries for Django and South.

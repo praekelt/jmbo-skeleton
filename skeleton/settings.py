@@ -80,7 +80,7 @@ STATIC_URL = '/static/'
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 't7lf+w70_4w7u4q(ijo&vx19t=%$_03ymp2afr*s8sm0@_3asm'
+SECRET_KEY = 'SECRET_KEY_PLACEHOLDER'
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
@@ -169,6 +169,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.gis', # NEW
     'django.contrib.admin',
+    'raven.contrib.django',
 )
 
 # Your ReCaptcha provided public key.
@@ -239,3 +240,5 @@ PHOTOLOGUE_MAXBLOCK = 2 ** 20
 DJANGO_ATLAS = {
     'google_maps_api_key': 'AIzaSyBvdwGsAn2h6tNI75M5cAcryln7rrTYqkk',
 }
+
+SENTRY_DSN = 'ENTER_YOUR_SENTRY_DSN_HERE'
