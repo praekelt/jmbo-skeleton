@@ -145,10 +145,10 @@ do
                 # 3. CT in DB, 0001 migration exists - migrate
                 FAKE_MIGRATE=""
                 for APP in competition music; do 
-                    RESULT=`sudo -u $USER ./bin/$THEDIR dumpdata south | grep '"app_label": "$APP"'`
+                    RESULT=`sudo -u $USER ./bin/$THEDIR dumpdata south | grep "\"app_label\": \"$APP\""`
                     if [ "$RESULT" != "" ]; then
                         # CT is in DB. Now check for 0001 migration.
-                        RESULT=`sudo -u $USER ./bin/$THEDIR dumpdata south | grep '"app_name": "$APP", "migration": "0001_initial"'`
+                        RESULT=`sudo -u $USER ./bin/$THEDIR dumpdata south | grep "\"app_name\": \"$APP\", \"migration\": \"0001_initial\""`
                         if [ "$RESULT" == "" ]; then
                             # Migration is not in db. Add to fake migrate list.
                             FAKE_MIGRATE="$FAKE_MIGRATE $APP"
