@@ -79,16 +79,16 @@ sudo chown -R www-data:www-data ${DEPLOY_DIR}
 # Sentry server
 # Own virtualenv because Sentry installs eggs in it
 sudo virtualenv ${DEPLOY_DIR}/python-sentry --no-site-packages
+sudo chown -R www-data:www-data ${DEPLOY_DIR}/python-sentry
 SENTRY_CONFIG=${DEPLOY_DIR}/sentry/sentry.conf.py
-sudo ${DEPLOY_DIR}/python-sentry/bin/easy_install sentry
-sudo ${DEPLOY_DIR}/python-sentry/bin/sentry init $SENTRY_CONFIG
+sudo -u www-data ${DEPLOY_DIR}/python-sentry/bin/easy_install sentry
+sudo -u www-data ${DEPLOY_DIR}/python-sentry/bin/sentry init $SENTRY_CONFIG
 # Use our own conf file
-sudo cp ${DIRNAME}/resources/sentry.conf.py $SENTRY_CONFIG
+sudo -u www-data cp ${DIRNAME}/resources/sentry.conf.py $SENTRY_CONFIG
 # Replace secret key
 SECRET_KEY=`date +%s | sha256sum | head -c 56`
-sudo sed -i "s/SECRET_KEY_PLACEHOLDER/${SECRET_KEY}/" $SENTRY_CONFIG
-sudo ${DEPLOY_DIR}/python-sentry/bin/sentry --config=$SENTRY_CONFIG upgrade
-sudo chown -R www-data:www-data ${DEPLOY_DIR}/python-sentry
+sudo -u www-data sed -i "s/SECRET_KEY_PLACEHOLDER/${SECRET_KEY}/" $SENTRY_CONFIG
+sudo -u www-data ${DEPLOY_DIR}/python-sentry/bin/sentry --config=$SENTRY_CONFIG upgrade
 sudo cp ${DIRNAME}/resources/supervisor.sentry.conf /etc/supervisor/conf.d/sentry.conf
 sudo supervisorctl update
 
