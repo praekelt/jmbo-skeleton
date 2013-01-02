@@ -184,10 +184,13 @@ do
         rm /tmp/acron
 
         # Create nginx symlink if required
-        sudo ln -s ${DEPLOY_DIR}/${THEDIR}/nginx/gunicorn-${THEDIR}.conf /etc/nginx/sites-enabled/
+        sudo ln -s ${DEPLOY_DIR}/${THEDIR}/nginx/${THEDIR}.conf /etc/nginx/sites-enabled/
+
+        # Create haproxy symlink if required
+        sudo ln -s ${DEPLOY_DIR}/${THEDIR}/haproxy/${THEDIR}.conf /etc/haproxy/
 
         # Create supervisor symlink if required
-        sudo ln -s ${DEPLOY_DIR}/${THEDIR}/supervisor/gunicorn-${THEDIR}.conf /etc/supervisor/conf.d/
+        sudo ln -s ${DEPLOY_DIR}/${THEDIR}/supervisor/${THEDIR}.conf /etc/supervisor/conf.d/
 
         let INDEX++
     fi
@@ -211,6 +214,8 @@ done
 
 # Restart memcached
 sudo /etc/init.d/memcached restart
+
+# Restart haproxy
 
 # Reload nginx
 sudo /etc/init.d/nginx reload
