@@ -1,0 +1,20 @@
+[program:${name}.gunicorn]
+numprocs=4
+numprocs_start=1
+process_name=%(program_name)s_%(process_num)s
+command=${buildout:bin-directory}/${control-script} run_gunicorn --max-requests=${max-requests} --pid=/tmp/pids/%(program_name)s_%(process_num)s.pid ${host}:${port-prefix}%(process_num)s
+user=${user}
+stdout_logfile=${log}
+redirect_stderr=true
+stopsignal=QUIT
+environment=PYTHON_EGG_CACHE='/var/www/.python-eggs'
+
+[program:${name}.deviceproxy]
+command=${buildout:directory}/../python-deviceproxy/bin/twistd -n devproxy --config ${buildout:directory}/deviceproxy.yaml
+user=${user}
+numprocs=1
+stdout_logfile=${log}
+redirect_stderr=true
+stopsignal=QUIT
+startsecs=10
+environment=PYTHON_EGG_CACHE='/var/www/.python-eggs'

@@ -6,6 +6,7 @@ next
 #. `south` lowercase pin added.
 #. `deploy-project.sh` now creates necessary cron entries.
 #. Sentry is now part of our setup.
+#. `device-proxy` and haproxy is now part of our setup. This enables user-agent to backend mapping.
 
 0.5.1
 -----

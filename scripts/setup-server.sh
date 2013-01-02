@@ -28,7 +28,7 @@ sudo apt-get install python-virtualenv python-dev \
 postgresql-9.1 libjpeg-dev zlib1g-dev build-essential git-core \
 memcached supervisor nginx postgresql-server-dev-all libxslt1-dev \
 apache2 libproj0 libproj-dev libgeos-3.2.2 libgdal1-dev libgeoip1 \
-libgeoip-dev libgdal1-1.7.0 postgis postgresql-9.1-postgis --no-upgrade
+libgeoip-dev libgdal1-1.7.0 postgis postgresql-9.1-postgis haproxy --no-upgrade
 
 echo "Configuring PostgreSQL..."
 # xxx: regexes would be better
@@ -47,6 +47,9 @@ sudo -u postgres psql -d template_postgis -c "GRANT ALL ON geography_columns TO 
 
 echo "Configuring nginx..."
 # todo. Set max bucket size.
+
+echo "Configuring haproxy..."
+# todo
 
 echo "Setting up the www-data user..."
 sudo mkdir /var/www
@@ -91,6 +94,12 @@ sudo -u www-data sed -i "s/SECRET_KEY_PLACEHOLDER/${SECRET_KEY}/" $SENTRY_CONFIG
 sudo -u www-data ${DEPLOY_DIR}/python-sentry/bin/sentry --config=$SENTRY_CONFIG upgrade
 sudo cp ${DIRNAME}/resources/supervisor.sentry.conf /etc/supervisor/conf.d/sentry.conf
 sudo supervisorctl update
+
+# device-proxy
+# Own virtualenv because device-proxy installs eggs in it
+sudo virtualenv ${DEPLOY_DIR}/python-deviceproxy --no-site-packages
+sudo chown -R www-data:www-data ${DEPLOY_DIR}/python-deviceproxy
+sudo -u www-data ${DEPLOY_DIR}/python-deviceproxy/bin/pip install device-proxy
 
 echo ""
 echo "All done! You probably want to run the deploy-project.sh script now."
