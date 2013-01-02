@@ -108,7 +108,7 @@ sudo virtualenv ${DEPLOY_DIR}/python-deviceproxy --no-site-packages
 sudo chown -R www-data:www-data ${DEPLOY_DIR}/python-deviceproxy
 #sudo -u www-data ${DEPLOY_DIR}/python-deviceproxy/bin/pip install device-proxy
 # xxx: workaround until device-proxy is released to pypi
-sudo -u www-data git clone git@github.com:smn/device-proxy.git ${DEPLOY_DIR}/
+sudo -u www-data git clone https://github.com/smn/device-proxy.git ${DEPLOY_DIR}/device-proxy
 sudo -u www-data ${DEPLOY_DIR}/python-deviceproxy/bin/pip install -r ${DEPLOY_DIR}/device-proxy/requirements.pip
 
 echo ""

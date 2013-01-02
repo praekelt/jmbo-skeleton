@@ -55,6 +55,7 @@ cp qa_web_site.cfg ${PROJECT_DIR}/qa_web_${SITE}.cfg
 cp setup.py ${PROJECT_DIR}/
 cp versions.cfg ${PROJECT_DIR}/
 cp setup-development.sh ${PROJECT_DIR}/
+cp deviceproxy.yaml ${PROJECT_DIR}/
 touch ${PROJECT_DIR}/AUTHORS.rst
 touch ${PROJECT_DIR}/CHANGELOG.rst
 touch ${PROJECT_DIR}/README.rst
@@ -74,9 +75,9 @@ fi
 # Change strings in the newly copied source
 sed -i s/name=\'jmbo-skeleton\'/name=\'${EGG}\'/ ${PROJECT_DIR}/setup.py
 sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/dev_base.cfg
-sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/live_base.cfg
+sed -i "13s/.*/    ${EGG}/" ${PROJECT_DIR}/live_base.cfg
 sed -i "s/PORT_PREFIX_PLACEHOLDER/${PORT}/" ${PROJECT_DIR}/live_base.cfg
-sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base.cfg
+sed -i "13s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base.cfg
 sed -i "s/PORT_PREFIX_PLACEHOLDER/${PORT}/" ${PROJECT_DIR}/qa_base.cfg
 sed -i s/skeleton/${APP}/g ${PROJECT_DIR}/*.cfg
 sed -i s/skeleton/${APP}/g ${APP_DIR}/*.py
