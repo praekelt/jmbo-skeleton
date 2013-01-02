@@ -97,7 +97,7 @@ sudo supervisorctl update
 
 # Basic haproxy config
 ADATE=`date +"%Y%m%dT%H%M"`
-sudo cp /etc/haproxy.cfg /etc/haproxy/haproxy.cfg.${ADATE}
+sudo cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.${ADATE}
 sudo cp ${DIRNAME}/resources/haproxy.cfg /etc/haproxy
 sudo cp ${DIRNAME}/resources/haproxy-start-wrapper.sh /usr/local/bin/
 sudo cp ${DIRNAME}/resources/supervisor.haproxy.conf /etc/supervisor/conf.d/
@@ -106,7 +106,10 @@ sudo cp ${DIRNAME}/resources/supervisor.haproxy.conf /etc/supervisor/conf.d/
 # Own virtualenv because device-proxy installs eggs in it
 sudo virtualenv ${DEPLOY_DIR}/python-deviceproxy --no-site-packages
 sudo chown -R www-data:www-data ${DEPLOY_DIR}/python-deviceproxy
-sudo -u www-data ${DEPLOY_DIR}/python-deviceproxy/bin/pip install device-proxy
+#sudo -u www-data ${DEPLOY_DIR}/python-deviceproxy/bin/pip install device-proxy
+# xxx: workaround until device-proxy is released to pypi
+sudo -u www-data git clone git@github.com:smn/device-proxy.git ${DEPLOY_DIR}/
+sudo -u www-data ${DEPLOY_DIR}/python-deviceproxy/bin/pip install -r ${DEPLOY_DIR}/device-proxy/requirements.pip
 
 echo ""
 echo "All done! You probably want to run the deploy-project.sh script now."
