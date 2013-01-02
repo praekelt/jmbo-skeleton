@@ -216,6 +216,7 @@ done
 sudo /etc/init.d/memcached restart
 
 # Restart haproxy
+sudo supervisorctl restart haproxy
 
 # Reload nginx
 sudo /etc/init.d/nginx reload

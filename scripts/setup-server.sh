@@ -95,6 +95,13 @@ sudo -u www-data ${DEPLOY_DIR}/python-sentry/bin/sentry --config=$SENTRY_CONFIG 
 sudo cp ${DIRNAME}/resources/supervisor.sentry.conf /etc/supervisor/conf.d/sentry.conf
 sudo supervisorctl update
 
+# Basic haproxy config
+ADATE=`date +"%Y%m%dT%H%M"`
+sudo cp /etc/haproxy.cfg /etc/haproxy/haproxy.cfg.${ADATE}
+sudo cp ${DIRNAME}/resources/haproxy.cfg /etc/haproxy
+sudo cp ${DIRNAME}/resources/haproxy-start-wrapper.sh /usr/local/bin/
+sudo cp ${DIRNAME}/resources/supervisor.haproxy.conf /etc/supervisor/conf.d/
+
 # device-proxy
 # Own virtualenv because device-proxy installs eggs in it
 sudo virtualenv ${DEPLOY_DIR}/python-deviceproxy --no-site-packages
