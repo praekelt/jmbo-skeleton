@@ -33,6 +33,6 @@ server {
     }
 
     # logging
-    access_log  ${buildout:directory}/log/nginx-access.log;
-    error_log   ${buildout:directory}/log/nginx-error.log;
+    access_log  ${log};
+    error_log   ${error-log};
 }

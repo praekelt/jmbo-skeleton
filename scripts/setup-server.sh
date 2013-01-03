@@ -77,6 +77,7 @@ sudo /etc/init.d/apache2 restart
 echo "Setting up the Django directory..."
 sudo mkdir ${DEPLOY_DIR}
 sudo virtualenv ${DEPLOY_DIR}/python --no-site-packages
+sudo mkdir ${DEPLOY_DIR}/log
 sudo chown -R www-data:www-data ${DEPLOY_DIR}
 
 # Sentry server
