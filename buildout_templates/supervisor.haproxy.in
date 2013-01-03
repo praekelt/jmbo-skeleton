@@ -1,6 +1,6 @@
-[program:haproxy]
-command=/usr/local/bin/haproxy-start-wrapper.sh
-user=www-data
+[program:${name}.haproxy]
+command=haproxy ${name}.cfg -sf
 stdout_logfile=/var/praekelt/log/haproxy.log
+stdout_logfile=${log}
 redirect_stderr=true
 stopsignal=QUIT

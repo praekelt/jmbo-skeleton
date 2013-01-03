@@ -48,9 +48,6 @@ sudo -u postgres psql -d template_postgis -c "GRANT ALL ON geography_columns TO 
 echo "Configuring nginx..."
 # todo. Set max bucket size.
 
-echo "Configuring haproxy..."
-# todo
-
 echo "Setting up the www-data user..."
 sudo mkdir /var/www
 sudo mkdir /var/www/.buildout
@@ -97,12 +94,12 @@ sudo cp ${DIRNAME}/resources/supervisor.sentry.conf /etc/supervisor/conf.d/sentr
 sudo supervisorctl update
 
 # Basic haproxy config
-ADATE=`date +"%Y%m%dT%H%M"`
-sudo cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.${ADATE}
-sudo cp ${DIRNAME}/resources/haproxy.cfg /etc/haproxy
-sudo cp ${DIRNAME}/resources/haproxy-start-wrapper.sh /usr/local/bin/
-sudo chown www-data:www-data /usr/local/bin/haproxy-start-wrapper.sh
-sudo cp ${DIRNAME}/resources/supervisor.haproxy.conf /etc/supervisor/conf.d/haproxy.conf
+#ADATE=`date +"%Y%m%dT%H%M"`
+#sudo cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.${ADATE}
+#sudo cp ${DIRNAME}/resources/haproxy.cfg /etc/haproxy
+#sudo cp ${DIRNAME}/resources/haproxy-start-wrapper.sh /usr/local/bin/
+#sudo chown www-data:www-data /usr/local/bin/haproxy-start-wrapper.sh
+#sudo cp ${DIRNAME}/resources/supervisor.haproxy.conf /etc/supervisor/conf.d/haproxy.conf
 
 # device-proxy
 # Own virtualenv because device-proxy installs eggs in it

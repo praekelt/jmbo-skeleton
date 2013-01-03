@@ -65,6 +65,8 @@ else
 fi
 
 # Stop processes
+sudo supervisorctl stop ${THEDIR}.haproxy
+sudo supervisorctl stop ${THEDIR}.deviceproxy
 for f in `ls /tmp/${REPO}/${DEPLOY_TYPE}_*.cfg`
 do
     FILENAME=$(basename $f)
@@ -186,14 +188,12 @@ do
         # Create nginx symlink if required
         sudo ln -s ${DEPLOY_DIR}/${THEDIR}/nginx/${THEDIR}.conf /etc/nginx/sites-enabled/
 
-        # Create haproxy symlink if required
-        sudo ln -s ${DEPLOY_DIR}/${THEDIR}/haproxy/*.cfg /etc/haproxy/
-
-        # Create supervisor symlinks if required
+        # Create supervisor symlink if required
         sudo ln -s ${DEPLOY_DIR}/${THEDIR}/supervisor/${THEDIR}-django.conf /etc/supervisor/conf.d/
 
-        # Create deviceproxy supervisor entry on first loop since we only need one running instance.
+        # Create haproxy and deviceproxy supervisor entry on first loop since we only need one running instance of each.
         if [ $INDEX == 0 ]; then
+            sudo ln -s ${DEPLOY_DIR}/${THEDIR}/supervisor/${THEDIR}-haproxy.conf /etc/supervisor/conf.d/
             sudo ln -s ${DEPLOY_DIR}/${THEDIR}/supervisor/${THEDIR}-deviceproxy.conf /etc/supervisor/conf.d/
         fi
 
@@ -220,8 +220,9 @@ done
 # Restart memcached
 sudo /etc/init.d/memcached restart
 
-# Restart haproxy
-sudo supervisorctl restart haproxy
+# Start haproxy and deviceproxy
+sudo supervisorctl start ${THEDIR}.deviceproxy
+sudo supervisorctl start ${THEDIR}.haproxy
 
 # Reload nginx
 sudo /etc/init.d/nginx reload
