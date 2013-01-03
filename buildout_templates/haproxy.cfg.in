@@ -5,9 +5,9 @@ frontend devproxy-${name}
 
 backend devproxy-${name}-switcher
     server devproxy-${name}-1 ${host}:${port-prefix}01 weight 1 check maxconn 500
-    server devproxy-${name}-2 ${host}:${port-prefix}02 weight 1 check maxconn 500
-    server devproxy-${name}-3 ${host}:${port-prefix}03 weight 1 check maxconn 500
-    server devproxy-${name}-4 ${host}:${port-prefix}04 weight 1 check maxconn 500
+    #server devproxy-${name}-2 ${host}:${port-prefix}02 weight 1 check maxconn 500
+    #server devproxy-${name}-3 ${host}:${port-prefix}03 weight 1 check maxconn 500
+    #server devproxy-${name}-4 ${host}:${port-prefix}04 weight 1 check maxconn 500
 
 frontend devproxy-${name}-upstream
     bind *:${port-prefix}09

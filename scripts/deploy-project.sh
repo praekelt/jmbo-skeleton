@@ -189,8 +189,13 @@ do
         # Create haproxy symlink if required
         sudo ln -s ${DEPLOY_DIR}/${THEDIR}/haproxy/*.cfg /etc/haproxy/
 
-        # Create supervisor symlink if required
-        sudo ln -s ${DEPLOY_DIR}/${THEDIR}/supervisor/${THEDIR}.conf /etc/supervisor/conf.d/
+        # Create supervisor symlinks if required
+        sudo ln -s ${DEPLOY_DIR}/${THEDIR}/supervisor/${THEDIR}-django.conf /etc/supervisor/conf.d/
+
+        # Create deviceproxy supervisor entry on first loop since we only need one running instance.
+        if [ $INDEX == 0 ]; then
+            sudo ln -s ${DEPLOY_DIR}/${THEDIR}/supervisor/${THEDIR}-deviceproxy.conf /etc/supervisor/conf.d/
+        fi
 
         let INDEX++
     fi
