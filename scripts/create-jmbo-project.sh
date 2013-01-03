@@ -75,9 +75,9 @@ fi
 # Change strings in the newly copied source
 sed -i s/name=\'jmbo-skeleton\'/name=\'${EGG}\'/ ${PROJECT_DIR}/setup.py
 sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/dev_base.cfg
-sed -i "13s/.*/    ${EGG}/" ${PROJECT_DIR}/live_base.cfg
+sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/live_base.cfg
 sed -i "s/PORT_PREFIX_PLACEHOLDER/${PORT}/" ${PROJECT_DIR}/live_base.cfg
-sed -i "13s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base.cfg
+sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base.cfg
 sed -i "s/PORT_PREFIX_PLACEHOLDER/${PORT}/" ${PROJECT_DIR}/qa_base.cfg
 sed -i "s/SITE_NAME_PLACEHOLDER/${SITE}/" ${PROJECT_DIR}/qa_basic_${SITE}.cfg
 sed -i "s/SITE_NAME_PLACEHOLDER/${SITE}/" ${PROJECT_DIR}/qa_smart_${SITE}.cfg
