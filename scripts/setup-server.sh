@@ -112,6 +112,9 @@ sudo chown -R www-data:www-data ${DEPLOY_DIR}/python-deviceproxy
 # xxx: workaround until device-proxy is released to pypi
 sudo -u www-data git clone https://github.com/smn/device-proxy.git ${DEPLOY_DIR}/device-proxy
 sudo -u www-data ${DEPLOY_DIR}/python-deviceproxy/bin/pip install -r ${DEPLOY_DIR}/device-proxy/requirements.pip
+wget -c "http://mirror.transact.net.au/pub/sourceforge/w/project/wu/wurfl/WURFL/2.1.1/wurfl-2.1.zip"
+unzip -o wurfl-2.1.zip wurfl.xml
+sudo -u www-data ${DEPLOY_DIR}/python-deviceproxy/bin/wurfl2python.py -o ${DEPLOY_DIR}/device-proxy/devproxy/handlers/wurfl_handler/wurfl_devices.py wurfl.xml
 
 echo ""
 echo "All done! You probably want to run the deploy-project.sh script now."
