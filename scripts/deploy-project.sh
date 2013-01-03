@@ -81,10 +81,8 @@ DJANGO_SITE_INDEX=0
 for f in `ls /tmp/${REPO}/${DEPLOY_TYPE}_*.cfg`
 do
     FILENAME=$(basename $f)
-    # ${DEPLOY_TYPE}_base_* files must be ignored. Files
-    # ${DEPLOY_TYPE}_constants_*, ${DEPLOY_TYPE}_common_* and and
-    # ${DEPLOY_TYPE}_mobi_* have their own handling.
-    if [[ $FILENAME != *_base_*.cfg ]]; then
+    # ${DEPLOY_TYPE}_base_* and ${DEPLOY_TYPE}_constants_* files must be ignored.
+    if [[ $FILENAME != *_base_*.cfg ]] && [[ $FILENAME != *_constants_*.cfg ]]; then
 
         # Calculate directory name. Also name of script.
         FTMP=${FILENAME%.*}
@@ -126,7 +124,7 @@ do
             sudo -u $USER ./bin/buildout -Nv -c $FILENAME
         fi
 
-        if [[ $FILENAME != *_common_*.cfg ]] &&  [[ $FILENAME != *_mobi_*.cfg ]]; then
+        if [[ $FILENAME != *_common_*.cfg ]] && [[ $FILENAME != *_mobi_*.cfg ]]; then
 
             # Database setup on first loop
             if [ $DJANGO_SITE_INDEX == 0 ]; then
@@ -183,12 +181,12 @@ do
 
         # Create nginx symlink if required
         if [ -d ${DEPLOY_DIR}/${THEDIR}/nginx ]; then
-            sudo ln -s ${DEPLOY_DIR}/${THEDIR}/nginx/*.conf /etc/nginx/sites-enabled/
+            sudo ln -s ${DEPLOY_DIR}/${THEDIR}/nginx/* /etc/nginx/sites-enabled/
         fi
 
         # Create supervisor symlink if required
         if [ -d ${DEPLOY_DIR}/${THEDIR}/supervisor ]; then
-            sudo ln -s ${DEPLOY_DIR}/${THEDIR}/supervisor/*.conf /etc/supervisor/conf.d/
+            sudo ln -s ${DEPLOY_DIR}/${THEDIR}/supervisor/* /etc/supervisor/conf.d/
         fi
 
     fi
