@@ -192,9 +192,10 @@ do
         sudo ln -s ${DEPLOY_DIR}/${THEDIR}/supervisor/${THEDIR}-django.conf /etc/supervisor/conf.d/
 
         # Create haproxy and deviceproxy supervisor entry on first loop since we only need one running instance of each.
+        # Abuse * so we don't have to calculate the name.
         if [ $INDEX == 0 ]; then
-            sudo ln -s ${DEPLOY_DIR}/${THEDIR}/supervisor/${THEDIR}-haproxy.conf /etc/supervisor/conf.d/
-            sudo ln -s ${DEPLOY_DIR}/${THEDIR}/supervisor/${THEDIR}-deviceproxy.conf /etc/supervisor/conf.d/
+            sudo ln -s ${DEPLOY_DIR}/${THEDIR}/supervisor/*-haproxy.conf /etc/supervisor/conf.d/
+            sudo ln -s ${DEPLOY_DIR}/${THEDIR}/supervisor/*-deviceproxy.conf /etc/supervisor/conf.d/
         fi
 
         let INDEX++
