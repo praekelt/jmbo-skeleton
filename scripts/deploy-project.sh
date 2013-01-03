@@ -187,7 +187,7 @@ do
         sudo ln -s ${DEPLOY_DIR}/${THEDIR}/nginx/${THEDIR}.conf /etc/nginx/sites-enabled/
 
         # Create haproxy symlink if required
-        sudo ln -s ${DEPLOY_DIR}/${THEDIR}/haproxy/${THEDIR}.cfg /etc/haproxy/
+        sudo ln -s ${DEPLOY_DIR}/${THEDIR}/haproxy/*.cfg /etc/haproxy/
 
         # Create supervisor symlink if required
         sudo ln -s ${DEPLOY_DIR}/${THEDIR}/supervisor/${THEDIR}.conf /etc/supervisor/conf.d/

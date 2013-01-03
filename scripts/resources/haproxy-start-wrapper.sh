@@ -9,4 +9,4 @@ do
     FILES="$FILES -f $f"
 done
 
-haproxy $FILES -p /tmp/pids/haproxy.pid -sf
+haproxy $FILES -sf

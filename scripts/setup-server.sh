@@ -101,6 +101,7 @@ ADATE=`date +"%Y%m%dT%H%M"`
 sudo cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.${ADATE}
 sudo cp ${DIRNAME}/resources/haproxy.cfg /etc/haproxy
 sudo cp ${DIRNAME}/resources/haproxy-start-wrapper.sh /usr/local/bin/
+sudo chown www-data:www-data /usr/local/bin/haproxy-start-wrapper.sh
 sudo cp ${DIRNAME}/resources/supervisor.haproxy.conf /etc/supervisor/conf.d/
 
 # device-proxy
