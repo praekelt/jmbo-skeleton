@@ -1,6 +1,5 @@
 [program:${name}.haproxy]
-command=haproxy ${name}.cfg -sf
-stdout_logfile=/var/praekelt/log/haproxy.log
+command=haproxy ${skeleton-haproxy:output} -sf
 stdout_logfile=${log}
 redirect_stderr=true
 stopsignal=QUIT

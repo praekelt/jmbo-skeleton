@@ -65,19 +65,20 @@ else
 fi
 
 # Stop processes
-sudo supervisorctl stop ${THEDIR}.haproxy
-sudo supervisorctl stop ${THEDIR}.deviceproxy
-for f in `ls /tmp/${REPO}/${DEPLOY_TYPE}_*.cfg`
-do
-    FILENAME=$(basename $f)
-    if [ $FILENAME != "${DEPLOY_TYPE}_base.cfg" ]; then
-        # Calculate directory name. Also name of script.
-        FTMP=${FILENAME%.*}
-        THEDIR=$PREFIX-${FTMP//_/-}
-
-        sudo supervisorctl stop ${THEDIR}.gunicorn
-    fi    
-done
+#sudo supervisorctl stop ${THEDIR}.haproxy
+#sudo supervisorctl stop ${THEDIR}.deviceproxy
+#for f in `ls /tmp/${REPO}/${DEPLOY_TYPE}_*.cfg`
+#do
+#    FILENAME=$(basename $f)
+#    if [ $FILENAME != "${DEPLOY_TYPE}_base.cfg" ]; then
+#        # Calculate directory name. Also name of script.
+#        FTMP=${FILENAME%.*}
+#        THEDIR=$PREFIX-${FTMP//_/-}
+#
+#        sudo supervisorctl stop ${THEDIR}.gunicorn
+#    fi    
+#done
+sudo supervisorctl stop all
 
 # Create database. Safe to run even if database already exists.
 IS_NEW_DATABASE=0
@@ -205,25 +206,24 @@ done
 # Update supervisor
 sudo supervisorctl update
 
-# Start processes
-for f in `ls /tmp/${REPO}/${DEPLOY_TYPE}_*.cfg`
-do
-    FILENAME=$(basename $f)
-    if [ $FILENAME != "${DEPLOY_TYPE}_base.cfg" ]; then
-        # Calculate directory name. Also name of script.
-        FTMP=${FILENAME%.*}
-        THEDIR=$PREFIX-${FTMP//_/-}
-
-        sudo supervisorctl start ${THEDIR}.gunicorn
-    fi    
-done
-
 # Restart memcached
 sudo /etc/init.d/memcached restart
 
-# Start haproxy and deviceproxy
-sudo supervisorctl start ${THEDIR}.deviceproxy
-sudo supervisorctl start ${THEDIR}.haproxy
+# Start processes
+#for f in `ls /tmp/${REPO}/${DEPLOY_TYPE}_*.cfg`
+#do
+#    FILENAME=$(basename $f)
+#    if [ $FILENAME != "${DEPLOY_TYPE}_base.cfg" ]; then
+#        # Calculate directory name. Also name of script.
+#        FTMP=${FILENAME%.*}
+#        THEDIR=$PREFIX-${FTMP//_/-}
+#
+#        sudo supervisorctl start ${THEDIR}.gunicorn
+#    fi    
+#done
+#sudo supervisorctl start ${THEDIR}.deviceproxy
+#sudo supervisorctl start ${THEDIR}.haproxy
+sudo supervisorctl start all
 
 # Reload nginx
 sudo /etc/init.d/nginx reload
