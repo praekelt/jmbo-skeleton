@@ -64,20 +64,6 @@ else
     sudo -u $USER git clone -b $BRANCH https://${CREDENTIALS}@github.com/$REPO_OWNER/$REPO.git
 fi
 
-# Stop processes
-#sudo supervisorctl stop ${THEDIR}.haproxy
-#sudo supervisorctl stop ${THEDIR}.deviceproxy
-#for f in `ls /tmp/${REPO}/${DEPLOY_TYPE}_*.cfg`
-#do
-#    FILENAME=$(basename $f)
-#    if [ $FILENAME != "${DEPLOY_TYPE}_base.cfg" ]; then
-#        # Calculate directory name. Also name of script.
-#        FTMP=${FILENAME%.*}
-#        THEDIR=$PREFIX-${FTMP//_/-}
-#
-#        sudo supervisorctl stop ${THEDIR}.gunicorn
-#    fi    
-#done
 sudo supervisorctl stop all
 
 # Create database. Safe to run even if database already exists.
@@ -91,11 +77,15 @@ if [ "$RESULT" == "" ]; then
 fi
 
 # Checkouts
-INDEX=0
+DJANGO_SITE_INDEX=0
 for f in `ls /tmp/${REPO}/${DEPLOY_TYPE}_*.cfg`
 do
     FILENAME=$(basename $f)
-    if [ $FILENAME != "${DEPLOY_TYPE}_base.cfg" ]; then
+    # ${DEPLOY_TYPE}_base_* files must be ignored. Files
+    # ${DEPLOY_TYPE}_constants_*, ${DEPLOY_TYPE}_common_* and and
+    # ${DEPLOY_TYPE}_mobi_* have their own handling.
+    if [[ $FILENAME != *_base_*.cfg ]]; then
+
         # Calculate directory name. Also name of script.
         FTMP=${FILENAME%.*}
         THEDIR=$PREFIX-${FTMP//_/-}
@@ -136,70 +126,71 @@ do
             sudo -u $USER ./bin/buildout -Nv -c $FILENAME
         fi
 
-        # Database setup on first loop
-        if [ $INDEX == 0 ]; then
-            if [ $IS_NEW_DATABASE -eq 1 ]; then
-                read -p "Create a superuser if prompted. Do not generate default content. [enter]" y
-                sudo -u $USER ./bin/$THEDIR syncdb
-	        else
-                # Some Jmbo apps only got South migrations at a later stage. Scenarios:
-                # 1. CT not in DB - migrate
-                # 2. CT in DB, 0001 migration does not exist - fake migrate 0001
-                # 3. CT in DB, 0001 migration exists - migrate
-                FAKE_MIGRATE=""
-                for APP in competition music; do 
-                    RESULT=`sudo -u $USER ./bin/$THEDIR dumpdata south | grep "\"app_label\": \"$APP\""`
-                    if [ "$RESULT" != "" ]; then
-                        # CT is in DB. Now check for 0001 migration.
-                        RESULT=`sudo -u $USER ./bin/$THEDIR dumpdata south | grep "\"app_name\": \"$APP\", \"migration\": \"0001_initial\""`
-                        if [ "$RESULT" == "" ]; then
-                            # Migration is not in db. Add to fake migrate list.
-                            FAKE_MIGRATE="$FAKE_MIGRATE $APP"
+        if [[ $FILENAME != *_common_*.cfg ]] &&  [[ $FILENAME != *_mobi_*.cfg ]]; then
+
+            # Database setup on first loop
+            if [ $DJANGO_SITE_INDEX == 0 ]; then
+                if [ $IS_NEW_DATABASE -eq 1 ]; then
+                    read -p "Create a superuser if prompted. Do not generate default content. [enter]" y
+                    sudo -u $USER ./bin/$THEDIR syncdb
+    	        else
+                    # Some Jmbo apps only got South migrations at a later stage. Scenarios:
+                    # 1. CT not in DB - migrate
+                    # 2. CT in DB, 0001 migration does not exist - fake migrate 0001
+                    # 3. CT in DB, 0001 migration exists - migrate
+                    FAKE_MIGRATE=""
+                    for APP in competition music; do 
+                        RESULT=`sudo -u $USER ./bin/$THEDIR dumpdata south | grep "\"app_label\": \"$APP\""`
+                        if [ "$RESULT" != "" ]; then
+                            # CT is in DB. Now check for 0001 migration.
+                            RESULT=`sudo -u $USER ./bin/$THEDIR dumpdata south | grep "\"app_name\": \"$APP\", \"migration\": \"0001_initial\""`
+                            if [ "$RESULT" == "" ]; then
+                                # Migration is not in db. Add to fake migrate list.
+                                FAKE_MIGRATE="$FAKE_MIGRATE $APP"
+                            fi
                         fi
-                    fi
-                done
+                    done
 
-	            sudo -u $USER ./bin/$THEDIR syncdb --noinput                
+	                sudo -u $USER ./bin/$THEDIR syncdb --noinput                
 
-                # Appky fake migrations
-                for APP in $FAKE_MIGRATE; do 
-                    sudo -u $USER ./bin/$THEDIR migrate ${APP} 0001_initial --fake
-                done
+                    # Apply fake migrations
+                    for APP in $FAKE_MIGRATE; do 
+                        sudo -u $USER ./bin/$THEDIR migrate ${APP} 0001_initial --fake
+                    done
+                fi
+                sudo -u $USER ./bin/$THEDIR migrate
+                sudo -u $USER ./bin/$THEDIR load_photosizes
+                sudo -u $USER ./bin/$THEDIR loaddata ${APP_NAME}/fixtures/sites.json
             fi
-            sudo -u $USER ./bin/$THEDIR migrate
-            sudo -u $USER ./bin/$THEDIR load_photosizes
-            sudo -u $USER ./bin/$THEDIR loaddata ${APP_NAME}/fixtures/sites.json
+
+            sudo -u $USER rm -rf static
+            sudo -u $USER ./bin/$THEDIR collectstatic --noinput
+
+            # Cron entries
+            touch /tmp/acron
+            sudo -u $USER crontab -l > /tmp/acron
+            for COMMAND in report_naughty_words jmbo_publish; do
+                RESULT=`grep "${THEDIR} ${COMMAND}" /tmp/acron`
+                if [ "$RESULT" == "" ]; then
+                    echo "0 * * * * ${DEPLOY_DIR}/${THEDIR}/bin/${THEDIR} ${COMMAND}" >> /tmp/acron
+                fi
+            done
+            sudo -u $USER crontab /tmp/acron
+            rm /tmp/acron
+
+            let DJANGO_SITE_INDEX++
         fi
-
-        sudo -u $USER rm -rf static
-        sudo -u $USER ./bin/$THEDIR collectstatic --noinput
-
-        # Cron entries
-        touch /tmp/acron
-        sudo -u $USER crontab -l > /tmp/acron
-        for COMMAND in report_naughty_words jmbo_publish; do
-            RESULT=`grep "${THEDIR} ${COMMAND}" /tmp/acron`
-            if [ "$RESULT" == "" ]; then
-                echo "0 * * * * ${DEPLOY_DIR}/${THEDIR}/bin/${THEDIR} ${COMMAND}" >> /tmp/acron
-            fi
-        done
-        sudo -u $USER crontab /tmp/acron
-        rm /tmp/acron
 
         # Create nginx symlink if required
-        sudo ln -s ${DEPLOY_DIR}/${THEDIR}/nginx/${THEDIR}.conf /etc/nginx/sites-enabled/
-
-        # Create supervisor symlink if required
-        sudo ln -s ${DEPLOY_DIR}/${THEDIR}/supervisor/${THEDIR}-django.conf /etc/supervisor/conf.d/
-
-        # Create haproxy and deviceproxy supervisor entry on first loop since we only need one running instance of each.
-        # Abuse * so we don't have to calculate the name.
-        if [ $INDEX == 0 ]; then
-            sudo ln -s ${DEPLOY_DIR}/${THEDIR}/supervisor/*-haproxy.conf /etc/supervisor/conf.d/
-            sudo ln -s ${DEPLOY_DIR}/${THEDIR}/supervisor/*-deviceproxy.conf /etc/supervisor/conf.d/
+        if [ -d ${DEPLOY_DIR}/${THEDIR}/nginx ]; then
+            sudo ln -s ${DEPLOY_DIR}/${THEDIR}/nginx/*.conf /etc/nginx/sites-enabled/
         fi
 
-        let INDEX++
+        # Create supervisor symlink if required
+        if [ -d ${DEPLOY_DIR}/${THEDIR}/supervisor ]; then
+            sudo ln -s ${DEPLOY_DIR}/${THEDIR}/supervisor/*.conf /etc/supervisor/conf.d/
+        fi
+
     fi
 done
 
@@ -209,20 +200,6 @@ sudo supervisorctl update
 # Restart memcached
 sudo /etc/init.d/memcached restart
 
-# Start processes
-#for f in `ls /tmp/${REPO}/${DEPLOY_TYPE}_*.cfg`
-#do
-#    FILENAME=$(basename $f)
-#    if [ $FILENAME != "${DEPLOY_TYPE}_base.cfg" ]; then
-#        # Calculate directory name. Also name of script.
-#        FTMP=${FILENAME%.*}
-#        THEDIR=$PREFIX-${FTMP//_/-}
-#
-#        sudo supervisorctl start ${THEDIR}.gunicorn
-#    fi    
-#done
-#sudo supervisorctl start ${THEDIR}.deviceproxy
-#sudo supervisorctl start ${THEDIR}.haproxy
 sudo supervisorctl start all
 
 # Reload nginx

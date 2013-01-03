@@ -36,22 +36,7 @@ PROJECT_DIR=${CREATE_DIR}/${APP}
 APP_DIR=${PROJECT_DIR}/${APP}
 mkdir $PROJECT_DIR
 cp bootstrap.py ${PROJECT_DIR}/
-cp buildout.cfg ${PROJECT_DIR}/
 cp .gitignore ${PROJECT_DIR}/
-cp -r buildout_templates ${PROJECT_DIR}/
-cp dev_base.cfg ${PROJECT_DIR}/
-cp dev_basic_site.cfg ${PROJECT_DIR}/dev_basic_${SITE}.cfg
-cp dev_smart_site.cfg ${PROJECT_DIR}/dev_smart_${SITE}.cfg
-cp dev_web_site.cfg ${PROJECT_DIR}/dev_web_${SITE}.cfg
-cp -r skeleton ${PROJECT_DIR}/${APP}
-cp live_base.cfg ${PROJECT_DIR}/
-cp live_basic_site.cfg ${PROJECT_DIR}/live_basic_${SITE}.cfg
-cp live_smart_site.cfg ${PROJECT_DIR}/live_smart_${SITE}.cfg
-cp live_web_site.cfg ${PROJECT_DIR}/live_web_${SITE}.cfg
-cp qa_base.cfg ${PROJECT_DIR}/
-cp qa_basic_site.cfg ${PROJECT_DIR}/qa_basic_${SITE}.cfg
-cp qa_smart_site.cfg ${PROJECT_DIR}/qa_smart_${SITE}.cfg
-cp qa_web_site.cfg ${PROJECT_DIR}/qa_web_${SITE}.cfg
 cp setup.py ${PROJECT_DIR}/
 cp versions.cfg ${PROJECT_DIR}/
 cp setup-development.sh ${PROJECT_DIR}/
@@ -59,6 +44,13 @@ cp deviceproxy.yaml ${PROJECT_DIR}/
 touch ${PROJECT_DIR}/AUTHORS.rst
 touch ${PROJECT_DIR}/CHANGELOG.rst
 touch ${PROJECT_DIR}/README.rst
+cp *.cfg ${PROJECT_DIR}/
+cp -r buildout_templates ${PROJECT_DIR}/
+cp -r skeleton ${PROJECT_DIR}/${APP}
+
+# Rename buildout config files
+for f in ${PROJECT_DIR}/*_site.cfg; do mv $f ${f/site/${SITE}}; done
+
 if [ "$SITE" != "site" ];
 then
     mv ${APP_DIR}/settings_dev_basic_site.py ${APP_DIR}/settings_dev_basic_${SITE}.py
@@ -74,20 +66,22 @@ fi
 
 # Change strings in the newly copied source
 sed -i s/name=\'jmbo-skeleton\'/name=\'${EGG}\'/ ${PROJECT_DIR}/setup.py
+sed -i "s/PORT_PREFIX_PLACEHOLDER/${PORT}/g" ${PROJECT_DIR}/*.cfg
+sed -i "s/SITE_NAME_PLACEHOLDER/${SITE}/g" ${PROJECT_DIR}/*.cfg
+sed -i "s/PORT_PREFIX_PLACEHOLDER/${PORT}/g" ${PROJECT_DIR}/deviceproxy.yaml
+
 sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/dev_base.cfg
-sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/live_base.cfg
-sed -i "s/PORT_PREFIX_PLACEHOLDER/${PORT}/" ${PROJECT_DIR}/live_base.cfg
-sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base.cfg
-sed -i "s/PORT_PREFIX_PLACEHOLDER/${PORT}/" ${PROJECT_DIR}/qa_base.cfg
-sed -i "s/SITE_NAME_PLACEHOLDER/${SITE}/" ${PROJECT_DIR}/qa_basic_${SITE}.cfg
-sed -i "s/SITE_NAME_PLACEHOLDER/${SITE}/" ${PROJECT_DIR}/qa_smart_${SITE}.cfg
-sed -i "s/SITE_NAME_PLACEHOLDER/${SITE}/" ${PROJECT_DIR}/qa_web_${SITE}.cfg
+
+sed -i "14s/.*/    ${EGG}/" ${PROJECT_DIR}/live_base_mobi.cfg
+
+sed -i "13s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base_mobi.cfg
+sed -i "14s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base_conventional.cfg
+
 sed -i s/skeleton/${APP}/g ${PROJECT_DIR}/*.cfg
 sed -i s/skeleton/${APP}/g ${APP_DIR}/*.py
 SECRET_KEY=`date +%s | sha256sum | head -c 56`
 sed -i "s/SECRET_KEY_PLACEHOLDER/${SECRET_KEY}/" ${APP_DIR}/settings.py
 sed -i s/skeleton/${APP}/g ${APP_DIR}/migrations/*.py
-sed -i "s/PORT_PREFIX_PLACEHOLDER/${PORT}/g" ${PROJECT_DIR}/deviceproxy.yaml
 
 if [ "$SITE" != "site" ];
 then

@@ -21,6 +21,7 @@ defaults
     stats uri /haproxy?stats
     stats realm Jmbo\ Haproxy\ Statistics
     stats auth haproxy:stats
+
 frontend devproxy-${name}
     bind *:${port-prefix}00
     mode http
@@ -41,6 +42,15 @@ frontend devproxy-${name}-upstream
     use_backend smart-backend-${name} if is_smart
     use_backend basic-backend-${name} if is_basic
     default_backend basic-backend-${name}
+
+# todo: use genshi template and for loop
+#{% for layer in layers %}   
+#backend basic-backend-${name}
+#    server basic-backend-${name}-1 ${host}:${port-prefix}21 weight 1 check maxconn 500
+#    server basic-backend-${name}-2 ${host}:${port-prefix}22 weight 1 check maxconn 500
+#    server basic-backend-${name}-3 ${host}:${port-prefix}23 weight 1 check maxconn 500
+#    server basic-backend-${name}-4 ${host}:${port-prefix}24 weight 1 check maxconn 500
+#{% endfor %}
 
 backend basic-backend-${name}
     server basic-backend-${name}-1 ${host}:${port-prefix}21 weight 1 check maxconn 500

@@ -1,6 +1,7 @@
 A site that serves on basic, smart and web has this convention.
 
-We use up to 100 ports for each site. Ports are offset from a port base. A typical port base is N=8100.
+We use up to 100 ports for each site. Ports are offset from a port base. A
+typical port base is N=8100.
 
 The Django processes use gunicorn and up to 9 ports per layer.
 
@@ -12,5 +13,5 @@ Haproxy asks a twisted process to do user-agent to layer mappings. It then
 passes the request to a relevant Django backend.
 
 haproxy device proxy = N
-haproxy device proxy backends = N+1, N+2, N+3, N+4
+haproxy device proxy backends = N+1 (also port twisted device-proxy plugin runs on)
 haproxy device upstream = N+9

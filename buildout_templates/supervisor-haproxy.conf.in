@@ -1,5 +1,5 @@
 [program:${name}.haproxy]
-command=haproxy ${skeleton-haproxy:output} -sf
+command=haproxy ${config} -sf
 stdout_logfile=${log}
 redirect_stderr=true
 stopsignal=QUIT
