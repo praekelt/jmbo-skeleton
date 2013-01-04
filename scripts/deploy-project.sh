@@ -161,6 +161,9 @@ do
                 sudo -u $USER ./bin/$THEDIR loaddata ${APP_NAME}/fixtures/sites.json
             fi
 
+            sudo -u $USER rm -rf static
+            sudo -u $USER ./bin/$THEDIR collectstatic --noinput
+
             # Cron entries
             touch /tmp/acron
             sudo -u $USER crontab -l > /tmp/acron
@@ -176,9 +179,6 @@ do
             let DJANGO_SITE_INDEX++
         fi
         
-        sudo -u $USER rm -rf static
-        sudo -u $USER ./bin/$THEDIR collectstatic --noinput
-
         # Create nginx symlink if required
         if [ -d ${DEPLOY_DIR}/${THEDIR}/nginx ]; then
             sudo ln -s ${DEPLOY_DIR}/${THEDIR}/nginx/* /etc/nginx/sites-enabled/
