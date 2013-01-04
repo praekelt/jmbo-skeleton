@@ -4,7 +4,7 @@ directory=${buildout:directory}/../device-proxy
 user=${user}
 numprocs=1
 stdout_logfile=${log}
-redirect_stderr=true
+stdout_errfile=${error-log}
 stopsignal=QUIT
 startsecs=10
 environment=PYTHON_EGG_CACHE='/var/www/.python-eggs'
