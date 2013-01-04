@@ -11,7 +11,7 @@ defaults
     option dontlognull
     option redispatch
     option httpclose
-    option httpchk GET /logo/
+    option httpchk GET /logo/ HTTP/1.0\r\nUser-agent:\ Haproxy-Health-Check
     timeout connect 5000
     timeout client 50000
     timeout server 50000
