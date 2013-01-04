@@ -11,7 +11,7 @@ defaults
     option dontlognull
     option redispatch
     option httpclose
-    option httpchk GET /age-gateway/
+    option httpchk GET /logo/
     timeout connect 5000
     timeout client 50000
     timeout server 50000
