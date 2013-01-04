@@ -11,12 +11,12 @@ server {
 
     # todo: use genshi template and for loop
     location ^~ /static/basic/ {
-        alias   ${static-root}/basic/;
+        alias   ${static-root-prefix}-basic-${static-root-suffix}/basic/;
         expires 31d;
     }
 
     location ^~ /static/smart/ {
-        alias   ${static-root}/smart/;
+        alias   ${static-root-prefix}-smart-${static-root-suffix}/smart/;
         expires 31d;
     }
 
