@@ -46,6 +46,7 @@ touch ${PROJECT_DIR}/CHANGELOG.rst
 touch ${PROJECT_DIR}/README.rst
 cp *.cfg ${PROJECT_DIR}/
 cp -r buildout_templates ${PROJECT_DIR}/
+cp -r scripts ${PROJECT_DIR}/
 cp -r skeleton ${PROJECT_DIR}/${APP}
 
 # Rename buildout config files
@@ -74,8 +75,8 @@ sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/dev_base.cfg
 
 sed -i "14s/.*/    ${EGG}/" ${PROJECT_DIR}/live_base_mobi.cfg
 
-sed -i "13s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base_mobi.cfg
-sed -i "14s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base_conventional.cfg
+sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base_mobi.cfg
+sed -i "16s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base_conventional.cfg
 
 sed -i s/skeleton/${APP}/g ${PROJECT_DIR}/*.cfg
 sed -i s/skeleton/${APP}/g ${APP_DIR}/*.py

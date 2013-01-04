@@ -22,18 +22,26 @@ defaults
     stats realm Jmbo\ Haproxy\ Statistics
     stats auth haproxy:stats
 
-frontend devproxy-${name}
+frontend web-${name}
     bind *:${port-prefix}00
     mode http
-    default_backend devproxy-${name}-switcher
+    default_backend web-backend-${name}
 
-backend devproxy-${name}-switcher
-    server devproxy-${name}-1 ${host}:${port-prefix}01 weight 1 check maxconn 500
-    #server devproxy-${name}-2 ${host}:${port-prefix}02 weight 1 check maxconn 500
-    #server devproxy-${name}-3 ${host}:${port-prefix}03 weight 1 check maxconn 500
-    #server devproxy-${name}-4 ${host}:${port-prefix}04 weight 1 check maxconn 500
+backend web-backend-${name}
+    server web-backend-${name}-1 ${host}:${port-prefix}11 weight 1 check maxconn 500
+    server web-backend-${name}-2 ${host}:${port-prefix}12 weight 1 check maxconn 500
+    server web-backend-${name}-3 ${host}:${port-prefix}13 weight 1 check maxconn 500
+    server web-backend-${name}-4 ${host}:${port-prefix}14 weight 1 check maxconn 500
 
-frontend devproxy-${name}-upstream
+frontend mobi-${name}
+    bind *:${port-prefix}01
+    mode http
+    default_backend mobi-${name}-switcher
+
+backend mobi-${name}-switcher
+    server mobi-${name}-1 ${host}:${port-prefix}02 weight 1 check maxconn 500
+
+frontend mobi-${name}-upstream
     bind *:${port-prefix}09
     mode http
     # high, smart are device-proxy default names. Jmbo uses smart and basic.
@@ -41,22 +49,7 @@ frontend devproxy-${name}-upstream
     acl is_basic hdr_sub(X-UA-map) medium
     use_backend smart-backend-${name} if is_smart
     use_backend basic-backend-${name} if is_basic
-    default_backend web-backend-${name}
-
-# todo: use genshi template and for loop
-#{% for layer in layers %}   
-#backend basic-backend-${name}
-#    server basic-backend-${name}-1 ${host}:${port-prefix}21 weight 1 check maxconn 500
-#    server basic-backend-${name}-2 ${host}:${port-prefix}22 weight 1 check maxconn 500
-#    server basic-backend-${name}-3 ${host}:${port-prefix}23 weight 1 check maxconn 500
-#    server basic-backend-${name}-4 ${host}:${port-prefix}24 weight 1 check maxconn 500
-#{% endfor %}
-
-backend web-backend-${name}
-    server web-backend-${name}-1 ${host}:${port-prefix}11 weight 1 check maxconn 500
-    server web-backend-${name}-2 ${host}:${port-prefix}12 weight 1 check maxconn 500
-    server web-backend-${name}-3 ${host}:${port-prefix}13 weight 1 check maxconn 500
-    server web-backend-${name}-4 ${host}:${port-prefix}14 weight 1 check maxconn 500
+    default_backend basic-backend-${name}
 
 backend basic-backend-${name}
     server basic-backend-${name}-1 ${host}:${port-prefix}21 weight 1 check maxconn 500
@@ -69,3 +62,5 @@ backend smart-backend-${name}
     server smart-backend-${name}-2 ${host}:${port-prefix}32 weight 1 check maxconn 500
     server smart-backend-${name}-3 ${host}:${port-prefix}33 weight 1 check maxconn 500
     server smart-backend-${name}-4 ${host}:${port-prefix}34 weight 1 check maxconn 500
+
+

@@ -9,9 +9,12 @@ Web = N+11, N+12, ..., [N+19]
 Basic = N+21, N+22, ..., [N+29]
 Smart = N+31, N+32, ..., [N+39]
 
-Haproxy asks a twisted process to do user-agent to layer mappings. It then
+Haproxy is configured for conventional non-mobi devices on port N. It acts as a
+normal load balancer.
+
+Haproxy may ask a twisted process to do user-agent to layer mappings. It then
 passes the request to a relevant Django backend.
 
-haproxy device proxy = N
-haproxy device proxy backends = N+1 (also port twisted device-proxy plugin runs on)
+haproxy device proxy = N+1
+haproxy device proxy backends = N+2 (also port twisted device-proxy plugin runs on)
 haproxy device upstream = N+9
