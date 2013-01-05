@@ -32,6 +32,7 @@ recipe = collective.recipe.template
 input = buildout_templates/supervisor-deviceproxy.conf.in
 output = ${buildout:directory}/supervisor/skeleton-DEPLOY_TYPE_PLACEHOLDER-${buildout:site-name}-deviceproxy.conf
 name = skeleton-DEPLOY_TYPE_PLACEHOLDER-${buildout:site-name}
+site-name = ${buildout:site-name}
 user = www-data
 log = ${buildout:directory}/../log/skeleton/DEPLOY_TYPE_PLACEHOLDER/common/${buildout:site-name}/deviceproxy.log
 error-log = ${buildout:directory}/../log/skeleton/DEPLOY_TYPE_PLACEHOLDER/common/${buildout:site-name}/deviceproxy-error.log
