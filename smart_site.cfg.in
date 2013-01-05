@@ -1,7 +1,7 @@
 # Configuration for smart mobi site.
 
 [buildout]
-extends=qa_base_mobi.cfg qa_constants_SITE_NAME_PLACEHOLDER.cfg
+extends=DEPLOY_TYPE_PLACEHOLDER_base_mobi.cfg DEPLOY_TYPE_PLACEHOLDER_constants_SITE_NAME_PLACEHOLDER.cfg
 site-type = smart
 
 [skeleton-supervisor-django]

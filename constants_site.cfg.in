@@ -5,8 +5,8 @@
 [buildout]
 port-prefix = PORT_PREFIX_PLACEHOLDER
 site-name = SITE_NAME_PLACEHOLDER
-web-server-name = qa.site.com
-mobi-server-name = m.qa.site.com
+web-server-name = DEPLOY_TYPE_PLACEHOLDER.site.com
+mobi-server-name = m.DEPLOY_TYPE_PLACEHOLDER.site.com
 # Layers not used yet. 
 mobi-layers = basic smart
 web-layers = web
