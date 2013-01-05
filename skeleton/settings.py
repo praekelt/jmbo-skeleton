@@ -18,9 +18,13 @@ PROJECT_MODULE = 'skeleton'
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-# For Postgres do from command line
+# For Postgres (not location aware) do from command line
 # echo "CREATE USER skeleton WITH PASSWORD 'skeleton'" | sudo -u postgres psql
 # echo "CREATE DATABASE skeleton WITH OWNER skeleton ENCODING 'UTF8'" | sudo -u postgres psql
+
+# For Postgres (location aware) do from command line
+# echo "CREATE USER skeleton WITH PASSWORD 'skeleton'" | sudo -u postgres psql
+# echo "CREATE DATABASE skeleton WITH OWNER skeleton ENCODING 'UTF8' TEMPLATE template_postgis" | sudo -u postgres psql
 
 # For MySQL remember to first do from a MySQL shell:
 # CREATE database skeleton;
@@ -30,7 +34,7 @@ TEMPLATE_DEBUG = DEBUG
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.spatialite', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.contrib.gis.db.backends.spatialite', # Options are spatialite, postgis, mysql.
         'NAME': 'skeleton.db', # Or path to database file if using sqlite3.
         'USER': 'skeleton', # Not used with sqlite3.
         'PASSWORD': 'skeleton', # Not used with sqlite3.
@@ -76,7 +80,7 @@ STATIC_URL = '/static/'
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 't7lf+w70_4w7u4q(ijo&vx19t=%$_03ymp2afr*s8sm0@_3asm'
+SECRET_KEY = 'SECRET_KEY_PLACEHOLDER'
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
@@ -127,21 +131,19 @@ INSTALLED_APPS = (
     'export',
     'snippetscream',
     'generate',
-    'cal',
     'jmbo_calendar',
     'jmbo',
     'photologue',
     'captcha',
     'secretballot',
     'publisher',
-#    'social',	# xxx: removed since can't download socialregistration-tokenstore tarball currently
     'category',
     'post',
     'likes',
     'gizmo',
     'object_tools',
     'registration',
-    'event',
+    'event', # to be removed once jmbo-show refactored
     'preferences',
     'banner',
     'competition',
@@ -156,7 +158,7 @@ INSTALLED_APPS = (
     'analytics',
     'gunicorn',
     'sites_groups',
-    'atlas',        # NEW
+    'atlas',
     'tastypie',
     'django.contrib.auth',
     'django.contrib.comments',
@@ -167,6 +169,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.gis', # NEW
     'django.contrib.admin',
+    'raven.contrib.django',
 )
 
 # Your ReCaptcha provided public key.
@@ -217,7 +220,6 @@ STATICFILES_FINDERS = (
 
 ADMIN_APPS_EXCLUDE = (
     'Cal',
-    'Competition',
     'Event',
     'Photologue',
     'Publisher',
@@ -226,7 +228,6 @@ ADMIN_APPS_EXCLUDE = (
 
 ADMIN_MODELS_EXCLUDE = (
     'Groups',
-    'Code banners',
     'Video files',
 )
 
@@ -239,3 +240,5 @@ PHOTOLOGUE_MAXBLOCK = 2 ** 20
 DJANGO_ATLAS = {
     'google_maps_api_key': 'AIzaSyBvdwGsAn2h6tNI75M5cAcryln7rrTYqkk',
 }
+
+SENTRY_DSN = 'ENTER_YOUR_SENTRY_DSN_HERE'

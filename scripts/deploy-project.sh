@@ -139,13 +139,28 @@ do
                 read -p "Create a superuser if prompted. Do not generate default content. [enter]" y
                 sudo -u $USER ./bin/$THEDIR syncdb
 	        else
-	            sudo -u $USER ./bin/$THEDIR syncdb --noinput                
-                # Jmbo apps that got South migrations later need fake initial migrations
-                for APP in "competition"; do 
-                    RESULT=`sudo -u $USER ./bin/$THEDIR migrate ${APP} --list | grep "( ) 0001_initial"`
+                # Some Jmbo apps only got South migrations at a later stage. Scenarios:
+                # 1. CT not in DB - migrate
+                # 2. CT in DB, 0001 migration does not exist - fake migrate 0001
+                # 3. CT in DB, 0001 migration exists - migrate
+                FAKE_MIGRATE=""
+                for APP in competition music; do 
+                    RESULT=`sudo -u $USER ./bin/$THEDIR dumpdata south | grep "\"app_label\": \"$APP\""`
                     if [ "$RESULT" != "" ]; then
-                        sudo -u $USER ./bin/$THEDIR migrate ${APP} 0001_initial --fake
+                        # CT is in DB. Now check for 0001 migration.
+                        RESULT=`sudo -u $USER ./bin/$THEDIR dumpdata south | grep "\"app_name\": \"$APP\", \"migration\": \"0001_initial\""`
+                        if [ "$RESULT" == "" ]; then
+                            # Migration is not in db. Add to fake migrate list.
+                            FAKE_MIGRATE="$FAKE_MIGRATE $APP"
+                        fi
                     fi
+                done
+
+	            sudo -u $USER ./bin/$THEDIR syncdb --noinput                
+
+                # Appky fake migrations
+                for APP in $FAKE_MIGRATE; do 
+                    sudo -u $USER ./bin/$THEDIR migrate ${APP} 0001_initial --fake
                 done
             fi
             sudo -u $USER ./bin/$THEDIR migrate
@@ -155,6 +170,18 @@ do
 
         sudo -u $USER rm -rf static
         sudo -u $USER ./bin/$THEDIR collectstatic --noinput
+
+        # Cron entries
+        touch /tmp/acron
+        sudo -u $USER crontab -l > /tmp/acron
+        for COMMAND in report_naughty_words jmbo_publish; do
+            RESULT=`grep "${THEDIR} ${COMMAND}" /tmp/acron`
+            if [ "$RESULT" == "" ]; then
+                echo "0 * * * * ${DEPLOY_DIR}/${THEDIR}/bin/${THEDIR} ${COMMAND}" >> /tmp/acron
+            fi
+        done
+        sudo -u $USER crontab /tmp/acron
+        rm /tmp/acron
 
         # Create nginx symlink if required
         sudo ln -s ${DEPLOY_DIR}/${THEDIR}/nginx/gunicorn-${THEDIR}.conf /etc/nginx/sites-enabled/

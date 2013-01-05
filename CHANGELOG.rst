@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.5.2
+-----
+#. `south` lowercase pin added.
+#. `deploy-project.sh` now creates necessary cron entries.
+#. Sentry is now part of our setup.
+
 0.5.1
 -----
 #. `setup-development.sh` makes getting a development environment running easy.
