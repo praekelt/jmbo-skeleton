@@ -124,7 +124,7 @@ do
             sudo -u $USER ./bin/buildout -Nv -c $FILENAME
         fi
 
-        if [[ $FILENAME != *_common_*.cfg ]] && [[ $FILENAME != *_mobi_*.cfg ]]; then
+        if [[ $FILENAME != *_common_*.cfg ]]; then
 
             # Database setup on first loop
             if [ $DJANGO_SITE_INDEX == 0 ]; then

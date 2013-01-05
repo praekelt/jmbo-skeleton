@@ -35,12 +35,14 @@ fi
 PROJECT_DIR=${CREATE_DIR}/${APP}
 APP_DIR=${PROJECT_DIR}/${APP}
 mkdir $PROJECT_DIR
+
+# Copy requisite bits
 cp bootstrap.py ${PROJECT_DIR}/
 cp .gitignore ${PROJECT_DIR}/
 cp setup.py ${PROJECT_DIR}/
 cp versions.cfg ${PROJECT_DIR}/
 cp setup-development.sh ${PROJECT_DIR}/
-cp deviceproxy.yaml ${PROJECT_DIR}/
+cp deviceproxy.yaml.in ${PROJECT_DIR}/deviceproxy_${SITE}.yaml
 touch ${PROJECT_DIR}/AUTHORS.rst
 touch ${PROJECT_DIR}/CHANGELOG.rst
 touch ${PROJECT_DIR}/README.rst
@@ -52,38 +54,43 @@ cp -r skeleton ${PROJECT_DIR}/${APP}
 # Rename buildout config files
 for f in ${PROJECT_DIR}/*_site.cfg; do mv $f ${f/site/${SITE}}; done
 
-if [ "$SITE" != "site" ];
-then
-    mv ${APP_DIR}/settings_dev_basic_site.py ${APP_DIR}/settings_dev_basic_${SITE}.py
-    mv ${APP_DIR}/settings_dev_smart_site.py ${APP_DIR}/settings_dev_smart_${SITE}.py
-    mv ${APP_DIR}/settings_dev_web_site.py ${APP_DIR}/settings_dev_web_${SITE}.py
-    mv ${APP_DIR}/settings_live_basic_site.py ${APP_DIR}/settings_live_basic_${SITE}.py
-    mv ${APP_DIR}/settings_live_smart_site.py ${APP_DIR}/settings_live_smart_${SITE}.py
-    mv ${APP_DIR}/settings_live_web_site.py ${APP_DIR}/settings_live_web_${SITE}.py
-    mv ${APP_DIR}/settings_qa_basic_site.py ${APP_DIR}/settings_qa_basic_${SITE}.py
-    mv ${APP_DIR}/settings_qa_smart_site.py ${APP_DIR}/settings_qa_smart_${SITE}.py
-    mv ${APP_DIR}/settings_qa_web_site.py ${APP_DIR}/settings_qa_web_${SITE}.py
-fi
+# Copy and rename buildout config files for qa and live
+for f in base_*.cfg.in; do cp $f ${PROJECT_DIR}/qa_${f/\.cfg\.in/\.cfg}; done
+for f in *_site.cfg.in; do cp $f ${PROJECT_DIR}/qa_${f/\_site.cfg\.in/_${SITE}\.cfg}; done
+for f in base_*.cfg.in; do cp $f ${PROJECT_DIR}/live_${f/\.cfg\.in/\.cfg}; done
+for f in *_site.cfg.in; do cp $f ${PROJECT_DIR}/live_${f/\_site.cfg\.in/_${SITE}\.cfg}; done
+
+# Create the settings files. First delete the existing ones, then copy and rename.
+rm ${PROJECT_DIR}/${APP}/settings_*_site.*
+for f in skeleton/settings_*.py; do 
+    F=$(basename $f)
+    cp $f ${PROJECT_DIR}/${APP}/${F/site/${SITE}}; 
+done
 
 # Change strings in the newly copied source
 sed -i s/name=\'jmbo-skeleton\'/name=\'${EGG}\'/ ${PROJECT_DIR}/setup.py
 sed -i "s/PORT_PREFIX_PLACEHOLDER/${PORT}/g" ${PROJECT_DIR}/*.cfg
 sed -i "s/SITE_NAME_PLACEHOLDER/${SITE}/g" ${PROJECT_DIR}/*.cfg
-sed -i "s/PORT_PREFIX_PLACEHOLDER/${PORT}/g" ${PROJECT_DIR}/deviceproxy.yaml
+sed -i "s/PORT_PREFIX_PLACEHOLDER/${PORT}/g" ${PROJECT_DIR}/deviceproxy_*.yaml
 
 sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/dev_base.cfg
-
-sed -i "14s/.*/    ${EGG}/" ${PROJECT_DIR}/live_base_mobi.cfg
 
 sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base_mobi.cfg
 sed -i "16s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base_conventional.cfg
 
+sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/live_base_mobi.cfg
+sed -i "16s/.*/    ${EGG}/" ${PROJECT_DIR}/live_base_conventional.cfg
+
+# Replace the word skeleton with the app name
 sed -i s/skeleton/${APP}/g ${PROJECT_DIR}/*.cfg
 sed -i s/skeleton/${APP}/g ${APP_DIR}/*.py
-SECRET_KEY=`date +%s | sha256sum | head -c 56`
-sed -i "s/SECRET_KEY_PLACEHOLDER/${SECRET_KEY}/" ${APP_DIR}/settings.py
 sed -i s/skeleton/${APP}/g ${APP_DIR}/migrations/*.py
 
+# Set the secret key
+SECRET_KEY=`date +%s | sha256sum | head -c 56`
+sed -i "s/SECRET_KEY_PLACEHOLDER/${SECRET_KEY}/" ${APP_DIR}/settings.py
+
+# Replace site name in site specific buildout config files
 if [ "$SITE" != "site" ];
 then
     sed -i s/_site/_${SITE}/g ${PROJECT_DIR}/*_${SITE}.cfg
