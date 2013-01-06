@@ -4,7 +4,7 @@ Changelog
 next-next
 ---------
 #. `device-proxy` and haproxy is now part of our setup. This enables user-agent to backend mapping.
-#. Buildouts massively refactored.
+#. Buildouts massively refactored. Everything can be regenerated using `create-project.sh`. `STATIC_URL` changes for basic and smart layers.
 
 0.5.2
 -----
