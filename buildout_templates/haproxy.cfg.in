@@ -3,6 +3,7 @@ global
     log 127.0.0.1 local1 notice
     maxconn 4096
     debug
+    spread-checks 5
 
 defaults
     log global
@@ -28,10 +29,10 @@ frontend web-${name}
     default_backend web-backend-${name}
 
 backend web-backend-${name}
-    server web-backend-${name}-1 ${host}:${port-prefix}11 weight 1 check maxconn 500
-    server web-backend-${name}-2 ${host}:${port-prefix}12 weight 1 check maxconn 500
-    server web-backend-${name}-3 ${host}:${port-prefix}13 weight 1 check maxconn 500
-    server web-backend-${name}-4 ${host}:${port-prefix}14 weight 1 check maxconn 500
+    server web-backend-${name}-1 ${host}:${port-prefix}11 weight 1 check maxconn 500 inter 10000
+    server web-backend-${name}-2 ${host}:${port-prefix}12 weight 1 check maxconn 500 inter 10000
+    server web-backend-${name}-3 ${host}:${port-prefix}13 weight 1 check maxconn 500 inter 10000
+    server web-backend-${name}-4 ${host}:${port-prefix}14 weight 1 check maxconn 500 inter 10000
 
 frontend mobi-${name}
     bind *:${port-prefix}01
@@ -39,7 +40,7 @@ frontend mobi-${name}
     default_backend mobi-${name}-switcher
 
 backend mobi-${name}-switcher
-    server mobi-${name}-1 ${host}:${port-prefix}02 weight 1 check maxconn 500
+    server mobi-${name}-1 ${host}:${port-prefix}02 weight 1 check maxconn 500 inter 10000
 
 frontend mobi-${name}-upstream
     bind *:${port-prefix}09
@@ -52,15 +53,15 @@ frontend mobi-${name}-upstream
     default_backend basic-backend-${name}
 
 backend basic-backend-${name}
-    server basic-backend-${name}-1 ${host}:${port-prefix}21 weight 1 check maxconn 500
-    server basic-backend-${name}-2 ${host}:${port-prefix}22 weight 1 check maxconn 500
-    server basic-backend-${name}-3 ${host}:${port-prefix}23 weight 1 check maxconn 500
-    server basic-backend-${name}-4 ${host}:${port-prefix}24 weight 1 check maxconn 500
+    server basic-backend-${name}-1 ${host}:${port-prefix}21 weight 1 check maxconn 500 inter 10000
+    server basic-backend-${name}-2 ${host}:${port-prefix}22 weight 1 check maxconn 500 inter 10000
+    server basic-backend-${name}-3 ${host}:${port-prefix}23 weight 1 check maxconn 500 inter 10000
+    server basic-backend-${name}-4 ${host}:${port-prefix}24 weight 1 check maxconn 500 inter 10000
 
 backend smart-backend-${name}
-    server smart-backend-${name}-1 ${host}:${port-prefix}31 weight 1 check maxconn 500
-    server smart-backend-${name}-2 ${host}:${port-prefix}32 weight 1 check maxconn 500
-    server smart-backend-${name}-3 ${host}:${port-prefix}33 weight 1 check maxconn 500
-    server smart-backend-${name}-4 ${host}:${port-prefix}34 weight 1 check maxconn 500
+    server smart-backend-${name}-1 ${host}:${port-prefix}31 weight 1 check maxconn 500 inter 10000
+    server smart-backend-${name}-2 ${host}:${port-prefix}32 weight 1 check maxconn 500 inter 10000
+    server smart-backend-${name}-3 ${host}:${port-prefix}33 weight 1 check maxconn 500 inter 10000
+    server smart-backend-${name}-4 ${host}:${port-prefix}34 weight 1 check maxconn 500 inter 10000
 
 
