@@ -1,0 +1,8 @@
+# Configuration for basic mobi site.
+
+[buildout]
+extends=DEPLOY_TYPE_PLACEHOLDER_base_mobi.cfg DEPLOY_TYPE_PLACEHOLDER_constants_SITE_NAME_PLACEHOLDER.cfg
+site-type = basic
+
+[skeleton-supervisor-django]
+port-prefix = ${buildout:port-prefix}2

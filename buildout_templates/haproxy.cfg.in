@@ -1,0 +1,67 @@
+global
+    log 127.0.0.1 local0
+    log 127.0.0.1 local1 notice
+    maxconn 4096
+    debug
+    spread-checks 5
+
+defaults
+    log global
+    mode http
+    option httplog
+    option dontlognull
+    option redispatch
+    option httpclose
+    option httpchk GET /logo/ HTTP/1.0\r\nUser-agent:\ Haproxy-Health-Check
+    timeout connect 5000
+    timeout client 50000
+    timeout server 50000
+    maxconn 2000
+    retries 3
+    stats enable
+    stats uri /haproxy?stats
+    stats realm Jmbo\ Haproxy\ Statistics
+    stats auth haproxy:stats
+
+frontend web-${name}
+    bind *:${port-prefix}00
+    mode http
+    default_backend web-backend-${name}
+
+backend web-backend-${name}
+    server web-backend-${name}-1 ${host}:${port-prefix}11 weight 1 check maxconn 500 inter 10000
+    server web-backend-${name}-2 ${host}:${port-prefix}12 weight 1 check maxconn 500 inter 10000
+    server web-backend-${name}-3 ${host}:${port-prefix}13 weight 1 check maxconn 500 inter 10000
+    server web-backend-${name}-4 ${host}:${port-prefix}14 weight 1 check maxconn 500 inter 10000
+
+frontend mobi-${name}
+    bind *:${port-prefix}01
+    mode http
+    default_backend mobi-${name}-switcher
+
+backend mobi-${name}-switcher
+    server mobi-${name}-1 ${host}:${port-prefix}02 weight 1 check maxconn 500 inter 10000
+
+frontend mobi-${name}-upstream
+    bind *:${port-prefix}09
+    mode http
+    # high, smart are device-proxy default names. Jmbo uses smart and basic.
+    acl is_smart hdr_sub(X-UA-map) high
+    acl is_basic hdr_sub(X-UA-map) medium
+    use_backend smart-backend-${name} if is_smart
+    use_backend basic-backend-${name} if is_basic
+    default_backend basic-backend-${name}
+
+backend basic-backend-${name}
+    server basic-backend-${name}-1 ${host}:${port-prefix}21 weight 1 check maxconn 500 inter 10000
+    server basic-backend-${name}-2 ${host}:${port-prefix}22 weight 1 check maxconn 500 inter 10000
+    server basic-backend-${name}-3 ${host}:${port-prefix}23 weight 1 check maxconn 500 inter 10000
+    server basic-backend-${name}-4 ${host}:${port-prefix}24 weight 1 check maxconn 500 inter 10000
+
+backend smart-backend-${name}
+    server smart-backend-${name}-1 ${host}:${port-prefix}31 weight 1 check maxconn 500 inter 10000
+    server smart-backend-${name}-2 ${host}:${port-prefix}32 weight 1 check maxconn 500 inter 10000
+    server smart-backend-${name}-3 ${host}:${port-prefix}33 weight 1 check maxconn 500 inter 10000
+    server smart-backend-${name}-4 ${host}:${port-prefix}34 weight 1 check maxconn 500 inter 10000
+
+

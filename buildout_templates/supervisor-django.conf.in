@@ -1,0 +1,10 @@
+[program:${name}.django]
+numprocs=4
+numprocs_start=1
+process_name=%(program_name)s_%(process_num)s
+command=${buildout:bin-directory}/${control-script} run_gunicorn --max-requests=${max-requests} ${host}:${port-prefix}%(process_num)s
+user=${user}
+stdout_logfile=${log}
+stderr_logfile=${error-log}
+stopsignal=QUIT
+environment=PYTHON_EGG_CACHE='/var/www/.python-eggs'

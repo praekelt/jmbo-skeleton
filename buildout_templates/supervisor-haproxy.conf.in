@@ -1,0 +1,5 @@
+[program:${name}.haproxy]
+command=haproxy -f ${config} -sf
+stdout_logfile=${log}
+stderr_logfile=${error-log}
+stopsignal=QUIT
