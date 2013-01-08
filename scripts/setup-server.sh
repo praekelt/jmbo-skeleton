@@ -28,7 +28,7 @@ sudo apt-get install python-virtualenv python-dev \
 postgresql-9.1 libjpeg-dev zlib1g-dev build-essential git-core \
 memcached supervisor nginx postgresql-server-dev-all libxslt1-dev \
 apache2 libproj0 libproj-dev libgeos-3.2.2 libgdal1-dev libgeoip1 \
-libgeoip-dev libgdal1-1.7.0 postgis postgresql-9.1-postgis --no-upgrade
+libgeoip-dev libgdal1-1.7.0 postgis postgresql-9.1-postgis haproxy unzip --no-upgrade
 
 echo "Configuring PostgreSQL..."
 # xxx: regexes would be better
@@ -74,6 +74,7 @@ sudo /etc/init.d/apache2 restart
 echo "Setting up the Django directory..."
 sudo mkdir ${DEPLOY_DIR}
 sudo virtualenv ${DEPLOY_DIR}/python --no-site-packages
+sudo mkdir ${DEPLOY_DIR}/log
 sudo chown -R www-data:www-data ${DEPLOY_DIR}
 
 # Sentry server
@@ -91,6 +92,26 @@ sudo -u www-data sed -i "s/SECRET_KEY_PLACEHOLDER/${SECRET_KEY}/" $SENTRY_CONFIG
 sudo -u www-data ${DEPLOY_DIR}/python-sentry/bin/sentry --config=$SENTRY_CONFIG upgrade
 sudo cp ${DIRNAME}/resources/supervisor.sentry.conf /etc/supervisor/conf.d/sentry.conf
 sudo supervisorctl update
+
+# Basic haproxy config
+#ADATE=`date +"%Y%m%dT%H%M"`
+#sudo cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.${ADATE}
+#sudo cp ${DIRNAME}/resources/haproxy.cfg /etc/haproxy
+#sudo cp ${DIRNAME}/resources/haproxy-start-wrapper.sh /usr/local/bin/
+#sudo chown www-data:www-data /usr/local/bin/haproxy-start-wrapper.sh
+#sudo cp ${DIRNAME}/resources/supervisor.haproxy.conf /etc/supervisor/conf.d/haproxy.conf
+
+# device-proxy
+# Own virtualenv because device-proxy installs eggs in it
+sudo virtualenv ${DEPLOY_DIR}/python-deviceproxy --no-site-packages
+sudo chown -R www-data:www-data ${DEPLOY_DIR}/python-deviceproxy
+#sudo -u www-data ${DEPLOY_DIR}/python-deviceproxy/bin/pip install device-proxy
+# xxx: workaround until device-proxy is released to pypi
+sudo -u www-data git clone https://github.com/smn/device-proxy.git ${DEPLOY_DIR}/device-proxy
+sudo -u www-data ${DEPLOY_DIR}/python-deviceproxy/bin/pip install -r ${DEPLOY_DIR}/device-proxy/requirements.pip
+wget -c "http://mirror.transact.net.au/pub/sourceforge/w/project/wu/wurfl/WURFL/2.1.1/wurfl-2.1.zip"
+unzip -o wurfl-2.1.zip wurfl.xml
+sudo -u www-data ${DEPLOY_DIR}/python-deviceproxy/bin/wurfl2python.py -o ${DEPLOY_DIR}/device-proxy/devproxy/handlers/wurfl_handler/wurfl_devices.py wurfl.xml
 
 echo ""
 echo "All done! You probably want to run the deploy-project.sh script now."

@@ -1,0 +1,10 @@
+[program:${name}.deviceproxy]
+command=${buildout:directory}/../python-deviceproxy/bin/twistd -n devproxy --config ${buildout:directory}/deviceproxy_${site-name}.yaml
+directory=${buildout:directory}/../device-proxy
+user=${user}
+numprocs=1
+stdout_logfile=${log}
+stderr_logfile=${error-log}
+stopsignal=QUIT
+startsecs=10
+environment=PYTHON_EGG_CACHE='/var/www/.python-eggs'
