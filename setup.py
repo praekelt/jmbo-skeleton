@@ -12,7 +12,7 @@ setup(
     packages = find_packages(),
     install_requires = [
         'jmbo-foundry>=1.1.1',
-        'raven',
+        'raven<3.0.0',
     ],
     include_package_data=True,
     tests_require=[
