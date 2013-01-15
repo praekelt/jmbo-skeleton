@@ -1,4 +1,3 @@
 chartupdate Cron job
 jmbo-twitter and jmbo-facebook
 Need latest releases of all products.
-Get rid of legacy events in settings.py. Only shows still need it.

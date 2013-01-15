@@ -1,6 +1,10 @@
 Changelog
 =========
 
+next
+----
+#. Up `jmbo-foundry` to 1.1.2.
+
 0.6
 ---
 #. `device-proxy` and haproxy is now part of our setup. This enables user-agent to backend mapping.
