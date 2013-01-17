@@ -8,10 +8,10 @@ PORT=90
 CREATE_DIR=/tmp
 
 # Prompt for params
-echo -n "Egg name, eg. jmbo-myapp. [enter]: "
+echo -n "Egg name, eg. jmbo-myapp. It MUST have this form. [enter]: "
 read EGG
-echo -n "Django app name, eg. myapp. [enter]: "
-read APP
+#echo -n "Django app name, eg. myapp. [enter]: "
+#read APP
 echo -n "Site name, eg. ghana. This is useful if you have different sites forming a logical whole, eg. a site per country. (default=site) [enter]: "
 read asite
 if [ -n "$asite" ];
@@ -30,6 +30,10 @@ if [ -n "$adir" ];
 then
     CREATE_DIR=$adir
 fi    
+
+# Extract app name. Convention is repo has form jmbo-foo or jmbo.foo.
+INDEX=`expr index "$EGG" [-.]`
+APP=${EGG:${INDEX}}
 
 # Create the project
 PROJECT_DIR=${CREATE_DIR}/${APP}
@@ -52,7 +56,10 @@ cp -r scripts ${PROJECT_DIR}/
 cp -r skeleton ${PROJECT_DIR}/${APP}
 
 # Rename buildout config files
-for f in ${PROJECT_DIR}/*_site.cfg; do mv $f ${f/site/${SITE}}; done
+if [ $SITE != "site" ];
+then
+    for f in ${PROJECT_DIR}/*_site.cfg; do mv $f ${f/site/${SITE}}; done
+fi
 
 # Copy and rename buildout config files for qa and live
 for f in base_*.cfg.in; do cp $f ${PROJECT_DIR}/qa_${f/\.cfg\.in/\.cfg}; done
