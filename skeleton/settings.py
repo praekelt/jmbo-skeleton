@@ -162,6 +162,7 @@ INSTALLED_APPS = (
     'sites_groups',
     'atlas',
     'tastypie',
+    'social_auth',
     'django.contrib.auth',
     'django.contrib.comments',
     'django.contrib.contenttypes',
@@ -198,6 +199,7 @@ LOGIN_REDIRECT_URL = '/'
 
 # todo: add setting to foundry paster
 AUTHENTICATION_BACKENDS = (
+    'social_auth.backends.facebook.FacebookBackend',
     'foundry.backends.MultiBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
@@ -244,3 +246,7 @@ DJANGO_ATLAS = {
 }
 
 SENTRY_DSN = 'ENTER_YOUR_SENTRY_DSN_HERE'
+
+SOCIAL_AUTH_USER_MODEL = 'foundry.Member'
+FACEBOOK_APP_ID = 'YOUR_FACEBOOK_APP_ID'
+FACEBOOK_API_SECRET = 'YOUR_FACEBOOK_API_SECRET'
