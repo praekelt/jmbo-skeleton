@@ -191,6 +191,10 @@ CKEDITOR_MEDIA_PREFIX = '/media/ckeditor/'
 # Make sure you have write permissions for the path, i.e/home/media/media.lawrence.com/uploads/
 CKEDITOR_UPLOAD_PATH = '%s/media/uploads/' % BUILDOUT_PATH
 
+CKEDITOR_CONFIGS = {
+    'default': {'toolbar': 'Basic'},
+}
+
 # LASTFM_API_KEY = '' # not used yet
 
 LOGIN_URL = '/login'
