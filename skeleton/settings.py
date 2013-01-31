@@ -92,6 +92,7 @@ MIDDLEWARE_CLASSES = (
     'likes.middleware.SecretBallotUserIpUseragentMiddleware',
     'foundry.middleware.PaginationMiddleware',
     'foundry.middleware.VerboseRequestMeta',                    
+    'foundry.middleware.LastSeen',
     'django.middleware.transaction.TransactionMiddleware',
 )
 
