@@ -118,7 +118,7 @@ do
         fi
 
         # Always re-bootstrap in case of a new version of distribute
-        sudo -u $USER ../python/bin/python bootstrap.py
+        sudo -u $USER ../python/bin/python bootstrap.py -v 1.7.0
 
         if [[ $IS_NEW == 1 || $LEVEL -ge 2 ]]; then
             sudo -u $USER ./bin/buildout -Nv -c $FILENAME

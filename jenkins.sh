@@ -6,7 +6,7 @@ rm skeleton.db
 
 rm -rf ve bin	
 virtualenv --no-site-packages ve
-ve/bin/python bootstrap.py
+ve/bin/python bootstrap.py -v 1.7.0
 
 # We must do a custom build of pysqlite
 wget http://pysqlite.googlecode.com/files/pysqlite-2.6.0.tar.gz
