@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='jmbo-skeleton',
-    version='0.6',
+    version='0.7',
     description='Create a Jmbo project environment quickly. Includes a Jmbo demo application.',
     long_description = open('README.rst', 'r').read() + open('AUTHORS.rst', 'r').read() + open('CHANGELOG.rst', 'r').read(),
     author='Praekelt Foundation',
