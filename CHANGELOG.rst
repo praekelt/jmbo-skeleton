@@ -6,6 +6,7 @@ next
 #. Up `jmbo-foundry` to 1.1.8.
 #. Media directories are now prefixed with the app name. This allows multiple Jmbo projects to live on the same server.
 #. Simplify `create-jmbo-project.sh` by removing an option.
+#. Force buildout 1.7.0 since version 2 has backward incompatible changes.
 
 0.6
 ---
