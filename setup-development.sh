@@ -37,7 +37,7 @@ sudo /sbin/ldconfig
 cd ..
 
 echo "Downloading distribute"
-ve/bin/python bootstrap.py
+ve/bin/python bootstrap.py -v 1.7.0
 
 APP_NAME=$1
 BUILDOUT_CONFIG=$2

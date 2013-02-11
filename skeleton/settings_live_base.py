@@ -15,7 +15,7 @@ DATABASES = {
     }
 }
 
-MEDIA_ROOT = '%s/../media-live/' % BUILDOUT_PATH
+MEDIA_ROOT = '%s/../skeleton-media-live/' % BUILDOUT_PATH
 
 CACHES = {
     'default': {
@@ -25,6 +25,6 @@ CACHES = {
     }
 }
 
-CKEDITOR_UPLOAD_PATH = '%s/../media-live/uploads/' % BUILDOUT_PATH
+CKEDITOR_UPLOAD_PATH = '%s/../skeleton-media-live/uploads/' % BUILDOUT_PATH
 
 COMPRESS_ENABLED = True

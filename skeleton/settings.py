@@ -92,6 +92,7 @@ MIDDLEWARE_CLASSES = (
     'likes.middleware.SecretBallotUserIpUseragentMiddleware',
     'foundry.middleware.PaginationMiddleware',
     'foundry.middleware.VerboseRequestMeta',                    
+    'foundry.middleware.LastSeen',
     'django.middleware.transaction.TransactionMiddleware',
 )
 
@@ -143,13 +144,15 @@ INSTALLED_APPS = (
     'gizmo',
     'object_tools',
     'registration',
-    'event', # to be removed once jmbo-show refactored
     'preferences',
     'banner',
     'competition',
     'ckeditor',
     'contact',
     'poll',
+#    'chart',
+#    'music',
+#    'show',
     'simple_autocomplete',
     'pagination',
     'south',
@@ -160,6 +163,8 @@ INSTALLED_APPS = (
     'sites_groups',
     'atlas',
     'tastypie',
+    'social_auth',
+    'dfp',
     'django.contrib.auth',
     'django.contrib.comments',
     'django.contrib.contenttypes',
@@ -188,6 +193,10 @@ CKEDITOR_MEDIA_PREFIX = '/media/ckeditor/'
 # Make sure you have write permissions for the path, i.e/home/media/media.lawrence.com/uploads/
 CKEDITOR_UPLOAD_PATH = '%s/media/uploads/' % BUILDOUT_PATH
 
+CKEDITOR_CONFIGS = {
+    'default': {'toolbar': 'Basic'},
+}
+
 # LASTFM_API_KEY = '' # not used yet
 
 LOGIN_URL = '/login'
@@ -196,6 +205,7 @@ LOGIN_REDIRECT_URL = '/'
 
 # todo: add setting to foundry paster
 AUTHENTICATION_BACKENDS = (
+    'social_auth.backends.facebook.FacebookBackend',
     'foundry.backends.MultiBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
@@ -242,3 +252,7 @@ DJANGO_ATLAS = {
 }
 
 SENTRY_DSN = 'ENTER_YOUR_SENTRY_DSN_HERE'
+
+SOCIAL_AUTH_USER_MODEL = 'foundry.Member'
+FACEBOOK_APP_ID = 'YOUR_FACEBOOK_APP_ID'
+FACEBOOK_API_SECRET = 'YOUR_FACEBOOK_API_SECRET'

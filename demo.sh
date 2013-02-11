@@ -61,7 +61,7 @@ sudo /sbin/ldconfig
 cd ..
 
 echo "Downloading distribute"
-ve/bin/python bootstrap.py
+ve/bin/python bootstrap.py -v 1.7.0
 echo "Choose the type of demo site:"
 choice=4
 echo "1. Basic (mobi for low-end and mid handsets)"

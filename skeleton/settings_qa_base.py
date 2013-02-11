@@ -12,7 +12,7 @@ DATABASES = {
     }
 }
 
-MEDIA_ROOT = '%s/../media-qa/' % BUILDOUT_PATH
+MEDIA_ROOT = '%s/../skeleton-media-qa/' % BUILDOUT_PATH
 
 CACHES = {
     'default': {
@@ -22,4 +22,4 @@ CACHES = {
     }
 }
 
-CKEDITOR_UPLOAD_PATH = '%s/../media-qa/uploads/' % BUILDOUT_PATH
+CKEDITOR_UPLOAD_PATH = '%s/../skeleton-media-qa/uploads/' % BUILDOUT_PATH

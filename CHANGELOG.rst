@@ -1,6 +1,13 @@
 Changelog
 =========
 
+0.7
+---
+#. Up `jmbo-foundry` to 1.1.9.
+#. Media directories are now prefixed with the app name. This allows multiple Jmbo projects to live on the same server.
+#. Simplify `create-jmbo-project.sh` by removing an option.
+#. Force buildout 1.7.0 since version 2 has backward incompatible changes.
+
 0.6
 ---
 #. `device-proxy` and haproxy is now part of our setup. This enables user-agent to backend mapping.

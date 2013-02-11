@@ -118,7 +118,7 @@ do
         fi
 
         # Always re-bootstrap in case of a new version of distribute
-        sudo -u $USER ../python/bin/python bootstrap.py
+        sudo -u $USER ../python/bin/python bootstrap.py -v 1.7.0
 
         if [[ $IS_NEW == 1 || $LEVEL -ge 2 ]]; then
             sudo -u $USER ./bin/buildout -Nv -c $FILENAME
@@ -137,7 +137,7 @@ do
                     # 2. CT in DB, 0001 migration does not exist - fake migrate 0001
                     # 3. CT in DB, 0001 migration exists - migrate
                     FAKE_MIGRATE=""
-                    for APP in competition music; do 
+                    for APP in competition music banner; do 
                         RESULT=`sudo -u $USER ./bin/$THEDIR dumpdata south | grep "\"app_label\": \"$APP\""`
                         if [ "$RESULT" != "" ]; then
                             # CT is in DB. Now check for 0001 migration.
