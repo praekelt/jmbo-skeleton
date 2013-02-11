@@ -10,3 +10,4 @@ recursive-include scripts *
 recursive-include skeleton/static *
 recursive-include skeleton/fixtures *
 recursive-include skeleton/migrations *
+recursive-include skeleton/management *
