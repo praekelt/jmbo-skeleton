@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.7.1
+-----
+#. Bump `jmbo-foundry` to 1.1.10.
+#. Bump `jmbo-downloads` to 0.0.5.
+#. Fix bug in `deploy-script.sh`.
+
 0.7
 ---
 #. Up `jmbo-foundry` to 1.1.9.

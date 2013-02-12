@@ -138,7 +138,7 @@ do
                     # 3. CT in DB, 0001 migration exists - migrate
                     FAKE_MIGRATE=""
                     for APP in competition music banner; do 
-                        RESULT=`sudo -u $USER ./bin/$THEDIR dumpdata south | grep "\"app_label\": \"$APP\""`
+                        RESULT=`sudo -u $USER ./bin/$THEDIR dumpdata contenttypes | grep "\"app_label\": \"$APP\""`
                         if [ "$RESULT" != "" ]; then
                             # CT is in DB. Now check for 0001 migration.
                             RESULT=`sudo -u $USER ./bin/$THEDIR dumpdata south | grep "\"app_name\": \"$APP\", \"migration\": \"0001_initial\""`
