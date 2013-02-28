@@ -1,6 +1,11 @@
 Changelog
 =========
 
+next
+----
+#. todo: list bumps
+#. `setup-server.sh` gets optional arguments for a leaner install.
+
 0.7.1
 -----
 #. Bump `jmbo-foundry` to 1.1.10.
