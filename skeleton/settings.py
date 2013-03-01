@@ -88,6 +88,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'foundry.middleware.AgeGateway',                            
+    'foundry.middleware.CheckProfileCompleteness',
     'django.contrib.messages.middleware.MessageMiddleware',
     'likes.middleware.SecretBallotUserIpUseragentMiddleware',
     'foundry.middleware.PaginationMiddleware',
