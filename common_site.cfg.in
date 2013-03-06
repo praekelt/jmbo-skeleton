@@ -14,9 +14,9 @@ parts=
     skeleton-supervisor-haproxy
     skeleton-supervisor-deviceproxy
     skeleton-haproxy
-    media-links
     directories
     skeleton-nginx
+    media-links
 
 [skeleton-supervisor-haproxy]
 recipe = collective.recipe.template
