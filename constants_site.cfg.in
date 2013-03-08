@@ -6,7 +6,7 @@
 # For a value of 90 the site will use ports in the range 9000 to 9100.
 port-prefix = PORT_PREFIX_PLACEHOLDER
 # How many processes to start up for a layer. Set to 2 if you have less than
-# 1GB of RAM.
+# 1GB of RAM. The maximum is 4.
 num-django-processes-per-layer = 4
 site-name = SITE_NAME_PLACEHOLDER
 # Only used if you have a web buildout config file. 
