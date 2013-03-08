@@ -5,6 +5,7 @@ next
 ----
 #. todo: list bumps
 #. `setup-server.sh` gets optional arguments for a leaner install.
+#. Haproxy config does not need both basic and smart backends for mobi anymore.
 
 0.7.1
 -----
