@@ -3,10 +3,18 @@
 # files you need to edit are the constants files.
 
 [buildout]
+# For a value of 90 the site will use ports in the range 9000 to 9100.
 port-prefix = PORT_PREFIX_PLACEHOLDER
+# How many processes to start up for a layer. Set to 2 if you have less than
+# 1GB of RAM. The maximum is 4.
+num-django-processes-per-layer = 4
 site-name = SITE_NAME_PLACEHOLDER
+# Only used if you have a web buildout config file. 
 web-server-name = DEPLOY_TYPE_PLACEHOLDER.SITE_NAME_PLACEHOLDER.com
+# Only used if you have a basic or smart buildout config file. 
 mobi-server-name = m.DEPLOY_TYPE_PLACEHOLDER.SITE_NAME_PLACEHOLDER.com
-# Layers not used yet. 
+# List mobi layers here. Only used if you have a basic or smart buildout config
+# file. 
 mobi-layers = basic smart
+# web-layers not used yet. 
 web-layers = web

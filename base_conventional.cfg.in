@@ -36,6 +36,7 @@ output = ${buildout:directory}/supervisor/skeleton-DEPLOY_TYPE_PLACEHOLDER-${bui
 name = skeleton-DEPLOY_TYPE_PLACEHOLDER-${buildout:site-type}-${buildout:site-name}
 control-script = skeleton-DEPLOY_TYPE_PLACEHOLDER-${buildout:site-type}-${buildout:site-name}
 host = 127.0.0.1
+num-processes = ${buildout:num-django-processes-per-layer}
 max-requests = 10000
 user = www-data
 log = ${buildout:directory}/../log/skeleton/DEPLOY_TYPE_PLACEHOLDER/${buildout:site-type}/${buildout:site-name}/django.log

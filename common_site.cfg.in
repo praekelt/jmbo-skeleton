@@ -38,11 +38,12 @@ log = ${buildout:directory}/../log/skeleton/DEPLOY_TYPE_PLACEHOLDER/common/${bui
 error-log = ${buildout:directory}/../log/skeleton/DEPLOY_TYPE_PLACEHOLDER/common/${buildout:site-name}/deviceproxy-error.log
 
 [skeleton-haproxy]
-recipe = collective.recipe.template
+recipe = collective.recipe.template[genshi]:genshi
 input = buildout_templates/haproxy.cfg.in
 output = ${buildout:directory}/haproxy/skeleton-DEPLOY_TYPE_PLACEHOLDER-${buildout:site-name}.cfg
 host = 127.0.0.1
 port-prefix = ${buildout:port-prefix}
+num-processes = ${buildout:num-django-processes-per-layer}
 name = skeleton-DEPLOY_TYPE_PLACEHOLDER-${buildout:site-name}
 mobi-layers = ${buildout:mobi-layers}
 web-layers = ${buildout:web-layers}
