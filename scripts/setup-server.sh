@@ -27,7 +27,7 @@ sudo apt-get remove "postgresql-8.4"
 sudo apt-get install python-virtualenv python-dev \
 postgresql-9.1 libjpeg-dev zlib1g-dev build-essential git-core \
 memcached supervisor nginx postgresql-server-dev-all libxslt1-dev \
-apache2 libproj0 libproj-dev libgeos-3.2.2 libgdal1-dev libgeoip1 \
+libproj0 libproj-dev libgeos-3.2.2 libgdal1-dev libgeoip1 \
 libgeoip-dev libgdal1-1.7.0 postgis postgresql-9.1-postgis haproxy unzip --no-upgrade
 
 echo "Configuring PostgreSQL..."
@@ -58,6 +58,7 @@ sudo chown -R www-data:www-data /var/www
 sudo usermod www-data -s /bin/bash
 
 if [ "$WEBDAV_PASSWORD" != "" ]; then
+    sudo apt-get install apache2
     echo "Configuring Apache2 to serve Webdav..."
     sudo a2enmod dav_fs
     sudo a2enmod dav
