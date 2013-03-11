@@ -106,7 +106,7 @@ sudo virtualenv ${DEPLOY_DIR}/python-deviceproxy --no-site-packages
 sudo chown -R www-data:www-data ${DEPLOY_DIR}/python-deviceproxy
 #sudo -u www-data ${DEPLOY_DIR}/python-deviceproxy/bin/pip install device-proxy
 # xxx: workaround until device-proxy is released to pypi
-sudo -u www-data git clone https://github.com/smn/device-proxy.git ${DEPLOY_DIR}/device-proxy
+sudo -u www-data git clone https://github.com/praekelt/device-proxy.git ${DEPLOY_DIR}/device-proxy
 sudo -u www-data ${DEPLOY_DIR}/python-deviceproxy/bin/pip install -r ${DEPLOY_DIR}/device-proxy/requirements.pip
 sudo rm /tmp/wurfl-2.1.zip
 sudo rm /tmp/wurfl.xml
