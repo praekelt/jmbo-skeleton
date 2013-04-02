@@ -121,7 +121,8 @@ do
         sudo -u $USER ../python/bin/python bootstrap.py -v 1.7.0
 
         if [[ $IS_NEW == 1 || $LEVEL -ge 2 ]]; then
-            sudo -u $USER ./bin/buildout -Nv -c $FILENAME
+            # Must use -i so buildout cache is used. That necessitates full paths as arguments.
+            sudo -u $USER -i ${DEPLOY_DIR}/${THEDIR}/bin/buildout -Nv -c ${DEPLOY_DIR}/${THEDIR}/$FILENAME
         fi
 
         if [[ $FILENAME != *_common_*.cfg ]]; then
