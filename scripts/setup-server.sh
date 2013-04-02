@@ -55,7 +55,7 @@ sudo mkdir /var/www/.buildout/eggs
 sudo mkdir /var/www/.buildout/downloads
 sudo su -c 'echo "[buildout]" > /var/www/.buildout/default.cfg'
 sudo su -c 'echo "eggs-directory = /var/www/.buildout/eggs" >> /var/www/.buildout/default.cfg'
-sudo su -c 'echo "download-directory = /var/www/.buildout/downloads" >> /var/www/.buildout/default.cfg'
+sudo su -c 'echo "download-cache = /var/www/.buildout/downloads" >> /var/www/.buildout/default.cfg'
 sudo chown -R www-data:www-data /var/www
 sudo usermod www-data -s /bin/bash
 
