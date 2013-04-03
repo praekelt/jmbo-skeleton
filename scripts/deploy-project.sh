@@ -74,6 +74,7 @@ fi
 
 # Checkouts
 DJANGO_SITE_INDEX=0
+PREVIOUS_BUILDOUT_DIR=""
 for f in `ls /tmp/${REPO}/${DEPLOY_TYPE}_*.cfg`
 do
     FILENAME=$(basename $f)
@@ -92,18 +93,28 @@ do
             sudo -u $USER cp -r ${DEPLOY_DIR}/${THEDIR}/static ${STATIC_BACKUP}/
         fi
 
-        # Copy existing checkout
+        # Copy existing checkout. If previous buildout dir is set we can even
+        # more save time by copying it over.
         cd ${WORKING_DIR}
-        sudo -u $USER cp -r /tmp/${REPO} ${THEDIR}
+        if [ $PREVIOUS_BUILDOUT_DIR != ""]; then
+            sudo -u $USER cp -r $PREVIOUS_BUILDOUT_DIR ${THEDIR}
+        else
+            sudo -u $USER cp -r /tmp/${REPO} ${THEDIR}
+        fi
 
         cd ${THEDIR}
         sudo chown -R $USER:$USER .git/
 
         # Always re-bootstrap in case of a new version of distribute
         sudo -u $USER ${DEPLOY_DIR}/python/bin/python bootstrap.py -v 1.7.0
-
+        
         # Must use -i so buildout cache is used. That necessitates full paths as arguments.
         sudo -u $USER -i ${WORKING_DIR}/${THEDIR}/bin/buildout -Nv -c ${WORKING_DIR}/${THEDIR}/$FILENAME
+
+        # Update previous dir
+        if [ $PREVIOUS_BUILDOUT_DIR == ""]; then
+            PREVIOUS_BUILDOUT_DIR=${WORKING_DIR}/${THEDIR}
+        fi
 
         if [[ $FILENAME != *_common_*.cfg ]]; then
 
@@ -173,8 +184,23 @@ do
 done
 
 # Delete pyc files. Replace occurrences of /tmp/praekelt with /var/praekelt.
+# This sucks but is unavoidable since buildout interprets the directory from
+# which it is executing. My bash-fu is not strong enough to make this more
+# elegant.
 sudo -u $USER find $WORKING_DIR -name "*.pyc" | xargs rm
-for f in `find ${WORKING_DIR} -name "*" | grep -v /static/`
+for f in `find ${WORKING_DIR} -name "*.conf"`
+do 
+    if [ -f $f ]; then
+        sed -i "s?${WORKING_DIR}?${DEPLOY_DIR}?g" $f
+    fi
+done
+for f in `find ${WORKING_DIR} -name "*.cfg"`
+do 
+    if [ -f $f ]; then
+        sed -i "s?${WORKING_DIR}?${DEPLOY_DIR}?g" $f
+    fi
+done
+for f in `find ${WORKING_DIR} -name "*" | grep /bin/`
 do 
     if [ -f $f ]; then
         sed -i "s?${WORKING_DIR}?${DEPLOY_DIR}?g" $f
