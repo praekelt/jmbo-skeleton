@@ -82,7 +82,7 @@ do
         THEDIR=$PREFIX-${FTMP//_/-}
 
         # Backup existing static directory if it exists
-        sudo -u $USER mkdir ${DEPLOY_DIR}/static-backups
+        sudo -u $USER mkdir -p ${DEPLOY_DIR}/static-backups
         if [ -d ${DEPLOY_DIR}/${THEDIR}/static ]; then
             ADATE=`date +"%Y%m%dT%H%M"`
             STATIC_BACKUP=${DEPLOY_DIR}/static-backups/${THEDIR}/${ADATE}
@@ -91,16 +91,16 @@ do
         fi
 
         # Checkout
-        cd ${WORKING_DIR}/
-        sudo -u $USER git clone -b $BRANCH https://${CREDENTIALS}@github.com/$REPO_OWNER/$REPO.git /tmp/${PREFIX}/${THEDIR}
-        cd /tmp/${PREFIX}/${THEDIR}
+        cd ${WORKING_DIR}
+        sudo -u $USER git clone -b $BRANCH https://${CREDENTIALS}@github.com/$REPO_OWNER/$REPO.git ${THEDIR}
+        cd ${THEDIR}
         sudo chown -R $USER:$USER .git/
 
         # Always re-bootstrap in case of a new version of distribute
         sudo -u $USER ${DEPLOY_DIR}/python/bin/python bootstrap.py -v 1.7.0
 
         # Must use -i so buildout cache is used. That necessitates full paths as arguments.
-        sudo -u $USER -i ${PREFIX}/${THEDIR}/bin/buildout -Nv -c ${PREFIX}/${THEDIR}/$FILENAME
+        sudo -u $USER -i ${WORKING_DIR}/${THEDIR}/bin/buildout -Nv -c ${WORKING_DIR}/${THEDIR}/$FILENAME
 
         if [[ $FILENAME != *_common_*.cfg ]]; then
 
