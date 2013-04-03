@@ -212,6 +212,16 @@ do
             sudo -u $USER rm -rf ${DEPLOY_DIR}/${f}
         fi
         sudo -u $USER mv ${WORKING_DIR}/${f} $DEPLOY_DIR/
+
+        # Create nginx symlinks if required
+        if [ -d ${DEPLOY_DIR}/${f}/nginx ]; then
+            sudo ln -s ${DEPLOY_DIR}/${f}/nginx/* /etc/nginx/sites-enabled/
+        fi
+
+        # Create supervisor symlinks if required
+        if [ -d ${DEPLOY_DIR}/${f}/supervisor ]; then
+            sudo ln -s ${DEPLOY_DIR}/${f}/supervisor/* /etc/supervisor/conf.d/
+        fi
     fi
 done
 
