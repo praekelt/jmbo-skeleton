@@ -32,6 +32,9 @@ then
     exit 1
 fi
 
+# Need this later
+ADATE=`date +"%Y%m%dT%H%M"`
+
 # Split OWNER_AND_REPO
 INDEX=`expr index "$OWNER_AND_REPO" /`
 REPO_OWNER=${OWNER_AND_REPO:0:(${INDEX}-1)}
@@ -84,15 +87,15 @@ do
         # Backup existing static directory if it exists
         sudo -u $USER mkdir -p ${DEPLOY_DIR}/static-backups
         if [ -d ${DEPLOY_DIR}/${THEDIR}/static ]; then
-            ADATE=`date +"%Y%m%dT%H%M"`
             STATIC_BACKUP=${DEPLOY_DIR}/static-backups/${THEDIR}/${ADATE}
             sudo -u $USER mkdir -p $STATIC_BACKUP
             sudo -u $USER cp -r ${DEPLOY_DIR}/${THEDIR}/static ${STATIC_BACKUP}/
         fi
 
-        # Checkout
+        # Copy existing checkout
         cd ${WORKING_DIR}
-        sudo -u $USER git clone -b $BRANCH https://${CREDENTIALS}@github.com/$REPO_OWNER/$REPO.git ${THEDIR}
+        sudo -u $USER cp -r /tmp/${REPO} ${THEDIR}
+
         cd ${THEDIR}
         sudo chown -R $USER:$USER .git/
 
