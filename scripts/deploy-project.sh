@@ -142,7 +142,6 @@ do
                 sudo -u $USER ./bin/$THEDIR loaddata ${APP_NAME}/fixtures/sites.json
             fi
 
-            sudo -u $USER rm -rf static
             sudo -u $USER ./bin/$THEDIR collectstatic --noinput
 
             # Cron entries
@@ -151,7 +150,7 @@ do
             for COMMAND in report_naughty_words jmbo_publish; do
                 RESULT=`grep "${THEDIR} ${COMMAND}" /tmp/acron`
                 if [ "$RESULT" == "" ]; then
-                    echo "0 * * * * ${WORKING_DIR}/${THEDIR}/bin/${THEDIR} ${COMMAND}" >> /tmp/acron
+                    echo "0 * * * * ${DEPLOY_DIR}/${THEDIR}/bin/${THEDIR} ${COMMAND}" >> /tmp/acron
                 fi
             done
             sudo -u $USER crontab /tmp/acron
@@ -175,7 +174,7 @@ done
 
 # Delete pyc files. Replace occurrences of /tmp/praekelt with /var/praekelt.
 sudo -u $USER find $WORKING_DIR -name "*.pyc" | xargs rm
-for f in `find ${WORKING_DIR} -name "*"`
+for f in `find ${WORKING_DIR} -name "*" | grep -v /static/`
 do 
     if [ -f $f ]; then
         sed -i "s?${WORKING_DIR}?${DEPLOY_DIR}?g" $f
