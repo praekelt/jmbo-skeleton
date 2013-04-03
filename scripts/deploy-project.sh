@@ -170,14 +170,19 @@ do
     fi
 done
 
-# Move directories in working directory to deploy directory
+# Copy / move directories in working directory to deploy directory
 for f in `ls $WORKING_DIR`
 do
-    # Delete target if it exists
-    if [ -d ${DEPLOY_DIR}/${f} ]; then
-        sudo -u $USER rm -rf ${DEPLOY_DIR}/${f}
+    # Delete target directories that contain source. The others (log, media etc are updated).
+    if [[ $f == log ]] || [[ $FILENAME == *-media-* ]]; then    
+        sudo -u $USER cp -r -u ${WORKING_DIR}/${f} $DEPLOY_DIR/
+    else
+        # Delete target if it exists
+        if [ -d ${DEPLOY_DIR}/${f} ]; then
+            sudo -u $USER rm -rf ${DEPLOY_DIR}/${f}
+        fi
+        sudo -u $USER mv ${WORKING_DIR}/${f} $DEPLOY_DIR/
     fi
-    sudo -u $USER mv ${WORKING_DIR}/${}f $DEPLOY_DIR/
 done
 
 # Update supervisor
