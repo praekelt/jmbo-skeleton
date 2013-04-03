@@ -96,7 +96,7 @@ do
         # Copy existing checkout. If previous buildout dir is set we can even
         # more save time by copying it over.
         cd ${WORKING_DIR}
-        if [ $PREVIOUS_BUILDOUT_DIR != ""]; then
+        if [ "$PREVIOUS_BUILDOUT_DIR" != "" ]; then
             sudo -u $USER cp -r $PREVIOUS_BUILDOUT_DIR ${THEDIR}
         else
             sudo -u $USER cp -r /tmp/${REPO} ${THEDIR}
@@ -112,9 +112,7 @@ do
         sudo -u $USER -i ${WORKING_DIR}/${THEDIR}/bin/buildout -Nv -c ${WORKING_DIR}/${THEDIR}/$FILENAME
 
         # Update previous dir
-        if [ $PREVIOUS_BUILDOUT_DIR == ""]; then
-            PREVIOUS_BUILDOUT_DIR=${WORKING_DIR}/${THEDIR}
-        fi
+        PREVIOUS_BUILDOUT_DIR=${WORKING_DIR}/${THEDIR}
 
         if [[ $FILENAME != *_common_*.cfg ]]; then
 
@@ -153,6 +151,7 @@ do
                 sudo -u $USER ./bin/$THEDIR loaddata ${APP_NAME}/fixtures/sites.json
             fi
 
+            sudo -u $USER rm -rf static
             sudo -u $USER ./bin/$THEDIR collectstatic --noinput
 
             # Cron entries
@@ -187,23 +186,23 @@ done
 # This sucks but is unavoidable since buildout interprets the directory from
 # which it is executing. My bash-fu is not strong enough to make this more
 # elegant.
-sudo -u $USER find $WORKING_DIR -name "*.pyc" | xargs rm
+sudo -u $USER find $WORKING_DIR -name "*.pyc" | sudo -u $USER xargs rm
 for f in `find ${WORKING_DIR} -name "*.conf"`
 do 
     if [ -f $f ]; then
-        sed -i "s?${WORKING_DIR}?${DEPLOY_DIR}?g" $f
+        sudo -u $USER sed -i "s?${WORKING_DIR}?${DEPLOY_DIR}?g" $f
     fi
 done
 for f in `find ${WORKING_DIR} -name "*.cfg"`
 do 
     if [ -f $f ]; then
-        sed -i "s?${WORKING_DIR}?${DEPLOY_DIR}?g" $f
+        sudo -u $USER sed -i "s?${WORKING_DIR}?${DEPLOY_DIR}?g" $f
     fi
 done
 for f in `find ${WORKING_DIR} -name "*" | grep /bin/`
 do 
     if [ -f $f ]; then
-        sed -i "s?${WORKING_DIR}?${DEPLOY_DIR}?g" $f
+        sudo -u $USER sed -i "s?${WORKING_DIR}?${DEPLOY_DIR}?g" $f
     fi
 done
 
