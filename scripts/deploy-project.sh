@@ -189,21 +189,15 @@ done
 sudo -u $USER find $WORKING_DIR -name "*.pyc" | sudo -u $USER xargs rm
 for f in `find ${WORKING_DIR} -name "*.conf"`
 do 
-    if [ -f $f ]; then
-        sudo -u $USER sed -i "s?${WORKING_DIR}?${DEPLOY_DIR}?g" $f
-    fi
+    sudo -u $USER sed -i "s?${WORKING_DIR}?${DEPLOY_DIR}?g" $f
 done
 for f in `find ${WORKING_DIR} -name "*.cfg"`
 do 
-    if [ -f $f ]; then
-        sudo -u $USER sed -i "s?${WORKING_DIR}?${DEPLOY_DIR}?g" $f
-    fi
+    sudo -u $USER sed -i "s?${WORKING_DIR}?${DEPLOY_DIR}?g" $f
 done
-for f in `find ${WORKING_DIR} -name "*" | grep /bin/`
+for f in `find ${WORKING_DIR} -type f -name "*" | grep /bin/`
 do 
-    if [ -f $f ]; then
-        sudo -u $USER sed -i "s?${WORKING_DIR}?${DEPLOY_DIR}?g" $f
-    fi
+    sudo -u $USER sed -i "s?${WORKING_DIR}?${DEPLOY_DIR}?g" $f
 done
 
 # Copy / move directories in working directory to deploy directory
