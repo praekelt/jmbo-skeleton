@@ -167,18 +167,7 @@ do
             rm /tmp/acron
 
             let DJANGO_SITE_INDEX++
-        fi
-        
-        # Create nginx symlink if required
-        if [ -d ${WORKING_DIR}/${THEDIR}/nginx ]; then
-            sudo ln -s ${WORKING_DIR}/${THEDIR}/nginx/* /etc/nginx/sites-enabled/
-        fi
-
-        # Create supervisor symlink if required
-        if [ -d ${WORKING_DIR}/${THEDIR}/supervisor ]; then
-            sudo ln -s ${WORKING_DIR}/${THEDIR}/supervisor/* /etc/supervisor/conf.d/
-        fi
-
+        fi                
     fi
 done
 
