@@ -93,14 +93,9 @@ do
             sudo -u $USER cp -r ${DEPLOY_DIR}/${THEDIR}/static ${STATIC_BACKUP}/
         fi
 
-        # Copy existing checkout. If previous buildout dir is set we can even
-        # more save time by copying it over.
+        # Copy existing checkout
         cd ${WORKING_DIR}
-        if [ "$PREVIOUS_BUILDOUT_DIR" != "" ]; then
-            sudo -u $USER cp -r $PREVIOUS_BUILDOUT_DIR ${THEDIR}
-        else
-            sudo -u $USER cp -r /tmp/${REPO} ${THEDIR}
-        fi
+        sudo -u $USER cp -r /tmp/${REPO} ${THEDIR}
 
         cd ${THEDIR}
         sudo chown -R $USER:$USER .git/
@@ -110,9 +105,6 @@ do
         
         # Must use -i so buildout cache is used. That necessitates full paths as arguments.
         sudo -u $USER -i ${WORKING_DIR}/${THEDIR}/bin/buildout -Nv -c ${WORKING_DIR}/${THEDIR}/$FILENAME
-
-        # Update previous dir
-        PREVIOUS_BUILDOUT_DIR=${WORKING_DIR}/${THEDIR}
 
         if [[ $FILENAME != *_common_*.cfg ]]; then
 
