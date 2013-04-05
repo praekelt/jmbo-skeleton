@@ -212,9 +212,11 @@ sudo supervisorctl update
 # Restart memcached
 sudo /etc/init.d/memcached restart
 
-# Restart processes
-# todo: make finer grained
-sudo supervisorctl restart all
+# Restart affected processes
+for process in `sudo supervisorctl status | grep ${PREFIX}- | awk '{ print length(), $0 | "sort -n -r" }' | awk '{ print $2 }'`
+do
+    sudo supervisorctl restart $process
+done
 
 # Reload nginx
 sudo /etc/init.d/nginx reload
