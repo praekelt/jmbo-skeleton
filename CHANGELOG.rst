@@ -5,7 +5,9 @@ next
 ----
 #. todo: list bumps
 #. `setup-server.sh` gets optional arguments for a leaner install.
+#. `deploy-project.sh` does not lead to downtime anymore.
 #. Haproxy config does not need both basic and smart backends for mobi anymore.
+#. Remove media-links from configs. It is redundant.
 
 0.7.1
 -----
