@@ -74,7 +74,6 @@ fi
 
 # Checkouts
 DJANGO_SITE_INDEX=0
-PREVIOUS_BUILDOUT_DIR=""
 for f in `ls /tmp/${REPO}/${DEPLOY_TYPE}_*.cfg`
 do
     FILENAME=$(basename $f)
