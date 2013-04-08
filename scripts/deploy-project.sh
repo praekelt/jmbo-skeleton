@@ -216,6 +216,7 @@ sudo /etc/init.d/memcached restart
 for process in `sudo supervisorctl status | grep ${PREFIX}- | awk '{ print length(), $0 | "sort -n -r" }' | awk '{ print $2 }'`
 do
     sudo supervisorctl restart $process
+    sleep 1
 done
 
 # Reload nginx
