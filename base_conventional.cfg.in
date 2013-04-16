@@ -4,7 +4,7 @@
 # Do not edit unless you know what you are doing.
 
 [buildout]
-extensions=    
+extensions=
     lovely.buildouthttp
     mr.developer
 parts=
