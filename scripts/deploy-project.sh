@@ -147,14 +147,14 @@ do
 
             # Cron entries
             touch /tmp/acron
-            sudo -u $USER crontab -l > /tmp/acron
+            sudo crontab -u $USER -l > /tmp/acron
             for COMMAND in report_naughty_words jmbo_publish; do
                 RESULT=`grep "${THEDIR} ${COMMAND}" /tmp/acron`
                 if [ "$RESULT" == "" ]; then
                     echo "0 * * * * ${DEPLOY_DIR}/${THEDIR}/bin/${THEDIR} ${COMMAND}" >> /tmp/acron
                 fi
             done
-            sudo -u $USER crontab /tmp/acron
+            sudo crontab -u $USER /tmp/acron
             rm /tmp/acron
 
             let DJANGO_SITE_INDEX++
