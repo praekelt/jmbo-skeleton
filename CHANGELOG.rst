@@ -8,6 +8,7 @@ next
 #. `deploy-project.sh` does not lead to downtime anymore.
 #. Haproxy config does not need both basic and smart backends for mobi anymore.
 #. Remove media-links from configs. It is redundant.
+#. Use gunicorn in way advised by Django.
 
 0.7.1
 -----

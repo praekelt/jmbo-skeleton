@@ -84,11 +84,11 @@ sed -i "s/DEPLOY_TYPE_PLACEHOLDER/live/g" ${PROJECT_DIR}/live_*.cfg
 
 sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/dev_base.cfg
 
-sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base_mobi.cfg
-sed -i "16s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base_conventional.cfg
+sed -i "16s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base_mobi.cfg
+sed -i "17s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base_conventional.cfg
 
-sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/live_base_mobi.cfg
-sed -i "16s/.*/    ${EGG}/" ${PROJECT_DIR}/live_base_conventional.cfg
+sed -i "16s/.*/    ${EGG}/" ${PROJECT_DIR}/live_base_mobi.cfg
+sed -i "17s/.*/    ${EGG}/" ${PROJECT_DIR}/live_base_conventional.cfg
 
 # Replace the word skeleton with the app name
 sed -i s/skeleton/${APP}/g ${PROJECT_DIR}/*.cfg

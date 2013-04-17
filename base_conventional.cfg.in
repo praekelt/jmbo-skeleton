@@ -6,6 +6,7 @@
 [buildout]
 extensions=
     lovely.buildouthttp
+    mr.developer
 parts=
     skeleton
     skeleton-supervisor-django
@@ -28,6 +29,8 @@ projectegg = skeleton
 eggs = ${buildout:eggs}
 settings = settings_DEPLOY_TYPE_PLACEHOLDER_${buildout:site-type}_${buildout:site-name}
 control-script = skeleton-DEPLOY_TYPE_PLACEHOLDER-${buildout:site-type}-${buildout:site-name}
+wsgi = true
+wsgi-script = skeleton-DEPLOY_TYPE_PLACEHOLDER-${buildout:site-type}-${buildout:site-name}-wsgi.py
 
 [skeleton-supervisor-django]
 recipe = collective.recipe.template
@@ -62,3 +65,7 @@ paths =
     ../skeleton-media-DEPLOY_TYPE_PLACEHOLDER/uploads
     ../skeleton-media-DEPLOY_TYPE_PLACEHOLDER/downloads
     ../log/skeleton/DEPLOY_TYPE_PLACEHOLDER/${buildout:site-type}/${buildout:site-name}
+
+[sources]
+# Waiting on official djangorecipe for merge
+djangorecipe = git git://github.com/hedleyroos/djangorecipe.git

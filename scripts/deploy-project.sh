@@ -105,6 +105,12 @@ do
         # Must use -i so buildout cache is used. That necessitates full paths as arguments.
         sudo -u $USER -i ${WORKING_DIR}/${THEDIR}/bin/buildout -Nv -c ${WORKING_DIR}/${THEDIR}/$FILENAME
 
+        # Checking for the eggs directory is a good way to detect failure.
+        if [ ! -d ${WORKING_DIR}/${THEDIR}/eggs ]; then
+            echo "Buildout failure. Aborting."
+            exit 1
+        fi
+
         if [[ $FILENAME != *_common_*.cfg ]]; then
 
             # Database setup on first loop
@@ -147,14 +153,14 @@ do
 
             # Cron entries
             touch /tmp/acron
-            sudo -u $USER crontab -l > /tmp/acron
+            sudo crontab -u $USER -l > /tmp/acron
             for COMMAND in report_naughty_words jmbo_publish; do
                 RESULT=`grep "${THEDIR} ${COMMAND}" /tmp/acron`
                 if [ "$RESULT" == "" ]; then
                     echo "0 * * * * ${DEPLOY_DIR}/${THEDIR}/bin/${THEDIR} ${COMMAND}" >> /tmp/acron
                 fi
             done
-            sudo -u $USER crontab /tmp/acron
+            sudo crontab -u $USER /tmp/acron
             rm /tmp/acron
 
             let DJANGO_SITE_INDEX++

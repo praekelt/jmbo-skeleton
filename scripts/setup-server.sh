@@ -82,8 +82,9 @@ sudo virtualenv ${DEPLOY_DIR}/python --no-site-packages
 sudo mkdir ${DEPLOY_DIR}/log
 sudo chown -R www-data:www-data ${DEPLOY_DIR}
 
-# Install genshi library for virtualenv Python
+# Install genshi and gunicorn library for virtualenv Python
 sudo -u www-data ${DEPLOY_DIR}/python/bin/easy_install genshi
+sudo -u www-data ${DEPLOY_DIR}/python/bin/easy_install gunicorn
 
 # Sentry server
 if [ $INSTALL_SENTRY != 0 ]; then
