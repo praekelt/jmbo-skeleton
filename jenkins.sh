@@ -29,6 +29,12 @@ cd ..
 rm -rf src
 ./bin/buildout -v -c dev_${SITE_TYPE}_site.cfg
 
+# Checking for the eggs directory is a good way to detect failure
+if [ ! -d eggs ]; then
+    echo "Buildout failure. Aborting."
+    exit 1
+fi
+
 ./bin/skeleton-dev-$SITE_TYPE-site syncdb --noinput
 ./bin/skeleton-dev-$SITE_TYPE-site migrate
 ./bin/skeleton-dev-$SITE_TYPE-site load_photosizes
