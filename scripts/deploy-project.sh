@@ -105,6 +105,12 @@ do
         # Must use -i so buildout cache is used. That necessitates full paths as arguments.
         sudo -u $USER -i ${WORKING_DIR}/${THEDIR}/bin/buildout -Nv -c ${WORKING_DIR}/${THEDIR}/$FILENAME
 
+        # Checking for the eggs directory is a good way to detect failure.
+        if [ ! -d ${WORKING_DIR}/${THEDIR}/eggs ]; then
+            echo "Buildout failure. Aborting."
+            exit 1
+        fi
+
         if [[ $FILENAME != *_common_*.cfg ]]; then
 
             # Database setup on first loop
