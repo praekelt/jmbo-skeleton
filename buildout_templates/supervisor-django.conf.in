@@ -2,8 +2,7 @@
 numprocs=${num-processes}
 numprocs_start=1
 process_name=%(program_name)s_%(process_num)s
-command=${buildout:directory}/../python/bin/gunicorn ${control-script}-wsgi:application --max-requests=${max-requests} -b ${host}:${port-prefix}%(process_num)s
-directory=${buildout:bin-directory}
+command=${buildout:bin-directory}/${control-script} run_gunicorn --max-requests=${max-requests} ${host}:${port-prefix}%(process_num)s
 user=${user}
 stdout_logfile=${log}
 stderr_logfile=${error-log}
