@@ -152,6 +152,7 @@ do
             sudo -u $USER ./bin/$THEDIR collectstatic --noinput
 
             # Cron entries
+            sudo rm /tmp/acron
             touch /tmp/acron
             sudo crontab -u $USER -l > /tmp/acron
             for COMMAND in report_naughty_words jmbo_publish; do
