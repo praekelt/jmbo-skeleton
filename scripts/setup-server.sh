@@ -113,7 +113,7 @@ sudo rm /tmp/wurfl-2.1.zip
 sudo rm /tmp/wurfl.xml
 wget -O /tmp/wurfl-2.1.zip "http://mirror.transact.net.au/pub/sourceforge/w/project/wu/wurfl/WURFL/2.1.1/wurfl-2.1.zip"
 unzip -o wurfl-2.1.zip -d /tmp
-sudo -u www-data ${DEPLOY_DIR}/python-deviceproxy/bin/wurfl2python.py -o ${DEPLOY_DIR}/python-deviceproxy/lib/python-2.7/site-packages/devproxy/handlers/wurfl_handler/wurfl_devices.py /tmp/wurfl.xml
+sudo -u www-data ${DEPLOY_DIR}/python-deviceproxy/bin/wurfl2python.py -o ${DEPLOY_DIR}/python-deviceproxy/lib/python2.7/site-packages/devproxy/handlers/wurfl_handler/wurfl_devices.py /tmp/wurfl.xml
 
 echo ""
 echo "All done! You probably want to run the deploy-project.sh script now."
