@@ -9,6 +9,7 @@ next
 #. Haproxy config does not need both basic and smart backends for mobi anymore.
 #. Remove media-links from configs. It is redundant.
 #. Use gunicorn in way advised by Django.
+#. Install `device-proxy` through pip from pypi.
 
 0.7.1
 -----
