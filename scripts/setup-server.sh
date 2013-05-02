@@ -114,6 +114,9 @@ sudo rm /tmp/wurfl.xml
 wget -O /tmp/wurfl-2.1.zip "http://mirror.transact.net.au/pub/sourceforge/w/project/wu/wurfl/WURFL/2.1.1/wurfl-2.1.zip"
 unzip -o wurfl-2.1.zip -d /tmp
 sudo -u www-data ${DEPLOY_DIR}/python-deviceproxy/bin/wurfl2python.py -o ${DEPLOY_DIR}/python-deviceproxy/lib/python2.7/site-packages/devproxy/handlers/wurfl_handler/wurfl_devices.py /tmp/wurfl.xml
+# Legacy (pre-pypi) requires this checkout
+sudo -u www-data git clone https://github.com/praekelt/device-proxy.git ${DEPLOY_DIR}/device-proxy
+sudo -u www-data ${DEPLOY_DIR}/python-deviceproxy/bin/wurfl2python.py -o ${DEPLOY_DIR}/device-proxy/devproxy/handlers/wurfl_handler/wurfl_devices.py /tmp/wurfl.xml
 
 echo ""
 echo "All done! You probably want to run the deploy-project.sh script now."
