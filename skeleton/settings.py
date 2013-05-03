@@ -198,6 +198,9 @@ CKEDITOR_CONFIGS = {
     'default': {'toolbar': 'Basic'},
 }
 
+# Restrict uploaded file access to user who uploaded file
+CKEDITOR_RESTRICT_BY_USER = True
+
 # LASTFM_API_KEY = '' # not used yet
 
 LOGIN_URL = '/login'
