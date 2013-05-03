@@ -46,6 +46,7 @@ cp .gitignore ${PROJECT_DIR}/
 cp setup.py ${PROJECT_DIR}/
 cp versions.cfg ${PROJECT_DIR}/
 cp setup-development.sh ${PROJECT_DIR}/
+cp handler.py ${PROJECT_DIR}/
 cp deviceproxy.yaml.in ${PROJECT_DIR}/deviceproxy_${SITE}.yaml
 touch ${PROJECT_DIR}/AUTHORS.rst
 touch ${PROJECT_DIR}/CHANGELOG.rst
