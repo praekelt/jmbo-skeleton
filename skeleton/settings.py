@@ -239,6 +239,7 @@ ADMIN_APPS_EXCLUDE = (
     'Photologue',
     'Publisher',
     'Registration',
+    'Auth',
 )
 
 ADMIN_MODELS_EXCLUDE = (
