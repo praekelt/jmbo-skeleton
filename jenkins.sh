@@ -46,4 +46,3 @@ rm -rf static
 git clone git@github.com:praekelt/jmbo-foundry.git src/jmbo-foundry
 cd src/jmbo-foundry
 ../../bin/setuptest-runner setup.py test
-cd -
