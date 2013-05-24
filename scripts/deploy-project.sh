@@ -113,7 +113,7 @@ do
 
         # Further checks on the bin directory
         if [[ $FILENAME != *_common_*.cfg ]]; then
-            if [ ! -f ${WORKING_DIR}/bin/${THEDIR} ]; then
+            if [ ! -f ${WORKING_DIR}/${THEDIR}/bin/${THEDIR} ]; then
                 echo "Buildout failure. Aborting."
                 exit 1
             fi
