@@ -83,7 +83,7 @@ sed -i "s/PORT_PREFIX_PLACEHOLDER/${PORT}/g" ${PROJECT_DIR}/deviceproxy_*.yaml
 sed -i "s/DEPLOY_TYPE_PLACEHOLDER/qa/g" ${PROJECT_DIR}/qa_*.cfg
 sed -i "s/DEPLOY_TYPE_PLACEHOLDER/live/g" ${PROJECT_DIR}/live_*.cfg
 
-sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/dev_base.cfg
+sed -i "14s/.*/    ${EGG}/" ${PROJECT_DIR}/dev_base.cfg
 
 sed -i "16s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base_mobi.cfg
 sed -i "17s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base_conventional.cfg
