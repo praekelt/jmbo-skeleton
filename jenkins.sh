@@ -28,9 +28,8 @@ cd ..
 
 rm -rf src
 ./bin/buildout -v -c dev_${SITE_TYPE}_site.cfg
-
-# Checking for the eggs directory is a good way to detect failure
-if [ ! -d eggs ]; then
+EXIT_CODE=$?
+if [ $EXIT_CODE != 0 ]; then
     echo "Buildout failure. Aborting."
     exit 1
 fi

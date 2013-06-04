@@ -109,21 +109,7 @@ do
             echo "Buildout failure. Aborting."
             exit 1
         fi
-
-        # All buildouts have a supervisor directory. Use it to detect failure.
-        #if [ ! -d ${WORKING_DIR}/${THEDIR}/supervisor ]; then
-        #    echo "Buildout failure. Aborting."
-        #    exit 1
-        #fi
-
-        # Further checks on the bin directory
-        #if [[ $FILENAME != *_common_*.cfg ]]; then
-        #    if [ ! -f ${WORKING_DIR}/${THEDIR}/bin/${THEDIR} ]; then
-        #        echo "Buildout failure. Aborting."
-        #        exit 1
-        #    fi
-        #fi
-
+        
         if [[ $FILENAME != *_common_*.cfg ]]; then
 
             # Database setup on first loop
