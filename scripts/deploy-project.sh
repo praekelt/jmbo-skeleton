@@ -105,11 +105,11 @@ do
         # https://pypi.python.org/packages/source/d/distribute/distribute-0.6.45.tar.gz
         # to /var/www/.buildout/downloads if they are not there.
         # todo: softcode
-        sudo -u $USER ${DEPLOY_DIR}/python/bin/python bootstrap.py -v 1.7.0 --setup-source=/var/www/distribute_setup.py --download-base=/var/www/.buildout/downloads --eggs=/var/www/.buildout/eggs
+        sudo -u $USER ${DEPLOY_DIR}/python/bin/python bootstrap.py -v 1.7.0 --distribute --setup-source=/var/www/distribute_setup.py --download-base=/var/www/.buildout/downloads --eggs=/var/www/.buildout/eggs
         EXIT_CODE=$?
         if [ $EXIT_CODE != 0 ]; then
             # Try online mode
-            sudo -u $USER ${DEPLOY_DIR}/python/bin/python bootstrap.py -v 1.7.0
+            sudo -u $USER ${DEPLOY_DIR}/python/bin/python bootstrap.py -v 1.7.0 --distribute
         fi
    
         # Must use -i so buildout cache is used. That necessitates full paths as arguments.

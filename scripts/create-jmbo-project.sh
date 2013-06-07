@@ -48,6 +48,7 @@ cp versions.cfg ${PROJECT_DIR}/
 cp setup-development.sh ${PROJECT_DIR}/
 cp handler.py ${PROJECT_DIR}/
 cp deviceproxy.yaml.in ${PROJECT_DIR}/deviceproxy_${SITE}.yaml
+cp test_settings.py ${PROJECT_DIR}/
 touch ${PROJECT_DIR}/AUTHORS.rst
 touch ${PROJECT_DIR}/CHANGELOG.rst
 touch ${PROJECT_DIR}/README.rst
@@ -93,6 +94,7 @@ sed -i "17s/.*/    ${EGG}/" ${PROJECT_DIR}/live_base_conventional.cfg
 
 # Replace the word skeleton with the app name
 sed -i s/skeleton/${APP}/g ${PROJECT_DIR}/*.cfg
+sed -i s/skeleton/${APP}/g ${PROJECT_DIR}/*.py
 sed -i s/skeleton/${APP}/g ${APP_DIR}/*.py
 sed -i s/skeleton/${APP}/g ${APP_DIR}/migrations/*.py
 
