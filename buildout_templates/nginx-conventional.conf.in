@@ -2,6 +2,7 @@ server {
     listen ${port};
     server_name ${server-name}; 
     client_max_body_size 100m;
+    gzip_types application/x-javascript text/css;
 
     # static resources
     location ^~ /media/ {
