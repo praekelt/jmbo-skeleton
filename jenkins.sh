@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # The following libraries must be installed on Ubuntu 12.04 for Jenkins to
 # function:
