@@ -31,7 +31,7 @@ libraries=sqlite3\
 cd ..
 
 # Loop over all applicable buildouts
-for f in `ls /tmp/${REPO}/${DEPLOY_TYPE}_*.cfg`
+for f in `ls *.cfg`
 do
     if [[ $FILENAME != *_base_*.cfg ]] && [[ $FILENAME != *_constants_*.cfg ]] && [[ $FILENAME != buildout.cfg ]] && [[ $FILENAME != versions.cfg ]]; then
         ./bin/buildout -Nv -c $f
