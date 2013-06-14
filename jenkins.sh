@@ -32,7 +32,8 @@ cd ..
 
 # Loop over all applicable buildouts
 for f in `ls *_*_*.cfg`; do
-    if [[ $FILENAME != *_base_*.cfg ]] && [[ $FILENAME != *_constants_*.cfg ]]; then
+    if [[ $f != *_base_*.cfg ]] && [[ $f != *_constants_*.cfg ]]; then
+        echo "Buildout of file $f"
         # django-setuptestrunner has an idempotency  bug which requires it to
         # be removed. Leave the last iteration intact because we need it later.
         rm bin/setuptest-runner
