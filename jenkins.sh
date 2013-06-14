@@ -45,6 +45,7 @@ done
 # If this product is jmbo-skeleton itself then run jmbo-foundry tests, else run
 # product tests.
 if [ -d "skeleton" ]; then
+    rm -rf src/jmbo-foundry
     git clone git@github.com:praekelt/jmbo-foundry.git src/jmbo-foundry
     cd src/jmbo-foundry
     ../../bin/setuptest-runner setup.py test
