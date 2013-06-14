@@ -31,9 +31,9 @@ libraries=sqlite3\
 cd ..
 
 # Loop over all applicable buildouts
-for f in `ls *.cfg`
+for f in `ls *_*_*.cfg`
 do
-    if [[ $FILENAME != *_base_*.cfg ]] && [[ $FILENAME != *_constants_*.cfg ]] && [[ $FILENAME != buildout.cfg ]] && [[ $FILENAME != versions.cfg ]]; then
+    if [[ $FILENAME != *_base_*.cfg ]] && [[ $FILENAME != *_constants_*.cfg ]]; then
         ./bin/buildout -Nv -c $f
         EXIT_CODE=$?
         if [ $EXIT_CODE != 0 ]; then
