@@ -6,8 +6,6 @@
 # libproj0 libproj-dev libgeos-3.2.2 libgdal1-dev libgeoip1 libgeoip-dev
 # libgdal1-1.7.0 unzip
 
-SITE_TYPE=basic
-
 rm test.db
 
 rm -rf ve bin	
@@ -32,13 +30,18 @@ libraries=sqlite3\
 ../ve/bin/python setup.py install
 cd ..
 
-rm -rf src
-./bin/buildout -Nv -c dev_${SITE_TYPE}_site.cfg
-EXIT_CODE=$?
-if [ $EXIT_CODE != 0 ]; then
-    echo "Buildout failure. Aborting."
-    exit 1
-fi
+# Loop over all applicable buildouts
+for f in `ls /tmp/${REPO}/${DEPLOY_TYPE}_*.cfg`
+do
+    if [[ $FILENAME != *_base_*.cfg ]] && [[ $FILENAME != *_constants_*.cfg ]] && [[ $FILENAME != buildout.cfg ]] && [[ $FILENAME != versions.cfg ]]; then
+        ./bin/buildout -Nv -c $f
+        EXIT_CODE=$?
+        if [ $EXIT_CODE != 0 ]; then
+            echo "Buildout failure. Aborting."
+            exit 1
+        fi
+    fi
+done
 
 # If this product is jmbo-skeleton itself then run jmbo-foundry tests, else run
 # product tests.
