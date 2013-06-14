@@ -2,7 +2,7 @@
 
 SITE_TYPE=basic
 
-rm skeleton.db
+rm test.db
 
 rm -rf ve bin	
 virtualenv --no-site-packages ve
@@ -27,21 +27,19 @@ libraries=sqlite3\
 cd ..
 
 rm -rf src
-./bin/buildout -v -c dev_${SITE_TYPE}_site.cfg
+./bin/buildout -Nv -c dev_${SITE_TYPE}_site.cfg
 EXIT_CODE=$?
 if [ $EXIT_CODE != 0 ]; then
     echo "Buildout failure. Aborting."
     exit 1
 fi
 
-./bin/skeleton-dev-$SITE_TYPE-site syncdb --noinput
-./bin/skeleton-dev-$SITE_TYPE-site migrate
-./bin/skeleton-dev-$SITE_TYPE-site load_photosizes
-./bin/skeleton-dev-$SITE_TYPE-site loaddata skeleton/fixtures/sites.json
-rm -rf static
-./bin/skeleton-dev-$SITE_TYPE-site collectstatic --noinput
-
-# Checkout jmbo-foundry explicitly so we can run tests
-git clone git@github.com:praekelt/jmbo-foundry.git src/jmbo-foundry
-cd src/jmbo-foundry
-../../bin/setuptest-runner setup.py test
+# If this product is jmbo-skeleton itself then run jmbo-foundry tests, else run
+# product tests.
+if [ -d "skeleton" ]; then
+    git clone git@github.com:praekelt/jmbo-foundry.git src/jmbo-foundry
+    cd src/jmbo-foundry
+    ../../bin/setuptest-runner setup.py test
+else
+    ./bin/setuptest-runner setup.py test
+fi

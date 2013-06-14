@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 from post.models import Post
 from foundry.models import Member
 
+
 class Client(BaseClient):
     """Bug in django/test/client.py omits wsgi.input"""
 
@@ -25,8 +26,8 @@ class TestCase(unittest.TestCase):
         self.client = Client()
 
         # Post-syncdb steps
-        management.call_command('migrate', interactive=False)
         management.call_command('load_photosizes', interactive=False)
+        management.call_command('loaddata', 'skeleton/fixtures/sites.json', interactive=False)
 
         # Editor
         self.editor, dc = Member.objects.get_or_create(
