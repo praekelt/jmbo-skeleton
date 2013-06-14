@@ -47,6 +47,7 @@ cp setup.py ${PROJECT_DIR}/
 cp versions.cfg ${PROJECT_DIR}/
 cp setup-development.sh ${PROJECT_DIR}/
 cp handler.py ${PROJECT_DIR}/
+cp jenkins.sh ${PROJECT_DIR}/
 cp deviceproxy.yaml.in ${PROJECT_DIR}/deviceproxy_${SITE}.yaml
 cp test_settings.py ${PROJECT_DIR}/
 touch ${PROJECT_DIR}/AUTHORS.rst

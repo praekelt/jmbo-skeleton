@@ -1,5 +1,11 @@
 #!/bin/sh
 
+# The following libraries must be installed on Ubuntu 12.04 for Jenkins to
+# function:
+# libjpeg-dev zlib1g-dev build-essential git-core libsqlite3-dev libxslt1-dev
+# libproj0 libproj-dev libgeos-3.2.2 libgdal1-dev libgeoip1 libgeoip-dev
+# libgdal1-1.7.0 unzip
+
 SITE_TYPE=basic
 
 rm test.db
