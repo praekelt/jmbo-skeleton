@@ -11,6 +11,8 @@ rm test.db
 rm -rf ve bin	
 virtualenv --no-site-packages ve
 ve/bin/python bootstrap.py -v 1.7.0 --distribute
+ve/bin/easy_install genshi
+ve/bin/easy_install gunicorn
 
 # We must do a custom build of pysqlite
 wget http://pysqlite.googlecode.com/files/pysqlite-2.6.0.tar.gz
@@ -34,17 +36,23 @@ cd ..
 for f in `ls *_*_*.cfg`; do
     if [[ $f != *_base_*.cfg ]] && [[ $f != *_constants_*.cfg ]]; then
         echo "Buildout of file $f"
-        # django-setuptestrunner has an idempotency  bug which requires it to
-        # be removed. Leave the last iteration intact because we need it later.
-        rm bin/setuptest-runner
         ./bin/buildout -Nv -c $f
         EXIT_CODE=$?
         if [ $EXIT_CODE != 0 ]; then
             echo "Buildout failure. Aborting."
             exit 1
         fi
+        # Hack required because (1) existing bin/setuptest-runner is removed if
+        # the file does not declare that section and (2) django-setuptestrunner
+        # has an idempotency bug.
+        if [ -f bin/setuptest-runner ]; then
+            mv bin/setuptest-runner .
+        fi
     fi
 done
+
+# Restore setuptest-runner
+cp setuptest-runner bin/
 
 # If this product is jmbo-skeleton itself then run jmbo-foundry tests, else run
 # product tests.
