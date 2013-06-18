@@ -10,6 +10,7 @@ next
 #. Remove media-links from configs. It is redundant.
 #. Use gunicorn in way advised by Django.
 #. Install `device-proxy` through pip from pypi.
+#. Admin runs on its own instance. This enables us to set longer timeouts to handle the more expensive queries.
 
 0.7.1
 -----
