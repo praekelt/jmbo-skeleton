@@ -21,32 +21,31 @@ class Client(BaseClient):
 
 class TestCase(unittest.TestCase):
 
-    def setUp(self):
-        self.request = RequestFactory()
-        self.client = Client()
+    @classmethod  
+    def setUpClass(cls):
+        cls.request = RequestFactory()
+        cls.client = Client()
 
         # Post-syncdb steps
+        management.call_command('migrate', interactive=False)
         management.call_command('load_photosizes', interactive=False)
         management.call_command('loaddata', 'skeleton/fixtures/sites.json', interactive=False)
 
         # Editor
-        self.editor, dc = Member.objects.get_or_create(
+        cls.editor, dc = Member.objects.get_or_create(
             username='editor',
             email='editor@test.com'
         )
-        self.editor.set_password("password")
-        self.editor.save()
+        cls.editor.set_password("password")
+        cls.editor.save()
         
         # Post
         post, dc = Post.objects.get_or_create(
             title='Post 1', content='<b>aaa</b>',
-            owner=self.editor, state='published',
+            owner=cls.editor, state='published',
         )
         post.sites = [1]
         post.save()
-
-        setattr(self, '_initialized', 1)
-
 
     def test_common_urls(self):
         """High-level test to confirm common set of URLs render"""
