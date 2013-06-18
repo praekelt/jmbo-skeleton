@@ -1,0 +1,11 @@
+# Configuration for admin site.
+
+[buildout]
+extends=DEPLOY_TYPE_PLACEHOLDER_base_admin.cfg DEPLOY_TYPE_PLACEHOLDER_constants_SITE_NAME_PLACEHOLDER.cfg
+site-type = admin
+
+[skeleton-supervisor-django]
+port-prefix = ${buildout:port-prefix}9
+
+[skeleton-nginx]
+server-name = ${buildout:admin-server-name}

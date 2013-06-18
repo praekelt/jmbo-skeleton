@@ -161,17 +161,20 @@ do
             sudo -u $USER ./bin/$THEDIR collectstatic --noinput
 
             # Cron entries
-            sudo rm /tmp/acron
-            touch /tmp/acron
-            sudo crontab -u $USER -l > /tmp/acron
-            for COMMAND in report_naughty_words jmbo_publish; do
-                RESULT=`grep "${THEDIR} ${COMMAND}" /tmp/acron`
-                if [ "$RESULT" == "" ]; then
-                    echo "0 * * * * ${DEPLOY_DIR}/${THEDIR}/bin/${THEDIR} ${COMMAND}" >> /tmp/acron
-                fi
-            done
-            sudo crontab -u $USER /tmp/acron
-            rm /tmp/acron
+            # Skip over admin. Will be more elegant once we use celery for jobs.
+            if [[ $FILENAME != *_admin_*.cfg ]]; then
+                sudo rm /tmp/acron
+                touch /tmp/acron
+                sudo crontab -u $USER -l > /tmp/acron
+                for COMMAND in report_naughty_words jmbo_publish; do
+                    RESULT=`grep "${THEDIR} ${COMMAND}" /tmp/acron`
+                    if [ "$RESULT" == "" ]; then
+                        echo "0 * * * * ${DEPLOY_DIR}/${THEDIR}/bin/${THEDIR} ${COMMAND}" >> /tmp/acron
+                    fi
+                done
+                sudo crontab -u $USER /tmp/acron
+                rm /tmp/acron
+            fi
 
             let DJANGO_SITE_INDEX++
         fi                

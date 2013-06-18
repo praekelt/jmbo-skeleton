@@ -3,11 +3,13 @@ A site that serves on basic, smart and web has this convention.
 We use up to 100 ports for each site. Ports are offset from a port base. A
 typical port base is N=8100.
 
-The Django processes use gunicorn and up to 9 ports per layer.
+The Django processes use gunicorn and up to 4 ports per layer.
 
-Web = N+11, N+12, ..., [N+19]
-Basic = N+21, N+22, ..., [N+29]
-Smart = N+31, N+32, ..., [N+39]
+Web = N+11, N+12, ..., [N+14]
+Basic = N+21, N+22, ..., [N+24]
+Smart = N+31, N+32, ..., [N+34]
+
+The Django process for admin runs on port N+91.
 
 Haproxy is configured for conventional non-mobi devices on port N. It acts as a
 normal load balancer.
