@@ -11,12 +11,12 @@ setup(
     url='',
     packages = find_packages(),
     install_requires = [
-        'jmbo-foundry>=1.1.18.1',
+        'jmbo-foundry>=1.1.19',
         'raven<3.0.0',
     ],
     include_package_data=True,
     tests_require=[
-        'django-setuptest>=0.1.2',
+        'django-setuptest>=0.1.4',
     ],
     test_suite="setuptest.setuptest.SetupTestSuite",
     classifiers=[
