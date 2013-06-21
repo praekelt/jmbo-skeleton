@@ -1,5 +1,5 @@
 from django.core import management
-from django.utils import unittest
+from django.test import TestCase as BaseTestCase
 from django.test.client import Client as BaseClient, FakePayload, \
     RequestFactory
 from django.core.urlresolvers import reverse
@@ -8,26 +8,14 @@ from post.models import Post
 from foundry.models import Member
 
 
-class Client(BaseClient):
-    """Bug in django/test/client.py omits wsgi.input"""
-
-    def _base_environ(self, **request):
-        result = super(Client, self)._base_environ(**request)
-        result['HTTP_USER_AGENT'] = 'Django Unittest'
-        result['HTTP_REFERER'] = 'dummy'
-        result['wsgi.input'] = FakePayload('')
-        return result
-
-
-class TestCase(unittest.TestCase):
+class TestCase(BaseTestCase):
 
     @classmethod  
     def setUpClass(cls):
         cls.request = RequestFactory()
-        cls.client = Client()
+        cls.client = BaseClient()
 
         # Post-syncdb steps
-        management.call_command('migrate', interactive=False)
         management.call_command('load_photosizes', interactive=False)
         management.call_command('loaddata', 'skeleton/fixtures/sites.json', interactive=False)
 

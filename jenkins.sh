@@ -6,31 +6,11 @@
 # libproj0 libproj-dev libgeos-3.2.2 libgdal1-dev libgeoip1 libgeoip-dev
 # libgdal1-1.7.0 unzip
 
-rm test.db
-
 rm -rf ve bin	
 virtualenv --no-site-packages ve
 ve/bin/python bootstrap.py -v 1.7.0 --distribute
 ve/bin/easy_install genshi
 ve/bin/easy_install gunicorn
-
-# We must do a custom build of pysqlite
-wget http://pysqlite.googlecode.com/files/pysqlite-2.6.0.tar.gz
-tar xzf pysqlite-2.6.0.tar.gz
-cd pysqlite-2.6.0
-echo "[build_ext]\
-    
-#define=\
-    
-include_dirs=/usr/local/include\
-    
-library_dirs=/usr/local/lib\
-    
-libraries=sqlite3\
-    
-#define=SQLITE_OMIT_LOAD_EXTENSION" > setup.cfg
-../ve/bin/python setup.py install
-cd ..
 
 # Loop over all applicable buildouts
 for f in `ls *_*_*.cfg`; do
@@ -62,5 +42,9 @@ if [ -d "skeleton" ]; then
     cd src/jmbo-foundry
     ../../bin/setuptest-runner setup.py test
 else
+    # Bug in django-setuptest means database db_name must exist, even though it is
+    # not used.
+    psql -U test -d template1 -c "CREATE DATABASE db_name WITH OWNER test ENCODING 'UTF8' TEMPLATE template_postgis;"
+    psql -U test -d template1 -c "DROP DATABASE test_db_name;"
     ./bin/setuptest-runner setup.py test
 fi
