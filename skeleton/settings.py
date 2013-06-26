@@ -272,7 +272,7 @@ LOGGING = {
     },
     'handlers': {
         'console': {
-            'level': 'DEBUG',
+            'level': 'WARN',
             'class': 'logging.StreamHandler',
             'formatter': 'verbose'
         },
@@ -284,18 +284,18 @@ LOGGING = {
     },
     'loggers': {
         'raven': {
-            'level': 'DEBUG',
+            'level': 'ERROR',
             'handlers': ['console'],
             'propagate': True,
         },
         'sentry.errors': {
-            'level': 'DEBUG',
+            'level': 'ERROR',
             'handlers': ['console'],
             'propagate': True,
         },
         'django': {
             'handlers': ['console'],
-            'level': 'DEBUG',
+            'level': 'WARN',
             'propagate': False,
         },
     },

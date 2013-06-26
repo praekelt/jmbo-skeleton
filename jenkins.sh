@@ -6,6 +6,10 @@
 # libproj0 libproj-dev libgeos-3.2.2 libgdal1-dev libgeoip1 libgeoip-dev
 # libgdal1-1.7.0 unzip
 
+# Create the PostgreSQL user:
+# create user test with password='';
+# alter user test createdb;
+
 rm -rf ve bin	
 virtualenv --no-site-packages ve
 ve/bin/python bootstrap.py -v 1.7.0 --distribute
