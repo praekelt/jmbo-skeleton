@@ -309,3 +309,8 @@ SOCIAL_AUTH_USER_MODEL = 'foundry.Member'
 #FACEBOOK_API_SECRET = ''
 #TWITTER_CONSUMER_KEY = ''
 #TWITTER_CONSUMER_SECRET = ''
+
+# Debug toolbar. Uncomment if required.
+#INSTALLED_APPS += ('debug_toolbar',)
+#MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',) 
+#INTERNAL_IPS = ('127.0.0.1',)
