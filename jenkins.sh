@@ -41,6 +41,11 @@ cp setuptest-runner bin/
 # If this product is jmbo-skeleton itself then run jmbo-foundry tests, else run
 # product tests.
 if [ -d "skeleton" ]; then
+    # Bug in django-setuptest means database foundry must exist, even though it
+    # is not used.
+    psql -U test -d template1 -c "CREATE DATABASE foundry WITH OWNER test ENCODING 'UTF8' TEMPLATE template_postgis;"
+    psql -U test -d template1 -c "DROP DATABASE test_foundry;"
+
     rm -rf src/jmbo-foundry
     git clone git@github.com:praekelt/jmbo-foundry.git src/jmbo-foundry
     cd src/jmbo-foundry
