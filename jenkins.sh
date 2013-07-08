@@ -7,7 +7,7 @@
 # libgdal1-1.7.0 unzip
 
 # Create the PostgreSQL user:
-# create user test with password='';
+# create user test with password '';
 # alter user test createdb;
 
 rm -rf ve bin
