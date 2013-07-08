@@ -46,9 +46,29 @@ if [ -d "skeleton" ]; then
     cd src/jmbo-foundry
     ../../bin/setuptest-runner setup.py test
 else
-    # Bug in django-setuptest means database db_name must exist, even though it is
-    # not used.
-    psql -U test -d template1 -c "CREATE DATABASE db_name WITH OWNER test ENCODING 'UTF8' TEMPLATE template_postgis;"
-    psql -U test -d template1 -c "DROP DATABASE test_db_name;"
-    ./bin/setuptest-runner setup.py test
+    ONE_LAYER_FAILED=0
+    # Test all layers
+    for layers in "('basic',)" "('smart', 'basic')" "('web', 'basic')"; do
+        echo ""
+        echo "****************************************************************"
+        echo "TESTING LAYERS $layers"
+        echo "****************************************************************"
+        # Until django-setuptest can take a settings file as parameter hack the
+        # test_settings.py file.
+        sed -i '$d' test_settings.py
+        echo "FOUNDRY['layers'] = ${layers}" >> test_settings.py
+        # Bug in django-setuptest means database db_name must exist, even
+        # though it is not used.
+        psql -U test -d template1 -c "CREATE DATABASE db_name WITH OWNER test ENCODING 'UTF8' TEMPLATE template_postgis;"
+        psql -U test -d template1 -c "DROP DATABASE test_db_name;"
+        ./bin/setuptest-runner setup.py test
+        EXIT_CODE=$?
+        if [ $EXIT_CODE != 0 ]; then
+            ONE_LAYER_FAILED=1
+        fi
+    done
+    if [ $ONE_LAYER_FAILED == 1 ]; then
+        echo "Tests failed for at least one layer. See the log."
+        exit 1
+    fi
 fi
