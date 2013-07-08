@@ -11,3 +11,5 @@ DATABASES = {
         'PORT': '',
     }
 }
+
+# Need this last line until django-setuptest is improved. 
