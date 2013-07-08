@@ -22,7 +22,7 @@ while getopts "p:d:r:b:c:u:l:" opt; do
             CREDENTIALS=$OPTARG;;
         u)
             USER=$OPTARG;;
-    esac    
+    esac
 done
 
 if [[ -z "$PREFIX" || -z "$DEPLOY_TYPE" || -z "$OWNER_AND_REPO" || -z "$BRANCH" || -z "$CREDENTIALS" ]];
@@ -105,13 +105,16 @@ do
         # https://pypi.python.org/packages/source/d/distribute/distribute-0.6.45.tar.gz
         # to /var/www/.buildout/downloads if they are not there.
         # todo: softcode
-        sudo -u $USER ${DEPLOY_DIR}/python/bin/python bootstrap.py -v 1.7.0 --distribute --setup-source=/var/www/distribute_setup.py --download-base=/var/www/.buildout/downloads --eggs=/var/www/.buildout/eggs
-        EXIT_CODE=$?
-        if [ $EXIT_CODE != 0 ]; then
-            # Try online mode
-            sudo -u $USER ${DEPLOY_DIR}/python/bin/python bootstrap.py -v 1.7.0 --distribute
-        fi
-   
+        #sudo -u $USER ${DEPLOY_DIR}/python/bin/python bootstrap.py -v 1.7.0 --distribute --setup-source=/var/www/distribute_setup.py --download-base=/var/www/.buildout/downloads --eggs=/var/www/.buildout/eggs
+        #EXIT_CODE=$?
+        #if [ $EXIT_CODE != 0 ]; then
+        #    # Try online mode
+        #    sudo -u $USER ${DEPLOY_DIR}/python/bin/python bootstrap.py -v 1.7.0 --distribute
+        #fi
+
+        # todo: distribute is deprecated and causing issues. Find offline equivalent for setuptools.
+        sudo -u $USER ${DEPLOY_DIR}/python/bin/python bootstrap.py -v 1.7.0
+
         # Must use -i so buildout cache is used. That necessitates full paths as arguments.
         sudo -u $USER -i ${WORKING_DIR}/${THEDIR}/bin/buildout -Nv -c ${WORKING_DIR}/${THEDIR}/$FILENAME
         EXIT_CODE=$?
@@ -119,7 +122,7 @@ do
             echo "Buildout failure. Aborting."
             exit 1
         fi
-        
+
         if [[ $FILENAME != *_common_*.cfg ]]; then
 
             # Database setup on first loop
@@ -133,7 +136,7 @@ do
                     # 2. CT in DB, 0001 migration does not exist - fake migrate 0001
                     # 3. CT in DB, 0001 migration exists - migrate
                     FAKE_MIGRATE=""
-                    for APP in competition music banner; do 
+                    for APP in competition music banner; do
                         RESULT=`sudo -u $USER ./bin/$THEDIR dumpdata contenttypes | grep "\"app_label\": \"$APP\""`
                         if [ "$RESULT" != "" ]; then
                             # CT is in DB. Now check for 0001 migration.
@@ -145,10 +148,10 @@ do
                         fi
                     done
 
-	                sudo -u $USER ./bin/$THEDIR syncdb --noinput                
+	                sudo -u $USER ./bin/$THEDIR syncdb --noinput
 
                     # Apply fake migrations
-                    for APP in $FAKE_MIGRATE; do 
+                    for APP in $FAKE_MIGRATE; do
                         sudo -u $USER ./bin/$THEDIR migrate ${APP} 0001_initial --fake
                     done
                 fi
@@ -177,7 +180,7 @@ do
             fi
 
             let DJANGO_SITE_INDEX++
-        fi                
+        fi
     fi
 done
 
@@ -187,15 +190,15 @@ done
 # elegant.
 sudo -u $USER find $WORKING_DIR -name "*.pyc" | sudo -u $USER xargs rm
 for f in `find ${WORKING_DIR} -name "*.conf"`
-do 
+do
     sudo -u $USER sed -i "s?${WORKING_DIR}?${DEPLOY_DIR}?g" $f
 done
 for f in `find ${WORKING_DIR} -name "*.cfg"`
-do 
+do
     sudo -u $USER sed -i "s?${WORKING_DIR}?${DEPLOY_DIR}?g" $f
 done
 for f in `find ${WORKING_DIR} -type f -name "*" | grep /bin/`
-do 
+do
     sudo -u $USER sed -i "s?${WORKING_DIR}?${DEPLOY_DIR}?g" $f
 done
 
@@ -203,7 +206,7 @@ done
 for f in `ls $WORKING_DIR`
 do
     # Delete target directories that contain source. The others (log, media etc are updated).
-    if [[ $f == log ]] || [[ $f == *-media-* ]] || [[ $f == media-* ]]; then    
+    if [[ $f == log ]] || [[ $f == *-media-* ]] || [[ $f == media-* ]]; then
         sudo -u $USER cp -r -u ${WORKING_DIR}/${f} $DEPLOY_DIR/
     else
         # Delete target if it exists

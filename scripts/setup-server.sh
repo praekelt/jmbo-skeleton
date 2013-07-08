@@ -15,12 +15,12 @@ while getopts "p:s:" opt; do
             WEBDAV_PASSWORD=$OPTARG;;
         s)
             INSTALL_SENTRY=$OPTARG;;
-    esac    
+    esac
 done
 
 
 echo "Installing required Ubuntu packages..."
-# Postgres is special. We want only one instance since Ubuntu will happily 
+# Postgres is special. We want only one instance since Ubuntu will happily
 # install different versions side by side.
 sudo /etc/init.d/postgresql stop
 sudo apt-get remove "postgresql-8.4"
@@ -36,11 +36,11 @@ sudo sed -i "s/local   all             all                                     p
 sudo /etc/init.d/postgresql restart
 
 echo "Configuring PostGIS..."
-sudo -u postgres createdb -E UTF8 template_postgis 
+sudo -u postgres createdb -E UTF8 template_postgis
 sudo -u postgres createlang -d template_postgis plpgsql
-sudo -u postgres psql -d postgres -c "UPDATE pg_database SET datistemplate='true' WHERE datname='template_postgis';" 
-sudo -u postgres psql -d template_postgis -f /usr/share/postgresql/9.1/contrib/postgis-1.5/postgis.sql 
-sudo -u postgres psql -d template_postgis -f /usr/share/postgresql/9.1/contrib/postgis-1.5/spatial_ref_sys.sql 
+sudo -u postgres psql -d postgres -c "UPDATE pg_database SET datistemplate='true' WHERE datname='template_postgis';"
+sudo -u postgres psql -d template_postgis -f /usr/share/postgresql/9.1/contrib/postgis-1.5/postgis.sql
+sudo -u postgres psql -d template_postgis -f /usr/share/postgresql/9.1/contrib/postgis-1.5/spatial_ref_sys.sql
 sudo -u postgres psql -d template_postgis -c "GRANT ALL ON geometry_columns TO PUBLIC;"
 sudo -u postgres psql -d template_postgis -c "GRANT ALL ON spatial_ref_sys TO PUBLIC;"
 sudo -u postgres psql -d template_postgis -c "GRANT ALL ON geography_columns TO PUBLIC;"
@@ -65,7 +65,7 @@ if [ "$WEBDAV_PASSWORD" != "" ]; then
     sudo a2enmod dav_fs
     sudo a2enmod dav
     # Can't use port 80
-    sudo sed -i "s/80/81/g" /etc/apache2/ports.conf 
+    sudo sed -i "s/80/81/g" /etc/apache2/ports.conf
     sudo rm /etc/apache2/sites-enabled/default
     DIRNAME=`dirname $0`
     sudo cp ${DIRNAME}/resources/apache2-webdav.conf /etc/apache2/sites-enabled/000-default
@@ -78,7 +78,7 @@ fi
 
 echo "Setting up the Django directory..."
 sudo mkdir ${DEPLOY_DIR}
-sudo virtualenv ${DEPLOY_DIR}/python --no-site-packages
+sudo virtualenv ${DEPLOY_DIR}/python --no-site-packages --setuptools
 sudo mkdir ${DEPLOY_DIR}/log
 sudo chown -R www-data:www-data ${DEPLOY_DIR}
 

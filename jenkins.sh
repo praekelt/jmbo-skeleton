@@ -11,8 +11,8 @@
 # alter user test createdb;
 
 rm -rf ve bin
-virtualenv --no-site-packages ve
-ve/bin/python bootstrap.py -v 1.7.0 --distribute
+virtualenv --no-site-packages --setuptools ve
+ve/bin/python bootstrap.py -v 1.7.0
 ve/bin/easy_install genshi
 ve/bin/easy_install gunicorn
 
