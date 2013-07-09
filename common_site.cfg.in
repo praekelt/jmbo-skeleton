@@ -10,7 +10,7 @@
 extends = DEPLOY_TYPE_PLACEHOLDER_constants_SITE_NAME_PLACEHOLDER.cfg
 extensions=
     lovely.buildouthttp
-parts=
+parts+=
     skeleton-supervisor-haproxy
     skeleton-supervisor-deviceproxy
     skeleton-haproxy
@@ -49,7 +49,7 @@ web-layers = ${buildout:web-layers}
 
 [directories]
 recipe = z3c.recipe.mkdir
-paths =    
+paths =
     ../log/skeleton/DEPLOY_TYPE_PLACEHOLDER/common/${buildout:site-name}
     ../log/skeleton/DEPLOY_TYPE_PLACEHOLDER/mobi/${buildout:site-name}
 
