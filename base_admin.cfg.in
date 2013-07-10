@@ -6,7 +6,7 @@
 extensions=
     lovely.buildouthttp
     mr.developer
-parts=
+parts+=
     skeleton
     skeleton-supervisor-django
     skeleton-nginx
@@ -14,9 +14,9 @@ parts=
 eggs=
     psycopg2
     jmbo-skeleton
-extends = 
+extends =
     versions.cfg
-versions = versions    
+versions = versions
 develop = .
 unzip = true
 auto-checkout = *
