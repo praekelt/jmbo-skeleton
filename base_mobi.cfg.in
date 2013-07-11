@@ -1,5 +1,5 @@
 # Base configuration for sites which have UA template switching, eg.  mobi
-# sites. 
+# sites.
 #
 # Do not edit unless you know what you are doing.
 
@@ -7,16 +7,16 @@
 extensions=
     lovely.buildouthttp
     mr.developer
-parts=
+parts+=
     skeleton
     skeleton-supervisor-django
     directories
 eggs=
     psycopg2
     jmbo-skeleton
-extends = 
+extends =
     versions.cfg
-versions = versions    
+versions = versions
 develop = .
 unzip = true
 auto-checkout = *
@@ -46,7 +46,7 @@ error-log = ${buildout:directory}/../log/skeleton/DEPLOY_TYPE_PLACEHOLDER/${buil
 
 [directories]
 recipe = z3c.recipe.mkdir
-paths = 
+paths =
     ../skeleton-media-DEPLOY_TYPE_PLACEHOLDER/uploads
     ../skeleton-media-DEPLOY_TYPE_PLACEHOLDER/downloads
     ../log/skeleton/DEPLOY_TYPE_PLACEHOLDER/${buildout:site-type}/${buildout:site-name}
