@@ -87,18 +87,19 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'foundry.middleware.AgeGateway',                            
+    'foundry.middleware.AgeGateway',
     'foundry.middleware.CheckProfileCompleteness',
     'django.contrib.messages.middleware.MessageMiddleware',
     'likes.middleware.SecretBallotUserIpUseragentMiddleware',
     'foundry.middleware.PaginationMiddleware',
-    'foundry.middleware.VerboseRequestMeta',                    
+    'foundry.middleware.VerboseRequestMeta',
     'foundry.middleware.LastSeen',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
 )
 
-# A tuple of callables that are used to populate the context in RequestContext. 
-# These callables take a request object as their argument and return a 
+# A tuple of callables that are used to populate the context in RequestContext.
+# These callables take a request object as their argument and return a
 # dictionary of items to be merged into the context.
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",
@@ -170,6 +171,7 @@ INSTALLED_APPS = (
     'django.contrib.comments',
     'django.contrib.contenttypes',
     'django.contrib.humanize',
+    'django.contrib.flatpages',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.staticfiles',
@@ -221,12 +223,12 @@ SIMPLE_AUTOCOMPLETE = {
     'auth.user': {'threshold': 20},
     'category.category': {'threshold':20},
     'jmbo.modelbase': {
-        'threshold': 50, 
+        'threshold': 50,
         'duplicate_format_function': lambda item, model, content_type: item.as_leaf_class().content_type.name
     }
 }
 
-STATICFILES_FINDERS = ( 
+STATICFILES_FINDERS = (
     'foundry.finders.FileSystemLayerAwareFinder',
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -312,5 +314,5 @@ SOCIAL_AUTH_USER_MODEL = 'foundry.Member'
 
 # Debug toolbar. Uncomment if required.
 #INSTALLED_APPS += ('debug_toolbar',)
-#MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',) 
+#MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 #INTERNAL_IPS = ('127.0.0.1',)
