@@ -10,7 +10,7 @@ from foundry.models import Member
 
 class TestCase(BaseTestCase):
 
-    @classmethod  
+    @classmethod
     def setUpClass(cls):
         cls.request = RequestFactory()
         cls.client = BaseClient()
@@ -26,7 +26,7 @@ class TestCase(BaseTestCase):
         )
         cls.editor.set_password("password")
         cls.editor.save()
-        
+
         # Post
         post, dc = Post.objects.get_or_create(
             title='Post 1', content='<b>aaa</b>',
@@ -42,8 +42,9 @@ class TestCase(BaseTestCase):
             (reverse('login'), 200),
             (reverse('logout'), 302),
             (reverse('password_reset'), 200),
-            (reverse('terms-and-conditions'), 200), 
+            (reverse('terms-and-conditions'), 200),
             ('/post/post-1/', 200),
+            ('/sitemap.xml', 200),
         )
         for url, code in urls:
             print "Checking path %s" % url
