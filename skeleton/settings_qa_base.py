@@ -7,8 +7,8 @@ DATABASES = {
         'NAME': 'skeleton_qa',
         'USER': 'skeleton_qa',
         'PASSWORD': 'skeleton_qa',
-        'HOST': '',
-        'PORT': '',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 

@@ -10,8 +10,8 @@ DATABASES = {
         'NAME': 'skeleton_live',
         'USER': 'skeleton_live',
         'PASSWORD': 'skeleton_live',
-        'HOST': '',
-        'PORT': '',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
