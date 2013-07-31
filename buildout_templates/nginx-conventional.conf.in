@@ -38,6 +38,9 @@ server {
     location = /50x.html {
         root /usr/share/nginx/www;
     }
+    location = /50x.png {
+        root /usr/share/nginx/www;
+    }
 
     # logging
     access_log  ${log};
