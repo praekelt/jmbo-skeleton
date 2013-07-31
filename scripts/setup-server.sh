@@ -47,6 +47,7 @@ sudo -u postgres psql -d template_postgis -c "GRANT ALL ON geography_columns TO 
 
 echo "Configuring nginx..."
 # todo. Set max bucket size.
+DIRNAME=`dirname $0`
 sudo cp ${DIRNAME}/resources/50x.html /usr/share/nginx/www/
 sudo cp ${DIRNAME}/resources/50x.png /usr/share/nginx/www/
 
