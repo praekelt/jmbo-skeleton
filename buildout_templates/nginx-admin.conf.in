@@ -1,6 +1,6 @@
 server {
     listen ${port};
-    server_name ${server-name}; 
+    server_name ${server-name};
     client_max_body_size 100m;
     gzip_types application/x-javascript text/css;
 
@@ -30,7 +30,13 @@ server {
         proxy_connect_timeout 300;
         proxy_read_timeout 300;
         proxy_pass http://${proxy-host}:${proxy-port}/;
+        proxy_intercept_errors on;
         keepalive_timeout  0;
+    }
+
+    error_page 502 503 504 /50x.html;
+    location = /50x.html {
+        root /usr/share/nginx/www;
     }
 
     # logging
