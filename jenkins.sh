@@ -10,7 +10,7 @@
 # create user test with password '';
 # alter user test createdb;
 
-rm -rf ve bin
+rm -rf ve bin src
 virtualenv --no-site-packages --setuptools ve
 ve/bin/python bootstrap.py -v 1.7.0
 ve/bin/easy_install genshi
