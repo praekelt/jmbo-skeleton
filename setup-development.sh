@@ -6,14 +6,14 @@ then
     exit 1
 fi
 
-# Distribute and bootstrap sometimes have version conflicts. Delete.
-sudo rm -rf ve/lib/python2.7/site-packages/distribute*
 sudo apt-get install python-virtualenv python2.7-dev \
 libjpeg-dev zlib1g-dev build-essential git-core \
 sqlite3 libproj0 libproj-dev libgeos-3.2.2 libgdal1-dev \
 libgdal1-1.7.0 libspatialite3 spatialite-bin libgeoip1 libgeoip-dev --no-upgrade
+
 echo "Setting up sandboxed Python environment with Python 2.7"
-virtualenv --python=python2.7 --no-site-packages ve
+rm -rf ve bin
+virtualenv --python=python2.7 --no-site-packages --setuptools ve
 
 # We must do a custom build of pysqlite
 if [ ! -f pysqlite-2.6.0.tar.gz ]; then
@@ -36,7 +36,6 @@ libraries=sqlite3\
 sudo /sbin/ldconfig
 cd ..
 
-echo "Downloading distribute"
 ve/bin/python bootstrap.py -v 1.7.0
 
 APP_NAME=$1

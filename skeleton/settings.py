@@ -87,17 +87,19 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'foundry.middleware.AgeGateway',                            
+    'foundry.middleware.AgeGateway',
+    'foundry.middleware.CheckProfileCompleteness',
     'django.contrib.messages.middleware.MessageMiddleware',
     'likes.middleware.SecretBallotUserIpUseragentMiddleware',
     'foundry.middleware.PaginationMiddleware',
-    'foundry.middleware.VerboseRequestMeta',                    
+    'foundry.middleware.VerboseRequestMeta',
     'foundry.middleware.LastSeen',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
 )
 
-# A tuple of callables that are used to populate the context in RequestContext. 
-# These callables take a request object as their argument and return a 
+# A tuple of callables that are used to populate the context in RequestContext.
+# These callables take a request object as their argument and return a
 # dictionary of items to be merged into the context.
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",
@@ -169,10 +171,12 @@ INSTALLED_APPS = (
     'django.contrib.comments',
     'django.contrib.contenttypes',
     'django.contrib.humanize',
+    'django.contrib.flatpages',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.staticfiles',
-    'django.contrib.gis', # NEW
+    'django.contrib.gis',
+    'django.contrib.sitemaps',
     'django.contrib.admin',
     'raven.contrib.django',
 )
@@ -197,6 +201,9 @@ CKEDITOR_CONFIGS = {
     'default': {'toolbar': 'Basic'},
 }
 
+# Restrict uploaded file access to user who uploaded file
+CKEDITOR_RESTRICT_BY_USER = True
+
 # LASTFM_API_KEY = '' # not used yet
 
 LOGIN_URL = '/login'
@@ -205,9 +212,10 @@ LOGIN_REDIRECT_URL = '/'
 
 # todo: add setting to foundry paster
 AUTHENTICATION_BACKENDS = (
-    'social_auth.backends.facebook.FacebookBackend',
     'foundry.backends.MultiBackend',
     'django.contrib.auth.backends.ModelBackend',
+    'social_auth.backends.facebook.FacebookBackend',
+    'social_auth.backends.twitter.TwitterBackend',
 )
 
 COMMENTS_APP = 'foundry'
@@ -216,12 +224,12 @@ SIMPLE_AUTOCOMPLETE = {
     'auth.user': {'threshold': 20},
     'category.category': {'threshold':20},
     'jmbo.modelbase': {
-        'threshold': 50, 
+        'threshold': 50,
         'duplicate_format_function': lambda item, model, content_type: item.as_leaf_class().content_type.name
     }
 }
 
-STATICFILES_FINDERS = ( 
+STATICFILES_FINDERS = (
     'foundry.finders.FileSystemLayerAwareFinder',
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -234,6 +242,7 @@ ADMIN_APPS_EXCLUDE = (
     'Photologue',
     'Publisher',
     'Registration',
+    'Auth',
 )
 
 ADMIN_MODELS_EXCLUDE = (
@@ -251,8 +260,60 @@ DJANGO_ATLAS = {
     'google_maps_api_key': 'AIzaSyBvdwGsAn2h6tNI75M5cAcryln7rrTYqkk',
 }
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'filters': {
+         'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+         }
+     },
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'WARN',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        },
+        'sentry': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'raven.contrib.django.handlers.SentryHandler',
+        },
+    },
+    'loggers': {
+        'raven': {
+            'level': 'ERROR',
+            'handlers': ['console'],
+            'propagate': True,
+        },
+        'sentry.errors': {
+            'level': 'ERROR',
+            'handlers': ['console'],
+            'propagate': True,
+        },
+        'django': {
+            'handlers': ['console'],
+            'level': 'WARN',
+            'propagate': False,
+        },
+    },
+}
+
 SENTRY_DSN = 'ENTER_YOUR_SENTRY_DSN_HERE'
 
+# See django-socialauth project for all settings
 SOCIAL_AUTH_USER_MODEL = 'foundry.Member'
-FACEBOOK_APP_ID = 'YOUR_FACEBOOK_APP_ID'
-FACEBOOK_API_SECRET = 'YOUR_FACEBOOK_API_SECRET'
+#FACEBOOK_APP_ID = ''
+#FACEBOOK_API_SECRET = ''
+#TWITTER_CONSUMER_KEY = ''
+#TWITTER_CONSUMER_SECRET = ''
+
+# Debug toolbar. Uncomment if required.
+#INSTALLED_APPS += ('debug_toolbar',)
+#MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
+#INTERNAL_IPS = ('127.0.0.1',)

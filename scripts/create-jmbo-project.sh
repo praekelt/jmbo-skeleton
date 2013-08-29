@@ -46,7 +46,10 @@ cp .gitignore ${PROJECT_DIR}/
 cp setup.py ${PROJECT_DIR}/
 cp versions.cfg ${PROJECT_DIR}/
 cp setup-development.sh ${PROJECT_DIR}/
+cp handler.py ${PROJECT_DIR}/
+cp jenkins.sh ${PROJECT_DIR}/
 cp deviceproxy.yaml.in ${PROJECT_DIR}/deviceproxy_${SITE}.yaml
+cp test_settings.py ${PROJECT_DIR}/
 touch ${PROJECT_DIR}/AUTHORS.rst
 touch ${PROJECT_DIR}/CHANGELOG.rst
 touch ${PROJECT_DIR}/README.rst
@@ -81,17 +84,19 @@ sed -i "s/SITE_NAME_PLACEHOLDER/${SITE}/g" ${PROJECT_DIR}/*.cfg
 sed -i "s/PORT_PREFIX_PLACEHOLDER/${PORT}/g" ${PROJECT_DIR}/deviceproxy_*.yaml
 sed -i "s/DEPLOY_TYPE_PLACEHOLDER/qa/g" ${PROJECT_DIR}/qa_*.cfg
 sed -i "s/DEPLOY_TYPE_PLACEHOLDER/live/g" ${PROJECT_DIR}/live_*.cfg
+sed -i "s/db_name/${APP}/g" ${PROJECT_DIR}/jenkins.sh
 
-sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/dev_base.cfg
+sed -i "14s/.*/    ${EGG}/" ${PROJECT_DIR}/dev_base.cfg
 
-sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base_mobi.cfg
-sed -i "16s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base_conventional.cfg
+sed -i "16s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base_mobi.cfg
+sed -i "17s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base_conventional.cfg
 
-sed -i "15s/.*/    ${EGG}/" ${PROJECT_DIR}/live_base_mobi.cfg
-sed -i "16s/.*/    ${EGG}/" ${PROJECT_DIR}/live_base_conventional.cfg
+sed -i "16s/.*/    ${EGG}/" ${PROJECT_DIR}/live_base_mobi.cfg
+sed -i "17s/.*/    ${EGG}/" ${PROJECT_DIR}/live_base_conventional.cfg
 
 # Replace the word skeleton with the app name
 sed -i s/skeleton/${APP}/g ${PROJECT_DIR}/*.cfg
+sed -i s/skeleton/${APP}/g ${PROJECT_DIR}/*.py
 sed -i s/skeleton/${APP}/g ${APP_DIR}/*.py
 sed -i s/skeleton/${APP}/g ${APP_DIR}/migrations/*.py
 

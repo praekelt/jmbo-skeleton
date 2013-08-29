@@ -1,6 +1,6 @@
 [program:${name}.deviceproxy]
-command=${buildout:directory}/../python-deviceproxy/bin/twistd -n devproxy --config ${buildout:directory}/deviceproxy_${site-name}.yaml
-directory=${buildout:directory}/../device-proxy
+command=${buildout:directory}/../python-deviceproxy/bin/twistd --pidfile=/tmp/deviceproxy-${name}.pid -n devproxy --config ${buildout:directory}/deviceproxy_${site-name}.yaml
+directory=${buildout:directory}
 user=${user}
 numprocs=1
 stdout_logfile=${log}

@@ -1,6 +1,17 @@
 Changelog
 =========
 
+0.8
+---
+#. `setup-server.sh` gets optional arguments for a leaner install.
+#. `deploy-project.sh` does not lead to downtime anymore.
+#. Haproxy config does not need both basic and smart backends for mobi anymore.
+#. Remove media-links from configs. It is redundant.
+#. Use gunicorn in way advised by Django.
+#. Install `device-proxy` through pip from pypi.
+#. Admin runs on its own instance. This enables us to set longer timeouts to handle the more expensive queries.
+#. Mobile browsers are automatically directed to mobi now. They have the option of requesting the desktop site.
+
 0.7.1
 -----
 #. Bump `jmbo-foundry` to 1.1.10.
