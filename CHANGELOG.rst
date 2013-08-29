@@ -1,8 +1,8 @@
 Changelog
 =========
 
-next
-----
+0.8
+---
 #. `setup-server.sh` gets optional arguments for a leaner install.
 #. `deploy-project.sh` does not lead to downtime anymore.
 #. Haproxy config does not need both basic and smart backends for mobi anymore.
