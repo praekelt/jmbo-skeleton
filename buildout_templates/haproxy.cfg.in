@@ -23,47 +23,31 @@ defaults
     stats realm Jmbo\ Haproxy\ Statistics
     stats auth haproxy:stats
 
-frontend web-${options.name}
-    bind *:${options['port-prefix']}00
-    mode http
-    default_backend web-backend-${options.name}
-
-backend web-backend-${options.name}
-    {% with n=options['num-processes'] %}
-    {% if n == '1' %}
-    server web-backend-${options.name}-1 ${options.host}:${options['port-prefix']}11 weight 1 check maxconn 500 inter 10000
-    {% end %}
-    {% if n == '2' %}
-    server web-backend-${options.name}-1 ${options.host}:${options['port-prefix']}11 weight 1 check maxconn 500 inter 10000
-    server web-backend-${options.name}-2 ${options.host}:${options['port-prefix']}12 weight 1 check maxconn 500 inter 10000
-    {% end %}
-    {% if n == '3' %}
-    server web-backend-${options.name}-1 ${options.host}:${options['port-prefix']}11 weight 1 check maxconn 500 inter 10000
-    server web-backend-${options.name}-2 ${options.host}:${options['port-prefix']}12 weight 1 check maxconn 500 inter 10000
-    server web-backend-${options.name}-3 ${options.host}:${options['port-prefix']}13 weight 1 check maxconn 500 inter 10000
-    {% end %}
-    {% if n == '4' %}
-    server web-backend-${options.name}-1 ${options.host}:${options['port-prefix']}11 weight 1 check maxconn 500 inter 10000
-    server web-backend-${options.name}-2 ${options.host}:${options['port-prefix']}12 weight 1 check maxconn 500 inter 10000
-    server web-backend-${options.name}-3 ${options.host}:${options['port-prefix']}13 weight 1 check maxconn 500 inter 10000
-    server web-backend-${options.name}-4 ${options.host}:${options['port-prefix']}14 weight 1 check maxconn 500 inter 10000
-    {% end %}
-    {% end %}
-
-frontend mobi-${options.name}
+frontend ${options.name}
     bind *:${options['port-prefix']}01
     mode http
-    default_backend mobi-${options.name}-switcher
+    default_backend ${options.name}-switcher
 
-backend mobi-${options.name}-switcher
-    server mobi-${options.name}-1 ${options.host}:${options['port-prefix']}02 weight 1 check maxconn 500 inter 10000
+backend ${options.name}-switcher
+    server ${options.name}-1 ${options.host}:${options['port-prefix']}02 weight 1 check maxconn 500 inter 10000
 
-frontend mobi-${options.name}-upstream
+frontend ${options.name}-upstream
     bind *:${options['port-prefix']}09
     mode http
-    # high, smart are device-proxy default names. Jmbo uses smart and basic.
-    acl is_basic hdr_sub(X-UA-map) medium
-    acl is_smart hdr_sub(X-UA-map) high
+
+    acl is_web hdr_sub(X-UA-map) web
+    acl is_basic hdr_sub(X-UA-map) basic
+    acl is_smart hdr_sub(X-UA-map) smart
+
+    acl redirect_to_web hdr_sub(X-redirect-to-web) 1
+    acl redirect_to_mobi hdr_sub(X-redirect-to-mobi) 1
+
+    redirect location http://${options['web-server-name']}?show=web if redirect_to_web
+    redirect location http://${options['mobi-server-name']}?show=mobi if redirect_to_mobi
+
+    {% if 'web' in options['web-layers'] %}
+    use_backend web-backend-${options.name} if is_web
+    {% end %}
 
     {% if 'basic' in options['mobi-layers'] %}
     use_backend basic-backend-${options.name} if is_basic
@@ -87,6 +71,30 @@ frontend mobi-${options.name}-upstream
     default_backend smart-backend-${options.name}
     {% end %}
     {% end %}
+
+{% if 'web' in options['web-layers'] %}
+backend web-backend-${options.name}
+    {% with n=options['num-processes'] %}
+    {% if n == '1' %}
+    server web-backend-${options.name}-1 ${options.host}:${options['port-prefix']}11 weight 1 check maxconn 500 inter 10000
+    {% end %}
+    {% if n == '2' %}
+    server web-backend-${options.name}-1 ${options.host}:${options['port-prefix']}11 weight 1 check maxconn 500 inter 10000
+    server web-backend-${options.name}-2 ${options.host}:${options['port-prefix']}12 weight 1 check maxconn 500 inter 10000
+    {% end %}
+    {% if n == '3' %}
+    server web-backend-${options.name}-1 ${options.host}:${options['port-prefix']}11 weight 1 check maxconn 500 inter 10000
+    server web-backend-${options.name}-2 ${options.host}:${options['port-prefix']}12 weight 1 check maxconn 500 inter 10000
+    server web-backend-${options.name}-3 ${options.host}:${options['port-prefix']}13 weight 1 check maxconn 500 inter 10000
+    {% end %}
+    {% if n == '4' %}
+    server web-backend-${options.name}-1 ${options.host}:${options['port-prefix']}11 weight 1 check maxconn 500 inter 10000
+    server web-backend-${options.name}-2 ${options.host}:${options['port-prefix']}12 weight 1 check maxconn 500 inter 10000
+    server web-backend-${options.name}-3 ${options.host}:${options['port-prefix']}13 weight 1 check maxconn 500 inter 10000
+    server web-backend-${options.name}-4 ${options.host}:${options['port-prefix']}14 weight 1 check maxconn 500 inter 10000
+    {% end %}
+    {% end %}
+{% end %}
 
 {% if 'basic' in options['mobi-layers'] %}
 backend basic-backend-${options.name}

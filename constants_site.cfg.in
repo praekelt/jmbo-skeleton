@@ -1,5 +1,5 @@
 # A convenient place to store constants. This prevents constants being
-# scattered around other files. In a standard Jmbo deploy the only buildout 
+# scattered around other files. In a standard Jmbo deploy the only buildout
 # files you need to edit are the constants files.
 
 [buildout]
@@ -10,12 +10,11 @@ port-prefix = PORT_PREFIX_PLACEHOLDER
 num-django-processes-per-layer = 4
 site-name = SITE_NAME_PLACEHOLDER
 admin-server-name = admin.DEPLOY_TYPE_PLACEHOLDER.SITE_NAME_PLACEHOLDER.com
-# Only used if you have a web buildout config file. 
+# Only used if you have a web buildout config file.
 web-server-name = DEPLOY_TYPE_PLACEHOLDER.SITE_NAME_PLACEHOLDER.com
-# Only used if you have a basic or smart buildout config file. 
+# Only used if you have a basic or smart buildout config file.
 mobi-server-name = m.DEPLOY_TYPE_PLACEHOLDER.SITE_NAME_PLACEHOLDER.com
 # List mobi layers here. Only used if you have a basic or smart buildout config
-# file. 
+# file.
 mobi-layers = basic smart
-# web-layers not used yet. 
 web-layers = web
