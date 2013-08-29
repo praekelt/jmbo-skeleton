@@ -4,8 +4,9 @@ upstream: 127.0.0.1:PORT_PREFIX_PLACEHOLDER09
 debug_path: /_debug
 health_path: /health
 
+# Change the handler to suit your type of site. See handler.py.
 handlers:
-  - wurfl: handler.DefaultHandler
+  - wurfl: handler.WebMobiHandler
 
 wurfl:
   # All keys in Memcached are prefixed with this
