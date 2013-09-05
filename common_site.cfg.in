@@ -44,8 +44,8 @@ host = 127.0.0.1
 port-prefix = ${buildout:port-prefix}
 num-processes = ${buildout:num-django-processes-per-layer}
 name = skeleton-DEPLOY_TYPE_PLACEHOLDER-${buildout:site-name}
-mobi-server-name = ${buildout:mobi-server-name}
-web-server-name = ${buildout:web-server-name}
+primary-mobi-server-name = ${buildout:primary-mobi-server-name}
+primary-web-server-name = ${buildout:primary-web-server-name}
 mobi-layers = ${buildout:mobi-layers}
 web-layers = ${buildout:web-layers}
 

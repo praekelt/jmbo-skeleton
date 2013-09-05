@@ -42,8 +42,8 @@ frontend ${options.name}-upstream
     acl redirect_to_web hdr_sub(X-redirect-to-web) 1
     acl redirect_to_mobi hdr_sub(X-redirect-to-mobi) 1
 
-    redirect location http://${options['web-server-name']}?showsite=web if redirect_to_web
-    redirect location http://${options['mobi-server-name']}?showsite=mobi if redirect_to_mobi
+    redirect location http://${options['primary-web-server-name']}?showsite=web if redirect_to_web
+    redirect location http://${options['primary-mobi-server-name']}?showsite=mobi if redirect_to_mobi
 
     {% if 'web' in options['web-layers'] %}
     use_backend web-backend-${options.name} if is_web
