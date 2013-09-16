@@ -49,7 +49,7 @@ class WebMobiHandler(WurflHandler):
 
     def handle_device(self, request, device):
         result = {
-            'is_web_browser': device.devid == 'generic_web_browser' and '1' or '',
+            'is_web_browser': device.devid in ('generic_web_browser', 'generic_web_crawler') and '1' or '',
             self.header_name: 'basic'
         }
 
@@ -124,7 +124,7 @@ class ScientiaMobileCloudResolutionHandler(ScientiaMobileCloudHandler):
 
     def handle_device(self, request, device):
         result = {
-            'is_web_browser': device['id'] == 'generic_web_browser' and '1' or '',
+            'is_web_browser': device['capabilities']['is_full_desktop'] and '1' or '',
             self.header_name: 'basic'
         }
 
