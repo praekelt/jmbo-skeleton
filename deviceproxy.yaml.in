@@ -2,7 +2,7 @@ port: PORT_PREFIX_PLACEHOLDER02
 upstream: 127.0.0.1:PORT_PREFIX_PLACEHOLDER09
 # Path to hit to get debug from each of the handlers.
 debug_path: /_debug
-health_path: /health
+health_path: /logo
 
 # Change the handler to suit your type of site. See handler.py.
 handlers:
