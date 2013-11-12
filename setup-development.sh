@@ -16,11 +16,7 @@ rm -rf ve bin
 virtualenv --python=python2.7 --no-site-packages --setuptools ve
 
 # We must do a custom build of pysqlite
-if [ ! -f pysqlite-2.6.0.tar.gz ]; then
-    wget http://pysqlite.googlecode.com/files/pysqlite-2.6.0.tar.gz
-fi
-tar xzf pysqlite-2.6.0.tar.gz
-cd pysqlite-2.6.0
+ve/bin/pip install --no-install pysqlite==2.6.0
 echo "[build_ext]\
     
 #define=\
@@ -31,10 +27,8 @@ library_dirs=/usr/local/lib\
     
 libraries=sqlite3\
     
-#define=SQLITE_OMIT_LOAD_EXTENSION" > setup.cfg
-../ve/bin/python setup.py install
-sudo /sbin/ldconfig
-cd ..
+#define=SQLITE_OMIT_LOAD_EXTENSION" > ve/build/pysqlite/setup.cfg
+ve/bin/pip install --no-download pysqlite==2.6.0
 
 ve/bin/python bootstrap.py -v 1.7.0
 
@@ -60,8 +54,10 @@ rm -rf static
 
 if [ ${DB_SETUP} == "--no-setup-db" ]
 then
+	echo ""
 	echo "Use the following command on a QA server to make a tarball of media files (by default only files less than 1 month old):"
 	echo "find /path/to/${APP_NAME}-media-qa/ -type f -newerct `date --date "now -30 days" +"%Y-%m-%d"` | xargs -0 -d "\n" tar -cvf ~/${APP_NAME}-media.tar"
+	echo ""
 fi
 
 echo "You may now start up the site with ./bin/${APP_NAME}-$SITE runserver 0.0.0.0:8000"
