@@ -136,7 +136,11 @@ do
                     # 2. CT in DB, 0001 migration does not exist - fake migrate 0001
                     # 3. CT in DB, 0001 migration exists - migrate
                     FAKE_MIGRATE=""
-                    for APP in competition music banner gallery; do
+                    # Loop over apps. There is no way to query South if an app
+                    # is migrations so there will be some spam when attempting
+                    # to migrate non-South apps. It is perfectly safe.
+                    #for APP in competition music banner gallery; do
+                    for APP in `sudo -u $USER ./bin/$THEDIR dumpdata contenttypes --indent=4 | grep app_label | awk -F'"' '{ print $4 }' | sort | uniq`; do
                         RESULT=`sudo -u $USER ./bin/$THEDIR dumpdata contenttypes | grep "\"app_label\": \"$APP\""`
                         if [ "$RESULT" != "" ]; then
                             # CT is in DB. Now check for 0001 migration.
