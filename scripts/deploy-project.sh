@@ -132,9 +132,9 @@ do
                     sudo -u $USER ./bin/$THEDIR syncdb
     	        else
                     # Some Jmbo apps only got South migrations at a later stage. Scenarios:
-                    # 1. CT not in DB - migrate
-                    # 2. CT in DB, 0001 migration does not exist - fake migrate 0001
-                    # 3. CT in DB, 0001 migration exists - migrate
+                    # 1. Content type not in DB - normal migrate
+                    # 2. Content type in DB, 0001 migration does not exist - fake migrate 0001
+                    # 3. Content type in DB, 0001 migration exists - normal migrate
                     FAKE_MIGRATE=""
                     # Loop over apps. There is no way to query South if an app
                     # is migrations so there will be some spam when attempting
