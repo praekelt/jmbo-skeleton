@@ -137,9 +137,10 @@ do
                     # 3. Content type in DB, 0001 migration exists - normal migrate
                     FAKE_MIGRATE=""
                     # Loop over apps. There is no way to query South if an app
-                    # is migrations so there will be some spam when attempting
-                    # to migrate non-South apps. It is perfectly safe.
-                    #for APP in competition music banner gallery; do
+                    # has migrations so there will be some spam when attempting
+                    # to migrate non-South apps. It is perfectly safe. All this
+                    # can go away when http://south.aeracode.org/ticket/430 is
+                    # merged.
                     for APP in `sudo -u $USER ./bin/$THEDIR dumpdata contenttypes --indent=4 | grep app_label | awk -F'"' '{ print $4 }' | sort | uniq`; do
                         RESULT=`sudo -u $USER ./bin/$THEDIR dumpdata contenttypes | grep "\"app_label\": \"$APP\""`
                         if [ "$RESULT" != "" ]; then

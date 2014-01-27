@@ -13,6 +13,7 @@ setup(
     install_requires = [
         'jmbo-foundry>=1.1.23',
         'raven<3.0.0',
+        'pytz',
     ],
     include_package_data=True,
     tests_require=[

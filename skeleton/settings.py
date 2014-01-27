@@ -49,6 +49,7 @@ DATABASES = {
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
 TIME_ZONE = 'UTC'
+USE_TZ = True
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -312,6 +313,9 @@ SOCIAL_AUTH_USER_MODEL = 'foundry.Member'
 #FACEBOOK_API_SECRET = ''
 #TWITTER_CONSUMER_KEY = ''
 #TWITTER_CONSUMER_SECRET = ''
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+COMPRESS_CSS_HASHING_METHOD = 'content'
 
 # Debug toolbar. Uncomment if required.
 #INSTALLED_APPS += ('debug_toolbar',)
