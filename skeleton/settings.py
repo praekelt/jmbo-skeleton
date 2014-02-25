@@ -199,7 +199,12 @@ CKEDITOR_MEDIA_PREFIX = '/media/ckeditor/'
 CKEDITOR_UPLOAD_PATH = '%s/media/uploads/' % BUILDOUT_PATH
 
 CKEDITOR_CONFIGS = {
-    'default': {'toolbar': 'Basic'},
+    'default': {'toolbar_Full': [
+        ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Strike', 'SpellChecker', 'Undo', 'Redo'],
+        ['Link', 'Image', 'Flash', 'PageBreak'],
+        ['TextColor', 'BGColor'],
+        ['Smiley', 'SpecialChar'], ['Source'],
+    ]},
 }
 
 # Restrict uploaded file access to user who uploaded file
