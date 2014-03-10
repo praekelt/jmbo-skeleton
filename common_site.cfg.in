@@ -47,6 +47,6 @@ static-root = ${buildout:directory}/static
 static-root-prefix = ${buildout:directory}/../skeleton-DEPLOY_TYPE_PLACEHOLDER
 static-root-suffix = ${buildout:site-name}
 downloads-root = downloads
-log-prefix = ${buildout:directory}/../log/skeleton-DEPLOY_TYPE_PLACEHOLDER-${buildout:site-type}-${buildout:site-name}-nginx
+log-prefix = ${buildout:directory}/../log/skeleton-DEPLOY_TYPE_PLACEHOLDER-mobi-${buildout:site-name}-nginx
 layers = ${buildout:mobi-layers}
 server-name = ${buildout:mobi-server-name}

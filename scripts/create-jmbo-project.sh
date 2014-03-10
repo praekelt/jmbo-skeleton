@@ -90,9 +90,11 @@ sed -i "14s/.*/    ${EGG}/" ${PROJECT_DIR}/dev_base.cfg
 
 sed -i "16s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base_mobi.cfg
 sed -i "17s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base_web.cfg
+sed -i "16s/.*/    ${EGG}/" ${PROJECT_DIR}/qa_base_admin.cfg
 
 sed -i "16s/.*/    ${EGG}/" ${PROJECT_DIR}/live_base_mobi.cfg
 sed -i "17s/.*/    ${EGG}/" ${PROJECT_DIR}/live_base_web.cfg
+sed -i "16s/.*/    ${EGG}/" ${PROJECT_DIR}/live_base_admin.cfg
 
 # Replace the word skeleton with the app name
 sed -i s/skeleton/${APP}/g ${PROJECT_DIR}/*.cfg
