@@ -90,16 +90,14 @@ class ScientiaMobileCloudHandlerConnectError(Exception):
 
 
 class ScientiaMobileCloudResolutionHandler(ScientiaMobileCloudHandler):
-    """todo: contribute handle_request_and_cache and get_device_from_smcloud
-    back to deviceproxy"""
+    """This needs work to be more like the three classes above"""
 
     @inlineCallbacks
     def get_headers(self, request):
         user_agent = unicode(request.getHeader('User-Agent') or '')
 
-        # Handling for devices not yet recognized by the Wurfl service.
-        # Return early if this is a bot that should not be redirected.
-        if 'PageFetcher-Google-CoOp' in user_agent:
+        # Return early if this is a bot that should not be redirected
+        if user_agent in ('PageFetcher-Google-CoOp', 'Mozilla/5.0 (Java) outbrain'):
             # When X-Site-Type is 'mobi', default to 'basic'
             site_type = request.getHeader('X-Site-Type')
             layer = 'web' if site_type == 'web' else 'basic'
@@ -112,32 +110,6 @@ class ScientiaMobileCloudResolutionHandler(ScientiaMobileCloudHandler):
         else:
             headers = yield self.handle_request_and_cache(cache_key,
                 user_agent, request)
-
-        is_web_browser = bool(headers[0]['is_web_browser'])
-        is_mobi_browser = not is_web_browser
-        site_type = request.getHeader('X-Site-Type')
-
-        # This makes it possible for a mobi browser to request the full site,
-        # and also to go back to the mobi site.
-        if site_type == 'web':
-            headers[0][self.header_name] = 'web'
-            if request.uri.find('showsite=web') != -1:
-                request.addCookie('show_web', '1')
-            elif request.uri.find('showsite=mobi') != -1:
-                request.addCookie('show_web', '')
-                headers[0]['X-redirect-to-mobi'] = '1'
-            elif is_mobi_browser:
-                if not request.getCookie('show_web'):
-                    headers[0]['X-redirect-to-mobi'] = '1'
-
-        elif site_type == 'mobi':
-            if request.uri.find('showsite=web') != -1:
-                request.addCookie('show_web', '1')
-                headers[0]['X-redirect-to-web'] = '1'
-            elif request.uri.find('showsite=mobi') != -1:
-                request.addCookie('show_web', '')
-            elif request.getCookie('show_web'):
-                headers[0]['X-redirect-to-web'] = '1'
 
         returnValue(headers)
 
@@ -175,20 +147,27 @@ class ScientiaMobileCloudResolutionHandler(ScientiaMobileCloudHandler):
         returnValue(device)
 
     def handle_device(self, request, device):
+        # Set default (todo: get from settings)
         result = {
-            'is_web_browser': '1',
-            self.header_name: 'basic'
+            self.header_name: 'web',
         }
 
+        is_web_browser = False
+        is_smart_browser = False
+        is_basic_browser = False
         try:
-            result = {
-                'is_web_browser': (device['capabilities']['ux_full_desktop'] or device['capabilities']['is_tablet']) and '1' or '',
-                self.header_name: 'basic'
-            }
-            if (device['capabilities']['resolution_width'] >= 320) \
-                and (device['capabilities']['pointing_method'] == 'touchscreen'):
-                result[self.header_name] = 'smart'
+            is_web_browser = device['capabilities']['ux_full_desktop'] or device['capabilities']['is_tablet']
+            is_smart_browser = (device['capabilities']['resolution_width'] >= 320) \
+                and (device['capabilities']['pointing_method'] == 'touchscreen')
+            is_basic_browser = not (is_web_browser or is_smart_browser)
         except KeyError:
             pass
+
+        if is_web_browser:
+            result[self.header_name] = 'web'
+        elif is_smart_browser:
+            result[self.header_name] = 'smart'
+        elif is_basic_browser:
+            result[self.header_name] = 'basic'
 
         return [result]
