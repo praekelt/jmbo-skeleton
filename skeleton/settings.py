@@ -180,6 +180,7 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'django.contrib.admin',
     'raven.contrib.django',
+    'djcelery',
 )
 
 # Your ReCaptcha provided public key.
@@ -326,3 +327,6 @@ COMPRESS_CSS_HASHING_METHOD = 'content'
 #INSTALLED_APPS += ('debug_toolbar',)
 #MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 #INTERNAL_IPS = ('127.0.0.1',)
+
+import djcelery
+djcelery.setup_loader()
