@@ -47,6 +47,8 @@ sudo -u postgres psql -d template_postgis -c "GRANT ALL ON spatial_ref_sys TO PU
 sudo -u postgres psql -d template_postgis -c "GRANT ALL ON geography_columns TO PUBLIC;"
 
 echo "Configuring nginx..."
+sudo sed -i "11i proxy_temp_path /tmp/nginx-cache-tmp;" /etc/nginx/nginx.conf
+sudo sed -i "12i log_format rt_cache '$remote_addr - $upstream_cache_status [$time_local] $request_time $upstream_response_time $pipe \"$request\" $status $body_bytes_sent \"$http_referer\" \"$http_user_agent\"';"  /etc/nginx/nginx.conf
 # todo. Set max bucket size.
 DIRNAME=`dirname $0`
 sudo cp ${DIRNAME}/resources/50x.html /usr/share/nginx/www/

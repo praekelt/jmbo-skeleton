@@ -1,3 +1,13 @@
+proxy_cache_path /var/cache/nginx/mobi levels=1:2 keys_zone=mobi:512m max_size=1000m inactive=600m;
+
+map $host $web_domain {
+    default '${primary-web-server-name}';
+}
+
+map $host $domain_for_cookie {
+    default '${cookie-domain}';
+}
+
 server {
     listen ${port};
     server_name ${server-name};
@@ -22,11 +32,22 @@ server {
     }
 
     location ^~ /media/downloads/(.*) {
-	internal;
-	alias ${media-root}/${downloads-root}/$1;
+	    internal;
+	    alias ${media-root}/${downloads-root}/$1;
     }
 
     location / {
+        if ($args ~ showsite=web){
+            add_header Set-Cookie "ua_map=web;Domain=$domain_for_cookie;Path=/;Max-Age=3600";
+            rewrite ^/(.*)$ http://$web_domain/$1 last;
+        }
+
+        if ($args ~ showsite=mobi) {
+            # Set explicitly to smart since deviceproxy is not wired in for
+            # mobi.  If it were we would set this to ''.
+            add_header Set-Cookie "ua_map=smart;Domain=$domain_for_cookie;Path=/;Max-Age=3600";
+        }
+
         proxy_pass_header Server;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header Host $http_host;
@@ -36,9 +57,17 @@ server {
         proxy_set_header X-Site-Type mobi;
         proxy_connect_timeout 10;
         proxy_read_timeout 10;
-        proxy_pass http://${proxy-host}:${proxy-port}/;
+        proxy_pass http://${proxy-host}:${proxy-port};
         proxy_intercept_errors on;
         keepalive_timeout  0;
+
+        proxy_ignore_headers Set-Cookie;
+        proxy_cache mobi;
+        proxy_cache_key $host$request_uri$is_args$args$cookie_is_authenticated;
+        proxy_cache_valid 200 301 302 400 1m;
+        proxy_cache_use_stale updating;
+        proxy_cache_lock on;
+        add_header X-Cached $upstream_cache_status;
     }
 
     error_page 502 503 504 /50x.html;
@@ -50,6 +79,7 @@ server {
     }
 
     # logging
-    access_log  ${log};
-    error_log   ${error-log};
+    access_log  ${log-prefix}.log rt_cache;
+    error_log   ${log-prefix}-error.log;
+
 }
