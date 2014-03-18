@@ -1,5 +1,3 @@
-proxy_cache_path /var/cache/nginx/web levels=1:2 keys_zone=web:512m max_size=1000m inactive=600m;
-
 map $host $mobi_domain {
     default '${primary-mobi-server-name}';
 }

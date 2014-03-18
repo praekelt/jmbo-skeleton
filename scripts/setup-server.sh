@@ -49,6 +49,8 @@ sudo -u postgres psql -d template_postgis -c "GRANT ALL ON geography_columns TO 
 echo "Configuring nginx..."
 sudo sed -i "11i proxy_temp_path /tmp/nginx-cache-tmp;" /etc/nginx/nginx.conf
 sudo sed -i "12i log_format rt_cache '\$remote_addr - \$upstream_cache_status [\$time_local] \$request_time \$upstream_response_time \$pipe \"\$request\" \$status \$body_bytes_sent \"\$http_referer\" \"\$http_user_agent\"';"  /etc/nginx/nginx.conf
+sudo sed -i "13i proxy_cache_path /var/cache/nginx/mobi levels=1:2 keys_zone=mobi:1000m max_size=1000m inactive=600m;" /etc/nginx/nginx.conf
+sudo sed -i "14i proxy_cache_path /var/cache/nginx/web levels=1:2 keys_zone=web:1000m max_size=1000m inactive=600m;" /etc/nginx/nginx.conf
 sudo mkdir -p /var/cache/nginx/web
 sudo mkdir -p /var/cache/nginx/mobi
 # todo. Set max bucket size.
