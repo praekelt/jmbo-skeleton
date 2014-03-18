@@ -6,7 +6,7 @@ health_path: /logo
 
 # Change the handler to suit your type of site. See handler.py.
 handlers:
-  - wurfl: handler.WebMobiHandler
+  - wurfl: handler.ScientiaMobileCloudResolutionHandler
 
 wurfl:
   # All keys in Memcached are prefixed with this
@@ -14,6 +14,7 @@ wurfl:
   cache_lifetime: 86400 # defaults to 0, which means it won't expire unless
                         # memcached decides to delete the key based on its
                         # least-recently-used counters when memory fills up.
+  smcloud_api_key: YOUR_WURFL_CLOUD_API_KEY
   # Connect to Memcached with the following parameters
   memcached:
     host: localhost
