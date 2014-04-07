@@ -16,6 +16,8 @@ primary-web-server-name = DEPLOY_TYPE_PLACEHOLDER.SITE_NAME_PLACEHOLDER.com
 # Only used if you have a basic or smart buildout config file.
 mobi-server-name = m.DEPLOY_TYPE_PLACEHOLDER.SITE_NAME_PLACEHOLDER.com
 primary-mobi-server-name = m.DEPLOY_TYPE_PLACEHOLDER.SITE_NAME_PLACEHOLDER.com
+# Domain to set cookies on
+cookie-domain = .DEPLOY_TYPE_PLACEHOLDER.SITE_NAME_PLACEHOLDER.com
 # List mobi layers here. Only used if you have a basic or smart buildout config
 # file.
 mobi-layers = basic smart

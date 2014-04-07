@@ -13,6 +13,7 @@ setup(
     install_requires = [
         'jmbo-foundry>=1.2.2.3',
         'raven<3.0.0',
+        'django-celery',
     ],
     include_package_data=True,
     tests_require=[

@@ -1,4 +1,4 @@
-# Configuration for haproxy and deviceproxy is shared by all sites.
+# Configuration for deviceproxy is shared by all sites.
 #
 # Also, a configuration to set up nginx for sites that form a logical mobi site. Mobi
 # sites are served from a single url, eg. m.site.com. device-proxy determines
@@ -11,20 +11,9 @@ extends = DEPLOY_TYPE_PLACEHOLDER_constants_SITE_NAME_PLACEHOLDER.cfg
 extensions=
     lovely.buildouthttp
 parts+=
-    skeleton-supervisor-haproxy
     skeleton-supervisor-deviceproxy
-    skeleton-haproxy
     directories
     skeleton-nginx
-
-[skeleton-supervisor-haproxy]
-recipe = collective.recipe.template
-input = buildout_templates/supervisor-haproxy.conf.in
-output = ${buildout:directory}/supervisor/skeleton-DEPLOY_TYPE_PLACEHOLDER-${buildout:site-name}-haproxy.conf
-name = skeleton-DEPLOY_TYPE_PLACEHOLDER-${buildout:site-name}
-config = ${buildout:directory}/haproxy/skeleton-DEPLOY_TYPE_PLACEHOLDER-${buildout:site-name}.cfg
-log = ${buildout:directory}/../log/skeleton/DEPLOY_TYPE_PLACEHOLDER/common/${buildout:site-name}/haproxy.log
-error-log = ${buildout:directory}/../log/skeleton/DEPLOY_TYPE_PLACEHOLDER/common/${buildout:site-name}/haproxy-error.log
 
 [skeleton-supervisor-deviceproxy]
 recipe = collective.recipe.template
@@ -35,19 +24,6 @@ site-name = ${buildout:site-name}
 user = www-data
 log = ${buildout:directory}/../log/skeleton/DEPLOY_TYPE_PLACEHOLDER/common/${buildout:site-name}/deviceproxy.log
 error-log = ${buildout:directory}/../log/skeleton/DEPLOY_TYPE_PLACEHOLDER/common/${buildout:site-name}/deviceproxy-error.log
-
-[skeleton-haproxy]
-recipe = collective.recipe.template[genshi]:genshi
-input = buildout_templates/haproxy.cfg.in
-output = ${buildout:directory}/haproxy/skeleton-DEPLOY_TYPE_PLACEHOLDER-${buildout:site-name}.cfg
-host = 127.0.0.1
-port-prefix = ${buildout:port-prefix}
-num-processes = ${buildout:num-django-processes-per-layer}
-name = skeleton-DEPLOY_TYPE_PLACEHOLDER-${buildout:site-name}
-primary-mobi-server-name = ${buildout:primary-mobi-server-name}
-primary-web-server-name = ${buildout:primary-web-server-name}
-mobi-layers = ${buildout:mobi-layers}
-web-layers = ${buildout:web-layers}
 
 [directories]
 recipe = z3c.recipe.mkdir
@@ -61,13 +37,16 @@ input = buildout_templates/nginx-mobi.conf.in
 output = ${buildout:directory}/nginx/skeleton-DEPLOY_TYPE_PLACEHOLDER-mobi-${buildout:site-name}.conf
 port = 80
 proxy-host = 127.0.0.1
-proxy-port = ${buildout:port-prefix}01
+proxy-port = ${buildout:port-prefix}31
+port-prefix = ${buildout:port-prefix}
+primary-web-server-name = ${buildout:primary-web-server-name}
+primary-mobi-server-name = ${buildout:primary-mobi-server-name}
+cookie-domain = ${buildout:cookie-domain}
 media-root = ${buildout:directory}/../skeleton-media-DEPLOY_TYPE_PLACEHOLDER
 static-root = ${buildout:directory}/static
 static-root-prefix = ${buildout:directory}/../skeleton-DEPLOY_TYPE_PLACEHOLDER
 static-root-suffix = ${buildout:site-name}
 downloads-root = downloads
-log = ${buildout:directory}/../log/skeleton/DEPLOY_TYPE_PLACEHOLDER/mobi/${buildout:site-name}/nginx.log
-error-log = ${buildout:directory}/../log/skeleton/DEPLOY_TYPE_PLACEHOLDER/mobi/${buildout:site-name}/nginx-error.log
+log-prefix = ${buildout:directory}/../log/skeleton-DEPLOY_TYPE_PLACEHOLDER-mobi-${buildout:site-name}-nginx
 layers = ${buildout:mobi-layers}
 server-name = ${buildout:mobi-server-name}

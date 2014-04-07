@@ -29,7 +29,7 @@ postgresql-9.1 libjpeg-dev zlib1g-dev build-essential git-core \
 memcached supervisor nginx postgresql-server-dev-all libxslt1-dev \
 libproj0 libproj-dev libgeos-3.2.2 libgdal1-dev libgeoip1 \
 libgeoip-dev libgdal1-1.7.0 postgis postgresql-9.1-postgis haproxy unzip \
-rabbitmq-server--no-upgrade
+rabbitmq-server --no-upgrade
 
 echo "Configuring PostgreSQL..."
 # xxx: regexes would be better
@@ -47,6 +47,12 @@ sudo -u postgres psql -d template_postgis -c "GRANT ALL ON spatial_ref_sys TO PU
 sudo -u postgres psql -d template_postgis -c "GRANT ALL ON geography_columns TO PUBLIC;"
 
 echo "Configuring nginx..."
+sudo sed -i "11i proxy_temp_path /tmp/nginx-cache-tmp;" /etc/nginx/nginx.conf
+sudo sed -i "12i log_format rt_cache '\$remote_addr - \$upstream_cache_status [\$time_local] \$request_time \$upstream_response_time \$pipe \"\$request\" \$status \$body_bytes_sent \"\$http_referer\" \"\$http_user_agent\"';"  /etc/nginx/nginx.conf
+sudo sed -i "13i proxy_cache_path /var/cache/nginx/mobi levels=1:2 keys_zone=mobi:1000m max_size=1000m inactive=600m;" /etc/nginx/nginx.conf
+sudo sed -i "14i proxy_cache_path /var/cache/nginx/web levels=1:2 keys_zone=web:1000m max_size=1000m inactive=600m;" /etc/nginx/nginx.conf
+sudo mkdir -p /var/cache/nginx/web
+sudo mkdir -p /var/cache/nginx/mobi
 # todo. Set max bucket size.
 DIRNAME=`dirname $0`
 sudo cp ${DIRNAME}/resources/50x.html /usr/share/nginx/www/
