@@ -177,6 +177,7 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'django.contrib.admin',
     'raven.contrib.django',
+    'raven.contrib.django.celery',
     'djcelery',
 )
 
@@ -307,8 +308,6 @@ LOGGING = {
         },
     },
 }
-
-SENTRY_DSN = 'ENTER_YOUR_SENTRY_DSN_HERE'
 
 # See django-socialauth project for all settings
 SOCIAL_AUTH_USER_MODEL = 'foundry.Member'

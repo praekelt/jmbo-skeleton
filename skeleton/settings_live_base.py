@@ -28,3 +28,6 @@ CACHES = {
 CKEDITOR_UPLOAD_PATH = '%s/../skeleton-media-live/uploads/' % BUILDOUT_PATH
 
 COMPRESS_ENABLED = True
+
+SENTRY_DSN = 'ENTER_YOUR_SENTRY_DSN_HERE'
+SENTRY_CLIENT = 'raven.contrib.django.celery.CeleryClient'
