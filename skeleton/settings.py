@@ -319,6 +319,18 @@ SOCIAL_AUTH_USER_MODEL = 'foundry.Member'
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 COMPRESS_CSS_HASHING_METHOD = 'content'
 
+# Set else async logging to Sentry does not work
+CELERY_QUEUES = {
+    'default': {
+        'exchange': 'celery',
+        'binding_key': 'celery'
+    },
+    'sentry': {
+        'exchange': 'celery',
+        'binding_key': 'sentry'
+    },
+}
+
 # Debug toolbar. Uncomment if required.
 #INSTALLED_APPS += ('debug_toolbar',)
 #MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
