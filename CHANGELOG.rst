@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.9
+---
+#. Deprecate haproxy since a load balancer at another point in the chain does a better job.
+
 0.8
 ---
 #. `setup-server.sh` gets optional arguments for a leaner install.

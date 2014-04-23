@@ -49,6 +49,7 @@ DATABASES = {
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
 TIME_ZONE = 'UTC'
+USE_TZ = True
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -87,13 +88,10 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'foundry.middleware.AgeGateway',
     'foundry.middleware.CheckProfileCompleteness',
     'django.contrib.messages.middleware.MessageMiddleware',
     'likes.middleware.SecretBallotUserIpUseragentMiddleware',
     'foundry.middleware.PaginationMiddleware',
-    'foundry.middleware.VerboseRequestMeta',
-    'foundry.middleware.LastSeen',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
 )
@@ -179,6 +177,8 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     'django.contrib.admin',
     'raven.contrib.django',
+    'raven.contrib.django.celery',
+    'djcelery',
 )
 
 # Your ReCaptcha provided public key.
@@ -198,7 +198,12 @@ CKEDITOR_MEDIA_PREFIX = '/media/ckeditor/'
 CKEDITOR_UPLOAD_PATH = '%s/media/uploads/' % BUILDOUT_PATH
 
 CKEDITOR_CONFIGS = {
-    'default': {'toolbar': 'Basic'},
+    'default': {'toolbar_Full': [
+        ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Strike', 'SpellChecker', 'Undo', 'Redo'],
+        ['Link', 'Image', 'Flash', 'PageBreak'],
+        ['TextColor', 'BGColor'],
+        ['Smiley', 'SpecialChar'], ['Source'],
+    ]},
 }
 
 # Restrict uploaded file access to user who uploaded file
@@ -304,8 +309,6 @@ LOGGING = {
     },
 }
 
-SENTRY_DSN = 'ENTER_YOUR_SENTRY_DSN_HERE'
-
 # See django-socialauth project for all settings
 SOCIAL_AUTH_USER_MODEL = 'foundry.Member'
 #FACEBOOK_APP_ID = ''
@@ -313,7 +316,25 @@ SOCIAL_AUTH_USER_MODEL = 'foundry.Member'
 #TWITTER_CONSUMER_KEY = ''
 #TWITTER_CONSUMER_SECRET = ''
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+COMPRESS_CSS_HASHING_METHOD = 'content'
+
+# Set else async logging to Sentry does not work
+CELERY_QUEUES = {
+    'default': {
+        'exchange': 'celery',
+        'binding_key': 'celery'
+    },
+    'sentry': {
+        'exchange': 'celery',
+        'binding_key': 'sentry'
+    },
+}
+
 # Debug toolbar. Uncomment if required.
 #INSTALLED_APPS += ('debug_toolbar',)
 #MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
 #INTERNAL_IPS = ('127.0.0.1',)
+
+import djcelery
+djcelery.setup_loader()

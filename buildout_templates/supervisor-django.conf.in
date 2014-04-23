@@ -1,8 +1,7 @@
 [program:${name}.django]
-numprocs=${num-processes}
-numprocs_start=1
-process_name=%(program_name)s_%(process_num)s
-command=${buildout:bin-directory}/${control-script} run_gunicorn --max-requests=${max-requests} ${host}:${port-prefix}%(process_num)s
+process_name=%(program_name)s
+command=${buildout:directory}/../python/bin/gunicorn ${control-script}-wsgi:application -w ${num-processes} --max-requests=${max-requests} --bind=${host}:${port-prefix}1
+directory=${buildout:directory}/bin
 user=${user}
 stdout_logfile=${log}
 stderr_logfile=${error-log}

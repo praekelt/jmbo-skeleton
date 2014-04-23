@@ -3,9 +3,21 @@
 [buildout]
 extends=DEPLOY_TYPE_PLACEHOLDER_base_admin.cfg DEPLOY_TYPE_PLACEHOLDER_constants_SITE_NAME_PLACEHOLDER.cfg
 site-type = admin
+parts+=skeleton-supervisor-django-celery
 
 [skeleton-supervisor-django]
 port-prefix = ${buildout:port-prefix}9
 
 [skeleton-nginx]
 server-name = ${buildout:admin-server-name}
+
+[skeleton-supervisor-django-celery]
+recipe = collective.recipe.template
+input = buildout_templates/supervisor-django-celery.conf.in
+output = ${buildout:directory}/supervisor/skeleton-DEPLOY_TYPE_PLACEHOLDER-${buildout:site-name}-django-celery.conf
+name = skeleton-DEPLOY_TYPE_PLACEHOLDER-${buildout:site-name}
+control-script = skeleton-DEPLOY_TYPE_PLACEHOLDER-${buildout:site-type}-${buildout:site-name}
+host = 127.0.0.1
+user = www-data
+log = ${buildout:directory}/../log/skeleton/DEPLOY_TYPE_PLACEHOLDER/common/${buildout:site-name}/django-celery.log
+error-log = ${buildout:directory}/../log/skeleton/DEPLOY_TYPE_PLACEHOLDER/common/${buildout:site-name}/django-celery-error.log

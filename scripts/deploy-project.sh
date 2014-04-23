@@ -132,11 +132,16 @@ do
                     sudo -u $USER ./bin/$THEDIR syncdb
     	        else
                     # Some Jmbo apps only got South migrations at a later stage. Scenarios:
-                    # 1. CT not in DB - migrate
-                    # 2. CT in DB, 0001 migration does not exist - fake migrate 0001
-                    # 3. CT in DB, 0001 migration exists - migrate
+                    # 1. Content type not in DB - normal migrate
+                    # 2. Content type in DB, 0001 migration does not exist - fake migrate 0001
+                    # 3. Content type in DB, 0001 migration exists - normal migrate
                     FAKE_MIGRATE=""
-                    for APP in competition music banner; do
+                    # Loop over apps. There is no way to query South if an app
+                    # has migrations so there will be some spam when attempting
+                    # to migrate non-South apps. It is perfectly safe. All this
+                    # can go away when http://south.aeracode.org/ticket/430 is
+                    # merged.
+                    for APP in `sudo -u $USER ./bin/$THEDIR dumpdata contenttypes --indent=4 | grep app_label | awk -F'"' '{ print $4 }' | sort | uniq`; do
                         RESULT=`sudo -u $USER ./bin/$THEDIR dumpdata contenttypes | grep "\"app_label\": \"$APP\""`
                         if [ "$RESULT" != "" ]; then
                             # CT is in DB. Now check for 0001 migration.
@@ -162,22 +167,6 @@ do
 
             sudo -u $USER rm -rf static
             sudo -u $USER ./bin/$THEDIR collectstatic --noinput
-
-            # Cron entries
-            # Skip over admin. Will be more elegant once we use celery for jobs.
-            if [[ $FILENAME != *_admin_*.cfg ]]; then
-                sudo rm /tmp/acron
-                touch /tmp/acron
-                sudo crontab -u $USER -l > /tmp/acron
-                for COMMAND in report_naughty_words jmbo_publish; do
-                    RESULT=`grep "${THEDIR} ${COMMAND}" /tmp/acron`
-                    if [ "$RESULT" == "" ]; then
-                        echo "0 * * * * ${DEPLOY_DIR}/${THEDIR}/bin/${THEDIR} ${COMMAND}" >> /tmp/acron
-                    fi
-                done
-                sudo crontab -u $USER /tmp/acron
-                rm /tmp/acron
-            fi
 
             let DJANGO_SITE_INDEX++
         fi

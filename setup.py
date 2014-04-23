@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='jmbo-skeleton',
-    version='0.8',
+    version='0.9',
     description='Create a Jmbo project environment quickly. Includes a Jmbo demo application.',
     long_description = open('README.rst', 'r').read() + open('AUTHORS.rst', 'r').read() + open('CHANGELOG.rst', 'r').read(),
     author='Praekelt Foundation',
@@ -11,8 +11,9 @@ setup(
     url='',
     packages = find_packages(),
     install_requires = [
-        'jmbo-foundry>=1.1.21',
+        'jmbo-foundry>=1.2.2.3',
         'raven<3.0.0',
+        'django-celery',
     ],
     include_package_data=True,
     tests_require=[

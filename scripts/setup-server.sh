@@ -28,7 +28,8 @@ sudo apt-get install python-virtualenv python-dev \
 postgresql-9.1 libjpeg-dev zlib1g-dev build-essential git-core \
 memcached supervisor nginx postgresql-server-dev-all libxslt1-dev \
 libproj0 libproj-dev libgeos-3.2.2 libgdal1-dev libgeoip1 \
-libgeoip-dev libgdal1-1.7.0 postgis postgresql-9.1-postgis haproxy unzip --no-upgrade
+libgeoip-dev libgdal1-1.7.0 postgis postgresql-9.1-postgis haproxy unzip \
+rabbitmq-server --no-upgrade
 
 echo "Configuring PostgreSQL..."
 # xxx: regexes would be better
@@ -46,6 +47,12 @@ sudo -u postgres psql -d template_postgis -c "GRANT ALL ON spatial_ref_sys TO PU
 sudo -u postgres psql -d template_postgis -c "GRANT ALL ON geography_columns TO PUBLIC;"
 
 echo "Configuring nginx..."
+sudo sed -i "11i proxy_temp_path /tmp/nginx-cache-tmp;" /etc/nginx/nginx.conf
+sudo sed -i "12i log_format rt_cache '\$remote_addr - \$upstream_cache_status [\$time_local] \$request_time \$upstream_response_time \$pipe \"\$request\" \$status \$body_bytes_sent \"\$http_referer\" \"\$http_user_agent\"';"  /etc/nginx/nginx.conf
+sudo sed -i "13i proxy_cache_path /var/cache/nginx/mobi levels=1:2 keys_zone=mobi:1000m max_size=1000m inactive=600m;" /etc/nginx/nginx.conf
+sudo sed -i "14i proxy_cache_path /var/cache/nginx/web levels=1:2 keys_zone=web:1000m max_size=1000m inactive=600m;" /etc/nginx/nginx.conf
+sudo mkdir -p /var/cache/nginx/web
+sudo mkdir -p /var/cache/nginx/mobi
 # todo. Set max bucket size.
 DIRNAME=`dirname $0`
 sudo cp ${DIRNAME}/resources/50x.html /usr/share/nginx/www/
@@ -114,7 +121,8 @@ sudo chown -R www-data:www-data ${DEPLOY_DIR}/python-deviceproxy
 sudo -u www-data ${DEPLOY_DIR}/python-deviceproxy/bin/pip install device-proxy
 sudo rm /tmp/wurfl-2.1.zip
 sudo rm /tmp/wurfl.xml
-wget -O /tmp/wurfl-2.1.zip "http://mirror.transact.net.au/pub/sourceforge/w/project/wu/wurfl/WURFL/2.1.1/wurfl-2.1.zip"
+sudo cp ${DIRNAME}/resources/wurfl-2.1.zip /tmp
+#wget -O /tmp/wurfl-2.1.zip "http://mirror.transact.net.au/pub/sourceforge/w/project/wu/wurfl/WURFL/2.1.1/wurfl-2.1.zip"
 unzip -o /tmp/wurfl-2.1.zip -d /tmp
 sudo -u www-data ${DEPLOY_DIR}/python-deviceproxy/bin/wurfl2python.py -o ${DEPLOY_DIR}/python-deviceproxy/lib/python2.7/site-packages/devproxy/handlers/wurfl_handler/wurfl_devices.py /tmp/wurfl.xml
 # Legacy (pre-pypi) requires this checkout. Directory changing required because git gets confused.
