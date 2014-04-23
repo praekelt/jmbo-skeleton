@@ -31,6 +31,7 @@ settings = settings_DEPLOY_TYPE_PLACEHOLDER_${buildout:site-type}_${buildout:sit
 control-script = skeleton-DEPLOY_TYPE_PLACEHOLDER-${buildout:site-type}-${buildout:site-name}
 wsgi = true
 wsgi-script = skeleton-DEPLOY_TYPE_PLACEHOLDER-${buildout:site-type}-${buildout:site-name}-wsgi.py
+initialization = sys.argv[0] = __file__
 
 [skeleton-supervisor-django]
 recipe = collective.recipe.template
