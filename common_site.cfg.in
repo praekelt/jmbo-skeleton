@@ -22,14 +22,13 @@ output = ${buildout:directory}/supervisor/skeleton-DEPLOY_TYPE_PLACEHOLDER-${bui
 name = skeleton-DEPLOY_TYPE_PLACEHOLDER-${buildout:site-name}
 site-name = ${buildout:site-name}
 user = www-data
-log = ${buildout:directory}/../log/skeleton/DEPLOY_TYPE_PLACEHOLDER/common/${buildout:site-name}/deviceproxy.log
-error-log = ${buildout:directory}/../log/skeleton/DEPLOY_TYPE_PLACEHOLDER/common/${buildout:site-name}/deviceproxy-error.log
+log = ${buildout:directory}/../log/skeleton-DEPLOY_TYPE_PLACEHOLDER-${buildout:site-name}-deviceproxy.log
+error-log = ${buildout:directory}/../log/skeleton-DEPLOY_TYPE_PLACEHOLDER-${buildout:site-name}-deviceproxy-error.log
 
 [directories]
 recipe = z3c.recipe.mkdir
 paths =
-    ../log/skeleton/DEPLOY_TYPE_PLACEHOLDER/common/${buildout:site-name}
-    ../log/skeleton/DEPLOY_TYPE_PLACEHOLDER/mobi/${buildout:site-name}
+    ../log
 
 [skeleton-nginx]
 recipe = collective.recipe.template
