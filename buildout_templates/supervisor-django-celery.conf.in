@@ -1,6 +1,15 @@
 [program:${name}.django-celery]
-process_name=%(program_name)s_%(process_num)s
-command=${buildout:bin-directory}/${control-script} celery worker -B --schedule=/tmp/${name}-celerybeat-schedule --concurrency=1
+process_name=%(program_name)s
+command=${buildout:bin-directory}/${control-script} celery worker
+user=${user}
+stdout_logfile=${log}
+stderr_logfile=${error-log}
+stopsignal=QUIT
+environment=PYTHON_EGG_CACHE='/var/www/.python-eggs'
+
+[program:${name}.django-celery-beat]
+process_name=%(program_name)s
+command=${buildout:bin-directory}/${control-script} celery beat
 user=${user}
 stdout_logfile=${log}
 stderr_logfile=${error-log}
