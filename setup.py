@@ -11,7 +11,7 @@ setup(
     url='',
     packages = find_packages(),
     install_requires = [
-        'jmbo-foundry>=1.2.2.3',
+        'jmbo-foundry>=1.2.4',
         'raven<3.0.0',
         'django-celery',
     ],
