@@ -118,18 +118,7 @@ fi
 # Own virtualenv because device-proxy installs eggs in it
 sudo virtualenv ${DEPLOY_DIR}/python-deviceproxy --no-site-packages
 sudo chown -R www-data:www-data ${DEPLOY_DIR}/python-deviceproxy
-sudo -u www-data ${DEPLOY_DIR}/python-deviceproxy/bin/pip install device-proxy
-sudo rm /tmp/wurfl-2.1.zip
-sudo rm /tmp/wurfl.xml
-sudo cp ${DIRNAME}/resources/wurfl-2.1.zip /tmp
-#wget -O /tmp/wurfl-2.1.zip "http://mirror.transact.net.au/pub/sourceforge/w/project/wu/wurfl/WURFL/2.1.1/wurfl-2.1.zip"
-unzip -o /tmp/wurfl-2.1.zip -d /tmp
-sudo -u www-data ${DEPLOY_DIR}/python-deviceproxy/bin/wurfl2python.py -o ${DEPLOY_DIR}/python-deviceproxy/lib/python2.7/site-packages/devproxy/handlers/wurfl_handler/wurfl_devices.py /tmp/wurfl.xml
-# Legacy (pre-pypi) requires this checkout. Directory changing required because git gets confused.
-cd ${DEPLOY_DIR}
-sudo -u www-data git clone https://github.com/praekelt/device-proxy.git
-cd -
-sudo -u www-data ${DEPLOY_DIR}/python-deviceproxy/bin/wurfl2python.py -o ${DEPLOY_DIR}/device-proxy/devproxy/handlers/wurfl_handler/wurfl_devices.py /tmp/wurfl.xml
+sudo -u www-data ${DEPLOY_DIR}/python-deviceproxy/bin/pip install device-proxy>=0.4.1
 
 echo ""
 echo "All done! You probably want to run the deploy-project.sh script now."
