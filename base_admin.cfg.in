@@ -4,7 +4,6 @@
 
 [buildout]
 extensions=
-    lovely.buildouthttp
     mr.developer
 parts+=
     skeleton

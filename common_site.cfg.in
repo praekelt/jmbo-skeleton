@@ -8,8 +8,6 @@
 
 [buildout]
 extends = DEPLOY_TYPE_PLACEHOLDER_constants_SITE_NAME_PLACEHOLDER.cfg
-extensions=
-    lovely.buildouthttp
 parts+=
     skeleton-supervisor-deviceproxy
     directories
