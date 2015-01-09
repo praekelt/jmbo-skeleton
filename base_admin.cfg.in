@@ -66,5 +66,3 @@ paths =
     ../log
 
 [sources]
-# Waiting on official djangorecipe for merge
-djangorecipe = git git://github.com/hedleyroos/djangorecipe.git

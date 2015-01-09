@@ -68,7 +68,3 @@ paths =
     ../skeleton-media-DEPLOY_TYPE_PLACEHOLDER/uploads
     ../skeleton-media-DEPLOY_TYPE_PLACEHOLDER/downloads
     ../log
-
-[sources]
-# Waiting on official djangorecipe for merge
-djangorecipe = git git://github.com/hedleyroos/djangorecipe.git

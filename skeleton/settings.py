@@ -24,12 +24,13 @@ TEMPLATE_DEBUG = DEBUG
 
 # For Postgres (location aware) do from command line
 # echo "CREATE USER skeleton WITH PASSWORD 'skeleton'" | sudo -u postgres psql
-# echo "CREATE DATABASE skeleton WITH OWNER skeleton ENCODING 'UTF8' TEMPLATE template_postgis" | sudo -u postgres psql
+# echo "CREATE DATABASE skeleton WITH OWNER skeleton ENCODING 'UTF8'" | sudo -u postgres psql
+# echo "CREATE EXTENSION postgis" | sudo -u postgres psql skeleton
+# echo "CREATE EXTENSION postgis_topology" | sudo -u postgres psql skeleton
 
 # For MySQL remember to first do from a MySQL shell:
 # CREATE database skeleton;
 # GRANT ALL ON skeleton.* TO 'skeleton'@'localhost' IDENTIFIED BY 'skeleton';
-# GRANT ALL ON test_skeleton.* TO 'skeleton'@'localhost' IDENTIFIED BY 'skeleton';
 # FLUSH PRIVILEGES;
 
 DATABASES = {
@@ -93,7 +94,6 @@ MIDDLEWARE_CLASSES = (
     'likes.middleware.SecretBallotUserIpUseragentMiddleware',
     'foundry.middleware.PaginationMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
-    'django.middleware.transaction.TransactionMiddleware',
 )
 
 # A tuple of callables that are used to populate the context in RequestContext.
