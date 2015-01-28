@@ -47,6 +47,7 @@ cp requirements.pip ${PROJECT_DIR}/
 cp setup-development.sh ${PROJECT_DIR}/
 cp handler.py ${PROJECT_DIR}/
 cp deviceproxy.yaml.in ${PROJECT_DIR}/deviceproxy_${SITE}.yaml
+cp config.yaml.in ${PROJECT_DIR}/config.yaml
 cp test_settings.py ${PROJECT_DIR}/
 cp manage.py ${PROJECT_DIR}/
 cp MANIFEST.in ${PROJECT_DIR}/
@@ -71,6 +72,7 @@ done
 # Change strings in the newly copied source
 sed -i s/name=\'jmbo-skeleton\'/name=\'${EGG}\'/ ${PROJECT_DIR}/setup.py
 sed -i "s/PORT_PREFIX_PLACEHOLDER/${PORT}/g" ${PROJECT_DIR}/deviceproxy_*.yaml
+sed -i "s/PORT_PREFIX_PLACEHOLDER/${PORT}/g" ${PROJECT_DIR}/config.yaml
 
 # Replace the word skeleton with the app name
 sed -i s/skeleton/${APP}/g ${PROJECT_DIR}/*.py

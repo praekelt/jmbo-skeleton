@@ -91,7 +91,7 @@ sudo -u $USER mkdir -p ${DEPLOY_DIR}/static-backups
 if [ -d ${DEPLOY_DIR}/${REPO}/static ]; then
     STATIC_BACKUP=${DEPLOY_DIR}/static-backups/${REPO}/${ADATE}
     sudo -u $USER mkdir -p $STATIC_BACKUP
-    sudo -u $USER cp -r ${DEPLOY_DIR}/${REPO}/static ${STATIC_BACKUP}/
+    sudo -u $USER cp -r ${DEPLOY_DIR}/${REPO}-static ${STATIC_BACKUP}/
 fi
 
 # Database setup
@@ -151,13 +151,13 @@ do
         sudo -u $USER mv ${WORKING_DIR}/${f} $DEPLOY_DIR/
 
         # Create nginx symlinks if required
-        if [ -d ${DEPLOY_DIR}/${f}/nginx ]; then
-            sudo ln -s ${DEPLOY_DIR}/${f}/nginx/* /etc/nginx/sites-enabled/
+        if [ -e ${DEPLOY_DIR}/${f}/conf/nginx.conf ]; then
+            sudo ln -s ${DEPLOY_DIR}/${f}/conf/nginx.conf /etc/nginx/sites-enabled/${APP_NAME}.conf
         fi
 
         # Create supervisor symlinks if required
-        if [ -d ${DEPLOY_DIR}/${f}/supervisor ]; then
-            sudo ln -s ${DEPLOY_DIR}/${f}/supervisor/* /etc/supervisor/conf.d/
+        if [ -d ${DEPLOY_DIR}/${f}/conf/supervisor.conf ]; then
+            sudo ln -s ${DEPLOY_DIR}/${f}/conf/supervisor.conf /etc/supervisor/conf.d/${APP_NAME}.conf
         fi
     fi
 done

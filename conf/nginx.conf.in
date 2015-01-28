@@ -39,18 +39,18 @@ server {
 
     # static resources
     location ^~ /media/ {
-        alias   {{ deploy_root }}/{{ media_root }}/;
+        alias   {{ deploy_root }}/{{ app_name }}-media/;
         expires 31d;
     }
 
     location ^~ /static/ {
-        alias   {{ deploy_root }}/{{ static_root }}/;
+        alias   {{ deploy_root }}/{{ app_name }}-static/;
         expires 31d;
     }
 
     location ^~ /media/downloads/(.*) {
 	    internal;
-        alias {{ deploy_root }}/{{ media_root }}/downloads/$1;
+        alias {{ deploy_root }}/{{ app_name }}-media/downloads/$1;
     }
 
     location / {
@@ -92,8 +92,8 @@ server {
     }
 
     # logging
-    access_log  {{ deploy_root }}/log/{{ log_prefix }}-web.log;
-    error_log   {{ deploy_root }}/log/{{ log_prefix }}-error-web.log;
+    access_log  {{ deploy_root }}/log/{{ app_name }}-web.log;
+    error_log   {{ deploy_root }}/log/{{ app_name }}-error-web.log;
 
 }
 
@@ -106,24 +106,24 @@ server {
 
     # static resources
     location ^~ /media/ {
-        alias   {{ deploy_root }}/{{ media_root }}/;
+        alias   {{ deploy_root }}/{{ app_name }}-media/;
         expires 31d;
     }
 
     # todo: use genshi template and for loop
     location ^~ /static/basic/ {
-        alias   ${static-root-prefix}-basic-${static-root-suffix}/static/;
+        alias   {{ deploy-root }}/{{ app_name }}-static/basic/;
         expires 31d;
     }
 
     location ^~ /static/smart/ {
-        alias   ${static-root-prefix}-smart-${static-root-suffix}/static/;
+        alias   {{ deploy-root }}/{{ app_name }}-static/smart/;
         expires 31d;
     }
 
     location ^~ /media/downloads/(.*) {
 	    internal;
-	    alias {{ deploy_root }}/{{ media_root }}/downloads/$1;
+	    alias {{ deploy_root }}/{{ app_name }}-media/downloads/$1;
     }
 
     location / {
@@ -159,8 +159,8 @@ server {
     }
 
     # logging
-    access_log  {{ deploy_root }}/log/{{ log_prefix }}-mobi.log;
-    error_log   {{ deploy_root }}/log/{{ log_prefix }}-error-mobi.log;
+    access_log  {{ deploy_root }}/log/{{ app_name }}-mobi.log;
+    error_log   {{ deploy_root }}/log/{{ app_name }}-error-mobi.log;
 
 }
 
@@ -240,7 +240,7 @@ server {
     }
 
     # logging
-    access_log  {{ deploy_root }}/log/{{ log_prefix }}-router.log rt_cache;
-    error_log   {{ deploy_root }}/log/{{ log_prefix }}-error-router.log;
+    access_log  {{ deploy_root }}/log/{{ app_name }}-router.log rt_cache;
+    error_log   {{ deploy_root }}/log/{{ app_name }}-error-router.log;
 
 }

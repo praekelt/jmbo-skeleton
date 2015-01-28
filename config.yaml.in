@@ -1,4 +1,4 @@
-# Used to deploy skeleton itself
+# Generate config files in /conf from these definitions
 nginx:
     app_name: skeleton
     web_server_name: demo.jmbo.org
@@ -6,4 +6,4 @@ nginx:
     mobi_server_name: m.demo.jmbo.org
     primary_mobi_server_name: m.demo.jmbo.org
     cookie_domain: .demo.jmbo.org
-    port_prefix: 90
+    port_prefix: PORT_PREFIX_PLACEHOLDER
