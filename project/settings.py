@@ -35,7 +35,7 @@ TEMPLATE_DEBUG = DEBUG
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.spatialite', # Options are spatialite, postgis, mysql.
+        'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'skeleton.db', # Or path to database file if using sqlite3.
         'USER': 'skeleton', # Not used with sqlite3.
         'PASSWORD': 'skeleton', # Not used with sqlite3.
@@ -124,61 +124,71 @@ INSTALLED_APPS = (
     # The order is important else template resolution may not work
     'skeleton',
     'foundry',
-    'downloads',
-    'friends',
-    'section',
-    'gallery',
-    'googlesearch',
-    'export',
-    'snippetscream',
-    'generate',
-    'jmbo_calendar',
-    'jmbo',
-    'photologue',
-    'captcha',
-    'secretballot',
-    'publisher',
-    'category',
-    'post',
-    'likes',
-    'gizmo',
-    'object_tools',
-    'registration',
-    'preferences',
-    'banner',
-    'competition',
-    'ckeditor',
+
+    # Optional praekelt-maintained apps. Uncomment for development and
+    # install with buildout or pip.
+    #'banner',
+    #'jmbo_calendar',   # requires atlas
+    #'chart',
+    #'competition',
+    #'downloads',
+    #'friends',
+    #'gallery',
+    #'music',
+    #'poll',
+    #'show',            # requires jmbo_calendar
+    #'jmbo_twitter',
+
     'contact',
-    'poll',
-#    'chart',
-#    'music',
-#    'show',
-    'simple_autocomplete',
-    'pagination',
-    'south',
-    'compressor',
+    'post',
     'jmbo_analytics',
-    'analytics',
-    'gunicorn',
-    'sites_groups',
-    'atlas',
-    'tastypie',
-    'social_auth',
+    'jmbo_sitemap',
+    'jmbo',
+    'category',
+    'likes',
+    'photologue',
+    'secretballot',
+
+    # todo: attempt to get rid of these four
+    'section',
+    'gizmo',
+    'registration',
+    'snippetscream',
+
+    #'atlas',
+    'captcha',
+    'ckeditor',
+    'compressor',
     'dfp',
+    'export',
+    'googlesearch',
+    'gunicorn',
+    'object_tools',
+    'pagination',
+    'publisher',
+    'preferences',
+    'simple_autocomplete',
+    'sites_groups',
+    'social_auth',
+    'south',
+    'tastypie',
+    'generate',
+
     'django.contrib.auth',
     'django.contrib.comments',
     'django.contrib.contenttypes',
-    'django.contrib.humanize',
     'django.contrib.flatpages',
+    'django.contrib.humanize',
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.staticfiles',
     'django.contrib.gis',
     'django.contrib.sitemaps',
     'django.contrib.admin',
-    'raven.contrib.django',
-    'raven.contrib.django.celery',
+
     'djcelery',
+#    'debug_toolbar',
+
 )
 
 # Your ReCaptcha provided public key.

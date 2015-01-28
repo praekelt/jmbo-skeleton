@@ -71,9 +71,13 @@ python-mimeparse==0.1.4
 python-openid==2.2.5
 python-twitter==2.2
 pytz==2014.10
+raven==5.1.1
 requests==2.5.1
 requests-oauthlib==0.4.2
 six==1.9.0
 sqlparse==0.1.14
 wsgiref==0.1.2
 zope.interface==4.1.2
+
+device-proxy==0.4.1
+genshi

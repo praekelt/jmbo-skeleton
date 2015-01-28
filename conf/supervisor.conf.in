@@ -38,16 +38,6 @@ stderr_logfile=/var/praekelt/logs/newswatch/django-web-error.log
 stopsignal=QUIT
 environment=PYTHON_EGG_CACHE='/var/www/.python-eggs'
 
-[program:feeds-django]
-process_name=%(program_name)s
-command=/var/praekelt/python/bin/gunicorn newswatch-live-feeds-site-wsgi:application -w 4 --max-requests=10000 -b 127.0.0.1:9012
-directory=/var/praekelt/newswatch-live-feeds-site/bin/
-user=www-data
-stdout_logfile=/var/praekelt/logs/newswatch/django-feeds.log
-stderr_logfile=/var/praekelt/logs/newswatch/django-feeds-error.log
-stopsignal=QUIT
-environment=PYTHON_EGG_CACHE='/var/www/.python-eggs'
-
 [program:deviceproxy]
 command=/var/praekelt/python/bin/twistd --pidfile=/tmp/deviceproxy.pid -n devproxy --config /var/praekelt/newswatch-live-common-site/deviceproxy_site.yaml
 directory=/var/praekelt/newswatch-live-common-site

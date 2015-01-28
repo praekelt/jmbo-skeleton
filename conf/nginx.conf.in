@@ -1,3 +1,6 @@
+# Nginx config for basic, smart and web Django instances in conjunction with
+# device-proxy for device detection.
+
 map $host $mobi_domain {
     default '${primary-mobi-server-name}';
 }
