@@ -79,11 +79,7 @@ DESIRED_PIP_FILE=requirements_${DEPLOY_TYPE}.pip
 if [ -e "${DESIRED_PIP_FILE}" ]; then
     PIP_FILE=${DESIRED_PIP_FILE}
 fi
-pwd
-echo $PIP_FILE
-echo $DESIRED_PIP_FILE
-exit 0
-sudo -u $USER ${DEPLOY_DIR}/python/bin/pip install -r ${PIP_FILE}
+#sudo -u $USER ${DEPLOY_DIR}/python/bin/pip install -r ${PIP_FILE}
 EXIT_CODE=$?
 if [ $EXIT_CODE != 0 ]; then
     echo "Pip failure. Aborting."
@@ -99,7 +95,7 @@ if [ -d ${DEPLOY_DIR}/${REPO}/static ]; then
 fi
 
 # Database setup
-$DJANGO_MANAGE=${DEPLOY_DIR}/python/bin/python manage.py
+DJANGO_MANAGE="${DEPLOY_DIR}/python/bin/python manage.py"
 if [ $IS_NEW_DATABASE -eq 1 ]; then
     read -p "Create a superuser if prompted. Do not generate default content. [enter]" y
     sudo -u $USER $DJANGO_MANAGE syncdb
