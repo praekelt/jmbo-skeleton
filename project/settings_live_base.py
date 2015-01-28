@@ -7,15 +7,15 @@ TEMPLATE_DEBUG = DEBUG
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'skeleton_live',
-        'USER': 'skeleton_live',
-        'PASSWORD': 'skeleton_live',
+        'NAME': 'skeleton',
+        'USER': 'skeleton',
+        'PASSWORD': 'skeleton',
         'HOST': 'localhost',
         'PORT': '5432',
     }
 }
 
-MEDIA_ROOT = '%s/../skeleton-media-live/' % BUILDOUT_PATH
+MEDIA_ROOT = '%s/../skeleton-media/' % BUILDOUT_PATH
 
 CACHES = {
     'default': {
@@ -25,7 +25,7 @@ CACHES = {
     }
 }
 
-CKEDITOR_UPLOAD_PATH = '%s/../skeleton-media-live/uploads/' % BUILDOUT_PATH
+CKEDITOR_UPLOAD_PATH = '%s/../skeleton-media/uploads/' % BUILDOUT_PATH
 
 COMPRESS_ENABLED = True
 

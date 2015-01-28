@@ -1,0 +1,12 @@
+# Generate config files in /conf from these definitions
+nginx:
+    web_server_name: demo.jmbo.org
+    primary_web_server_name: demo.jmbo.org
+    mobi_server_name: m.demo.jmbo.org
+    primary_mobi_server_name: m.demo.jmbo.org
+    cookie_domain: .demo.jmbo.org
+    port_prefix: 90
+    media_root: skeleton-media
+    static_root: skeleton-static
+    device_proxy_host: 127.0.0.1
+    log_root: skeleton

@@ -4,15 +4,15 @@ from skeleton.settings import *
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'skeleton_qa',
-        'USER': 'skeleton_qa',
-        'PASSWORD': 'skeleton_qa',
+        'NAME': 'skeleton',
+        'USER': 'skeleton',
+        'PASSWORD': 'skeleton',
         'HOST': 'localhost',
         'PORT': '5432',
     }
 }
 
-MEDIA_ROOT = '%s/../skeleton-media-qa/' % BUILDOUT_PATH
+MEDIA_ROOT = '%s/../skeleton-media/' % BUILDOUT_PATH
 
 CACHES = {
     'default': {
@@ -22,4 +22,4 @@ CACHES = {
     }
 }
 
-CKEDITOR_UPLOAD_PATH = '%s/../skeleton-media-qa/uploads/' % BUILDOUT_PATH
+CKEDITOR_UPLOAD_PATH = '%s/../skeleton-media/uploads/' % BUILDOUT_PATH

@@ -64,7 +64,7 @@ USE_I18N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = '%s/media/' % BUILDOUT_PATH
+MEDIA_ROOT = '%s/skeleton-media/' % BUILDOUT_PATH
 
 
 
@@ -73,7 +73,7 @@ MEDIA_ROOT = '%s/media/' % BUILDOUT_PATH
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 MEDIA_URL = '/media/'
 
-STATIC_ROOT = '%s/static/' % BUILDOUT_PATH
+STATIC_ROOT = '%s/skeleton-static/' % BUILDOUT_PATH
 
 STATIC_URL = '/static/'
 
