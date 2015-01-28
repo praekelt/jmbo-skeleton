@@ -41,26 +41,31 @@ APP_DIR=${PROJECT_DIR}/${APP}
 mkdir $PROJECT_DIR
 
 # Copy requisite bits
-cp bootstrap.py ${PROJECT_DIR}/
 cp .gitignore ${PROJECT_DIR}/
 cp setup.py ${PROJECT_DIR}/
-cp versions.cfg ${PROJECT_DIR}/
+cp requirements.pip ${PROJECT_DIR}/
 cp setup-development.sh ${PROJECT_DIR}/
 cp handler.py ${PROJECT_DIR}/
 cp deviceproxy.yaml.in ${PROJECT_DIR}/deviceproxy_${SITE}.yaml
 cp test_settings.py ${PROJECT_DIR}/
+cp manage.py ${PROJECT_DIR}/
+cp MANIFEST.in ${PROJECT_DIR}/
 touch ${PROJECT_DIR}/AUTHORS.rst
 touch ${PROJECT_DIR}/CHANGELOG.rst
 touch ${PROJECT_DIR}/README.rst
-cp -r buildout_templates ${PROJECT_DIR}/
 cp -r scripts ${PROJECT_DIR}/
+cp -r project ${PROJECT_DIR}/
+cp -r conf ${PROJECT_DIR}/
 cp -r skeleton ${PROJECT_DIR}/${APP}
 
+# Delete pyc files
+find ${PROJECT_DIR} -name "*.pyc" | xargs rm
+
 # Create the settings files. First delete the existing ones, then copy and rename.
-rm ${PROJECT_DIR}/${APP}/settings_*_site.*
-for f in skeleton/settings_*.py; do
+rm ${PROJECT_DIR}/project/settings_*_site.*
+for f in project/settings_*.py; do
     F=$(basename $f)
-    cp $f ${PROJECT_DIR}/${APP}/${F/site/${SITE}};
+    cp $f ${PROJECT_DIR}/project/${F/site/${SITE}};
 done
 
 # Change strings in the newly copied source
@@ -69,12 +74,13 @@ sed -i "s/PORT_PREFIX_PLACEHOLDER/${PORT}/g" ${PROJECT_DIR}/deviceproxy_*.yaml
 
 # Replace the word skeleton with the app name
 sed -i s/skeleton/${APP}/g ${PROJECT_DIR}/*.py
+sed -i s/skeleton/${APP}/g ${PROJECT_DIR}/project/*.py
 sed -i s/skeleton/${APP}/g ${APP_DIR}/*.py
 sed -i s/skeleton/${APP}/g ${APP_DIR}/migrations/*.py
 
 # Set the secret key
 SECRET_KEY=`date +%s | sha256sum | head -c 56`
-sed -i "s/SECRET_KEY_PLACEHOLDER/${SECRET_KEY}/" ${APP_DIR}/settings.py
+sed -i "s/SECRET_KEY_PLACEHOLDER/${SECRET_KEY}/" ${PROJECT_DIR}/project/settings.py
 
 # Indicate version of jmbo-skeleton used to create project
 VERSION=`sed "5q;d" setup.py | awk -F= '{print $2}'`
