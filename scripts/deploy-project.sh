@@ -47,8 +47,8 @@ DEPLOY_DIR=/var/${REPO_OWNER}
 WORKING_DIR=/tmp/${REPO_OWNER}
 
 # Ensure working directory is clean
-sudo rm -rf $WORKING_DIR
-sudo -u $USER mkdir $WORKING_DIR
+#sudo rm -rf $WORKING_DIR
+sudo -u $USER mkdir -p $WORKING_DIR
 
 # Checkout / update repo to working directory
 cd $WORKING_DIR
@@ -66,14 +66,24 @@ DB_NAME=$APP_NAME
 RESULT=`sudo -u postgres psql -l | grep ${DB_NAME}`
 if [ "$RESULT" == "" ]; then
 	echo "CREATE USER $DB_NAME WITH PASSWORD '$DB_NAME'" | sudo -u postgres psql
-    echo "CREATE EXTENSION postgis" | sudo -u postgres psql skeleton
-    echo "CREATE EXTENSION postgis_topology" | sudo -u postgres psql skeleton
+    echo "CREATE DATABASE ${APP_NAME} WITH ENCODING 'UTF-8'" | sudo -u postgres psql
+    echo "CREATE EXTENSION postgis" | sudo -u postgres psql ${APP_NAME}
+    echo "CREATE EXTENSION postgis_topology" | sudo -u postgres psql ${APP_NAME}
 	IS_NEW_DATABASE=1
 fi
 
 # Pip
 cd /${WORKING_DIR}/${REPO}
-sudo -u $USER ${DEPLOY_DIR}/python/bin/pip install -r requirements.pip
+PIP_FILE=requirements.pip
+DESIRED_PIP_FILE=requirements_${DEPLOY_TYPE}.pip
+if [ -e "${DESIRED_PIP_FILE}" ]; then
+    PIP_FILE=${DESIRED_PIP_FILE}
+fi
+pwd
+echo $PIP_FILE
+echo $DESIRED_PIP_FILE
+exit 0
+sudo -u $USER ${DEPLOY_DIR}/python/bin/pip install -r ${PIP_FILE}
 EXIT_CODE=$?
 if [ $EXIT_CODE != 0 ]; then
     echo "Pip failure. Aborting."
