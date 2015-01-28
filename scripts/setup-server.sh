@@ -20,8 +20,8 @@ sudo apt-get install python-virtualenv python-dev \
 postgresql libjpeg-dev zlib1g-dev build-essential git-core \
 memcached supervisor nginx postgresql-server-dev-all libxslt1-dev \
 libproj0 libproj-dev libgeos-dev libgdal1-dev libgeoip1 \
-libgeoip-dev  postgis postgresql-9.1-postgis unzip \
-redis --no-upgrade
+libgeoip-dev postgis unzip \
+redis-server --no-upgrade
 
 echo "Configuring PostgreSQL..."
 # xxx: Regexes would be better. A loop would also be better.

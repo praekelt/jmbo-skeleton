@@ -8,10 +8,8 @@ CREDENTIALS=praekeltdeploy:password
 USER=www-data
 
 # Parse arguments
-while getopts "p:d:r:b:c:u:l:" opt; do
+while getopts "d:r:b:c:u:l:" opt; do
     case $opt in
-        p)
-            PREFIX=$OPTARG;;
         d)
             DEPLOY_TYPE=$OPTARG;;
         r)
@@ -25,9 +23,9 @@ while getopts "p:d:r:b:c:u:l:" opt; do
     esac
 done
 
-if [[ -z "$PREFIX" || -z "$DEPLOY_TYPE" || -z "$OWNER_AND_REPO" || -z "$BRANCH" || -z "$CREDENTIALS" ]];
+if [[ -z "$DEPLOY_TYPE" || -z "$OWNER_AND_REPO" || -z "$BRANCH" || -z "$CREDENTIALS" ]];
 then
-    echo "Usage: deploy-project.sh -p (prefix) -d (deploy_type) -r (repo) -b (branch) -c (credentials) [-u (user)]"
+    echo "Usage: deploy-project.sh -d (deploy_type) -r (repo) -b (branch) -c (credentials) [-u (user)]"
     echo "Example: deploy-project.sh -p praekelt -d qa -r praekelt/jmbo-foo -b develop -c praekeltdeploy:mypassword"
     exit 1
 fi
@@ -64,7 +62,7 @@ fi
 
 # Create database. Safe to run even if database already exists.
 IS_NEW_DATABASE=0
-DB_NAME=${PREFIX}_${DEPLOY_TYPE}
+DB_NAME=$APP_NAME
 RESULT=`sudo -u postgres psql -l | grep ${DB_NAME}`
 if [ "$RESULT" == "" ]; then
 	echo "CREATE USER $DB_NAME WITH PASSWORD '$DB_NAME'" | sudo -u postgres psql
@@ -165,7 +163,7 @@ sudo supervisorctl update
 sudo /etc/init.d/memcached restart
 
 # Restart affected processes
-for process in `sudo supervisorctl status | grep ${PREFIX}- | awk '{ print length(), $0 | "sort -n -r" }' | awk '{ print $2 }'`
+for process in `sudo supervisorctl status | grep ${APP_NAME}- | awk '{ print length(), $0 | "sort -n -r" }' | awk '{ print $2 }'`
 do
     sudo supervisorctl restart $process
     sleep 1
