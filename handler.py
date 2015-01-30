@@ -1,4 +1,4 @@
-from devproxy.handlers.wurfl_handler.scientia_mobile_cloud \
+from devproxy.handlers.wurfl_handler.scientia_mobile_cloud_resolution \
     import ScientiaMobileCloudResolutionTouchHandler
 
 
