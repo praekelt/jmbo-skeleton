@@ -52,12 +52,12 @@ sudo -u $USER mkdir -p $WORKING_DIR
 
 # Checkout / update repo to working directory
 cd $WORKING_DIR
-if [ -d $REPO ]; then
-    cd $REPO
+if [ -d $APP_NAME ]; then
+    cd $APP_NAME
     sudo -u $USER git checkout $BRANCH
     sudo -u $USER git pull
 else
-    sudo -u $USER git clone -b $BRANCH https://${CREDENTIALS}@github.com/$REPO_OWNER/$REPO.git
+    sudo -u $USER git clone -b $BRANCH https://${CREDENTIALS}@github.com/$REPO_OWNER/$REPO.git ${APP_NAME}
 fi
 
 # Create database. Safe to run even if database already exists.
@@ -73,7 +73,7 @@ if [ "$RESULT" == "" ]; then
 fi
 
 # Pip
-cd /${WORKING_DIR}/${REPO}
+cd /${WORKING_DIR}/${APP_NAME}
 PIP_FILE=requirements.pip
 DESIRED_PIP_FILE=requirements_${DEPLOY_TYPE}.pip
 if [ -e "${DESIRED_PIP_FILE}" ]; then
@@ -88,10 +88,10 @@ fi
 
 # Backup existing static directory if it exists
 sudo -u $USER mkdir -p ${DEPLOY_DIR}/static-backups
-if [ -d ${DEPLOY_DIR}/${REPO}/static ]; then
-    STATIC_BACKUP=${DEPLOY_DIR}/static-backups/${REPO}/${ADATE}
+if [ -d ${DEPLOY_DIR}/${APP_NAME}-static ]; then
+    STATIC_BACKUP=${DEPLOY_DIR}/static-backups/${APP_NAME}/${ADATE}
     sudo -u $USER mkdir -p $STATIC_BACKUP
-    sudo -u $USER cp -r ${DEPLOY_DIR}/${REPO}-static ${STATIC_BACKUP}/
+    sudo -u $USER cp -r ${DEPLOY_DIR}/${APP_NAME}-static ${STATIC_BACKUP}/
 fi
 
 # Database setup
