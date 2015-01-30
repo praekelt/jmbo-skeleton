@@ -7,3 +7,6 @@ nginx:
     primary_mobi_server_name: m.demo.jmbo.org
     cookie_domain: .demo.jmbo.org
     port_prefix: PORT_PREFIX_PLACEHOLDER
+
+supervisor:
+    app_name: PORT_PREFIX_PLACEHOLDER
