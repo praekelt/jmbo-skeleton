@@ -50,6 +50,7 @@ cp deviceproxy.yaml.in ${PROJECT_DIR}/deviceproxy_${SITE}.yaml
 cp config.yaml.in ${PROJECT_DIR}/config.yaml
 cp test_settings.py ${PROJECT_DIR}/
 cp manage.py ${PROJECT_DIR}/
+cp wsgi.py ${PROJECT_DIR}/
 cp MANIFEST.in ${PROJECT_DIR}/
 touch ${PROJECT_DIR}/AUTHORS.rst
 touch ${PROJECT_DIR}/CHANGELOG.rst
