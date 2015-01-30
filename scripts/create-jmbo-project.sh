@@ -80,6 +80,7 @@ sed -i s/skeleton/${APP}/g ${PROJECT_DIR}/*.py
 sed -i s/skeleton/${APP}/g ${PROJECT_DIR}/project/*.py
 sed -i s/skeleton/${APP}/g ${APP_DIR}/*.py
 sed -i s/skeleton/${APP}/g ${APP_DIR}/migrations/*.py
+sed -i s/skeleton/${APP}/g ${PROJECT_DIR}/conf/*.conf.in
 
 # Set the secret key
 SECRET_KEY=`date +%s | sha256sum | head -c 56`

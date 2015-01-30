@@ -23,3 +23,7 @@ CACHES = {
 }
 
 CKEDITOR_UPLOAD_PATH = '%s/../skeleton-media/uploads/' % BUILDOUT_PATH
+
+ALLOWED_HOSTS = [
+    ".site.com"
+]
