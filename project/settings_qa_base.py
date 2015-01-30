@@ -1,4 +1,4 @@
-from skeleton.settings import *
+from project.settings import *
 
 
 DATABASES = {

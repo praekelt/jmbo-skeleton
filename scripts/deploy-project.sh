@@ -98,7 +98,7 @@ fi
 DJANGO_MANAGE="${DEPLOY_DIR}/python/bin/python manage.py"
 if [ $IS_NEW_DATABASE -eq 1 ]; then
     read -p "Create a superuser if prompted. Do not generate default content. [enter]" y
-    sudo -u $USER $DJANGO_MANAGE syncdb
+    sudo -u $USER $DJANGO_MANAGE syncdb --settings=projects.settings_${DEPLOY_TYPE}_base
 else
     # Some Jmbo apps only got South migrations at a later stage. Scenarios:
     # 1. Content type not in DB - normal migrate
