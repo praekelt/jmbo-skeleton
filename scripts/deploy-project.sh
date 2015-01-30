@@ -135,7 +135,7 @@ sudo -u $USER $DJANGO_MANAGE loaddata ${APP_NAME}/fixtures/sites.json --settings
 
 # Static files
 sudo -u $USER rm -rf static
-sudo -u $USER $DJANGO_MANAGE collectstatic --noinput --settings=project.settings_${DEPLOY_TYPE}_base
+sudo -u $USER $DJANGO_MANAGE collectstatic --noinput -v 0 --settings=project.settings_${DEPLOY_TYPE}_base
 
 # Generate config files
 sudo -u $USER ${DEPLOY_DIR}/python/bin/python scripts/generate-configs.py config.yaml
