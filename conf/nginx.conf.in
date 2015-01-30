@@ -112,12 +112,12 @@ server {
 
     # todo: use genshi template and for loop
     location ^~ /static/basic/ {
-        alias   {{ deploy-root }}/{{ app_name }}-static/basic/;
+        alias   {{ deploy_root }}/{{ app_name }}-static/basic/;
         expires 31d;
     }
 
     location ^~ /static/smart/ {
-        alias   {{ deploy-root }}/{{ app_name }}-static/smart/;
+        alias   {{ deploy_root }}/{{ app_name }}-static/smart/;
         expires 31d;
     }
 
@@ -176,7 +176,7 @@ server {
 	    # Note: do if statements first because of Nginx if-statement weirdness
 
         # Default to upstream web port
-        set $port '{{ port_prefix} }11';
+        set $port '{{ port_prefix }}11';
 
         # Patterns to be used later to determine whether to redirect to mobi
 	    set $redirect_pattern_basic 'xxxxxx';

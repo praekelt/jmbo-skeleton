@@ -138,7 +138,7 @@ sudo -u $USER rm -rf static
 sudo -u $USER $DJANGO_MANAGE collectstatic --noinput
 
 # Generate config files
-sudo -u $USER ${DEPLOY_DIR}/python/bin/python generate_config.py config.yaml 
+sudo -u $USER ${DEPLOY_DIR}/python/bin/python scripts/generate-configs.py config.yaml
 
 # Copy / move directories in working directory to deploy directory
 for f in `ls $WORKING_DIR`
