@@ -137,6 +137,9 @@ sudo -u $USER $DJANGO_MANAGE loaddata ${APP_NAME}/fixtures/sites.json
 sudo -u $USER rm -rf static
 sudo -u $USER $DJANGO_MANAGE collectstatic --noinput
 
+# Generate config files
+sudo -u $USER ${DEPLOY_DIR}/python/bin/python generate_config.py config.yaml 
+
 # Copy / move directories in working directory to deploy directory
 for f in `ls $WORKING_DIR`
 do
