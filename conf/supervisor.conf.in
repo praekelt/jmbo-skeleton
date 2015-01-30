@@ -1,4 +1,4 @@
-[program:admin-django]
+[program:skeleton-admin-django]
 process_name=%(program_name)s
 command={{ deploy_root }}/python/bin/gunicorn wsgi -w 4 --max-requests=10000 --bind 127.0.0.1:9091
 directory={{ deploy_root }}/{{ app_name }}/
@@ -10,64 +10,72 @@ environment=
     PYTHON_EGG_CACHE='/var/www/.python-eggs',
     DJANGO_SETTINGS_MODULE=project.settings_live_admin_site
 
-[program:basic-django]
+[program:skeleton-basic-django]
 process_name=%(program_name)s
-command=/var/praekelt/python/bin/gunicorn newswatch-live-basic-site-wsgi:application -w 4 --max-requests=10000 -b 127.0.0.1:9021
-directory=/var/praekelt/newswatch-live-basic-site/bin/
+command={{ deploy_root }}/python/bin/gunicorn wsgi -w 4 --max-requests=10000 --bind 127.0.0.1:9021
+directory={{ deploy_root }}/{{ app_name }}/
 user=www-data
-stdout_logfile=/var/praekelt/logs/newswatch/django-basic.log
-stderr_logfile=/var/praekelt/logs/newswatch/django-basic-error.log
+stdout_logfile={{ deploy_root }}/log/{{ app_name }}-django-basic.log
+stderr_logfile={{ deploy_root }}/log/{{ app_name }}-django-basic-error.log
 stopsignal=QUIT
-environment=PYTHON_EGG_CACHE='/var/www/.python-eggs'
+environment=
+    PYTHON_EGG_CACHE='/var/www/.python-eggs',
+    DJANGO_SETTINGS_MODULE=project.settings_live_basic_site
 
-[program:smart-django]
+[program:skeleton-smart-django]
 process_name=%(program_name)s
-command=/var/praekelt/python/bin/gunicorn newswatch-live-smart-site-wsgi:application -w 4 --max-requests=10000 -b 127.0.0.1:9031
-directory=/var/praekelt/newswatch-live-smart-site/bin/
+command={{ deploy_root }}/python/bin/gunicorn wsgi -w 4 --max-requests=10000 --bind 127.0.0.1:9031
+directory={{ deploy_root }}/{{ app_name }}/
 user=www-data
-stdout_logfile=/var/praekelt/logs/newswatch/django-smart.log
-stderr_logfile=/var/praekelt/logs/newswatch/django-smart-error.log
+stdout_logfile={{ deploy_root }}/log/{{ app_name }}-django-smart.log
+stderr_logfile={{ deploy_root }}/log/{{ app_name }}-django-smart-error.log
 stopsignal=QUIT
-environment=PYTHON_EGG_CACHE='/var/www/.python-eggs'
+environment=
+    PYTHON_EGG_CACHE='/var/www/.python-eggs',
+    DJANGO_SETTINGS_MODULE=project.settings_live_smart_site
 
-[program:web-django]
+[program:skeleton-web-django]
 process_name=%(program_name)s
-command=/var/praekelt/python/bin/gunicorn newswatch-live-web-site-wsgi:application -w 4 --max-requests=10000 -b 127.0.0.1:9011
-directory=/var/praekelt/newswatch-live-web-site/bin/
+command={{ deploy_root }}/python/bin/gunicorn wsgi -w 4 --max-requests=10000 --bind 127.0.0.1:9011
+directory={{ deploy_root }}/{{ app_name }}/
 user=www-data
-stdout_logfile=/var/praekelt/logs/newswatch/django-web.log
-stderr_logfile=/var/praekelt/logs/newswatch/django-web-error.log
+stdout_logfile={{ deploy_root }}/log/{{ app_name }}-django-web.log
+stderr_logfile={{ deploy_root }}/log/{{ app_name }}-django-web-error.log
 stopsignal=QUIT
-environment=PYTHON_EGG_CACHE='/var/www/.python-eggs'
+environment=
+    PYTHON_EGG_CACHE='/var/www/.python-eggs',
+    DJANGO_SETTINGS_MODULE=project.settings_live_web_site
 
-[program:deviceproxy]
-command=/var/praekelt/python/bin/twistd --pidfile=/tmp/deviceproxy.pid -n devproxy --config /var/praekelt/newswatch-live-common-site/deviceproxy_site.yaml
-directory=/var/praekelt/newswatch-live-common-site
+[program:skeleton-deviceproxy]
+command={{ deploy_root }}/python/bin/twistd --pidfile=/tmp/deviceproxy.pid -n devproxy --config {{ deploy_root }}/{{ app_name }}/deviceproxy_site.yaml
+directory={{ deploy_root }}/{{ app_name }}/
 user=www-data
 numprocs=1
-stdout_logfile=/var/praekelt/logs/newswatch/deviceproxy.log
-stderr_logfile=/var/praekelt/logs/newswatch/deviceproxy-error.log
+stdout_logfile={{ deploy_root }}/log/{{ app_name }}-deviceproxy.log
+stderr_logfile={{ deploy_root }}/log/{{ app_name }}-deviceproxy-error.log
 stopsignal=QUIT
 startsecs=10
 environment=PYTHON_EGG_CACHE='/var/www/.python-eggs'
 
-[program:celery-worker]
+[program:skeleton-celery-worker]
 process_name=%(program_name)s_%(process_num)s
-command=/var/praekelt/newswatch-live-admin-site/bin/newswatch-live-admin-site celery worker
+command={{ deploy_root }}/{{ app_name }} manage.py celery worker
+directory={{ deploy_root }}/{{ app_name }}/
 user=www-data
-stdout_logfile=/var/praekelt/logs/newswatch/django-celery.log
-stderr_logfile=/var/praekelt/logs/newswatch/django-celery-error.log
+stdout_logfile={{ deploy_root }}/log/{{ app_name }}-django-celery.log
+stderr_logfile={{ deploy_root }}/log/{{ app_name }}-django-celery-error.log
 stopsignal=QUIT
 environment=PYTHON_EGG_CACHE='/var/www/.python-eggs'
 
-[program:celery-beat]
+[program:skeleton-celery-beat]
 process_name=%(program_name)s_%(process_num)s
-command=/var/praekelt/newswatch-live-admin-site/bin/newswatch-live-admin-site celery beat --pidfile=/tmp/newswatch-django-celery-beat.pid --schedule=/tmp/newswatch-celery-beat-schedule
+command={{ deploy_root }}/{{ app_name }} manage.py celery beat --pidfile=/tmp/{{ app_name }}-django-celery-beat.pid --schedule=/tmp/{{ app_name }}-celery-beat-schedule
+directory={{ deploy_root }}/{{ app_name }}/
 user=www-data
-stdout_logfile=/var/praekelt/logs/newswatch/django-celery.log
-stderr_logfile=/var/praekelt/logs/newswatch/django-celery-error.log
+stdout_logfile={{ deploy_root }}/log/{{ app_name }}-django-celery.log
+stderr_logfile={{ deploy_root }}/log/{{ app_name }}-django-celery-error.log
 stopsignal=QUIT
 environment=PYTHON_EGG_CACHE='/var/www/.python-eggs'
 
-[group:newswatch]
-programs=admin-django,basic-django,smart-django,web-django,feeds-django,deviceproxy,celery-worker,celery-beat
+[group:skeleton]
+programs=skeleton-admin-django,skeleton-basic-django,skeleton-smart-django,skeleton-web-django,skeleton-deviceproxy,skeleton-celery-worker,skeleton-celery-beat
