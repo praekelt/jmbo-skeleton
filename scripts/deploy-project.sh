@@ -159,7 +159,7 @@ do
         fi
 
         # Create supervisor symlinks if required
-        if [ -d ${DEPLOY_DIR}/${f}/conf/supervisor.conf ]; then
+        if [ -e ${DEPLOY_DIR}/${f}/conf/supervisor.conf ]; then
             sudo ln -s ${DEPLOY_DIR}/${f}/conf/supervisor.conf /etc/supervisor/conf.d/${APP_NAME}.conf
         fi
     fi
