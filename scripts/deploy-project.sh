@@ -79,7 +79,7 @@ DESIRED_PIP_FILE=requirements_${DEPLOY_TYPE}.pip
 if [ -e "${DESIRED_PIP_FILE}" ]; then
     PIP_FILE=${DESIRED_PIP_FILE}
 fi
-#sudo -u $USER ${DEPLOY_DIR}/python/bin/pip install -r ${PIP_FILE}
+sudo -u $USER ${DEPLOY_DIR}/python/bin/pip install -r ${PIP_FILE}
 EXIT_CODE=$?
 if [ $EXIT_CODE != 0 ]; then
     echo "Pip failure. Aborting."
