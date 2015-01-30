@@ -122,20 +122,20 @@ else
         fi
     done
 
-    sudo -u $USER $DJANGO_MANAGE syncdb --noinput
+    sudo -u $USER $DJANGO_MANAGE syncdb --noinput --settings=project.settings_${DEPLOY_TYPE}_base
 
     # Apply fake migrations
     for APP in $FAKE_MIGRATE; do
         sudo -u $USER $DJANGO_MANAGE migrate ${APP} 0001_initial --fake
     done
 fi
-sudo -u $USER $DJANGO_MANAGE migrate
-sudo -u $USER $DJANGO_MANAGE load_photosizes
-sudo -u $USER $DJANGO_MANAGE loaddata ${APP_NAME}/fixtures/sites.json
+sudo -u $USER $DJANGO_MANAGE migrate --settings=project.settings_${DEPLOY_TYPE}_base
+sudo -u $USER $DJANGO_MANAGE load_photosizes --settings=project.settings_${DEPLOY_TYPE}_base
+sudo -u $USER $DJANGO_MANAGE loaddata ${APP_NAME}/fixtures/sites.json --settings=project.settings_${DEPLOY_TYPE}_base
 
 # Static files
 sudo -u $USER rm -rf static
-sudo -u $USER $DJANGO_MANAGE collectstatic --noinput
+sudo -u $USER $DJANGO_MANAGE collectstatic --noinput --settings=project.settings_${DEPLOY_TYPE}_base
 
 # Generate config files
 sudo -u $USER ${DEPLOY_DIR}/python/bin/python scripts/generate-configs.py config.yaml
