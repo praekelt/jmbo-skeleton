@@ -93,7 +93,7 @@ server {
 
     # logging
     access_log  {{ deploy_root }}/log/{{ app_name }}-web.log;
-    error_log   {{ deploy_root }}/log/{{ app_name }}-error-web.log;
+    error_log   {{ deploy_root }}/log/{{ app_name }}-web-error.log;
 
 }
 
@@ -160,7 +160,7 @@ server {
 
     # logging
     access_log  {{ deploy_root }}/log/{{ app_name }}-mobi.log;
-    error_log   {{ deploy_root }}/log/{{ app_name }}-error-mobi.log;
+    error_log   {{ deploy_root }}/log/{{ app_name }}-mobi-error.log;
 
 }
 
@@ -241,6 +241,6 @@ server {
 
     # logging
     access_log  {{ deploy_root }}/log/{{ app_name }}-router.log rt_cache;
-    error_log   {{ deploy_root }}/log/{{ app_name }}-error-router.log;
+    error_log   {{ deploy_root }}/log/{{ app_name }}-router-error.log;
 
 }
