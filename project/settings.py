@@ -205,7 +205,7 @@ CKEDITOR_MEDIA_PREFIX = '/media/ckeditor/'
 
 # Specify absolute path to your ckeditor media upload directory.
 # Make sure you have write permissions for the path, i.e/home/media/media.lawrence.com/uploads/
-CKEDITOR_UPLOAD_PATH = '%s/media/uploads/' % BUILDOUT_PATH
+CKEDITOR_UPLOAD_PATH = '%suploads/' % MEDIA_ROOT
 
 CKEDITOR_CONFIGS = {
     'default': {'toolbar_Full': [
