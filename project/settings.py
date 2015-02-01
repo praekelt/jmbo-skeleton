@@ -10,8 +10,12 @@ FOUNDRY = {
 }
 
 # Paths
-SCRIPT_PATH =  path.abspath(path.dirname(__file__))
-BUILDOUT_PATH =  path.split(path.abspath(path.join(path.dirname(sys.argv[0]))))[0]
+# Paths
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+
+def abspath(*args):
+    """convert relative paths to absolute paths relative to PROJECT_ROOT"""
+    return os.path.join(PROJECT_ROOT, *args)
 
 PROJECT_MODULE = 'skeleton'
 
@@ -64,16 +68,14 @@ USE_I18N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = '%s/skeleton-media/' % BUILDOUT_PATH
-
-
+MEDIA_ROOT = abspath("skeleton-media")
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 MEDIA_URL = '/media/'
 
-STATIC_ROOT = '%s/skeleton-static/' % BUILDOUT_PATH
+STATIC_ROOT = abspath("static")
 
 STATIC_URL = '/static/'
 
@@ -118,7 +120,7 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 )
 
-ROOT_URLCONF = 'skeleton.urls'
+ROOT_URLCONF = 'project.urls'
 
 INSTALLED_APPS = (
     # The order is important else template resolution may not work
@@ -205,7 +207,7 @@ CKEDITOR_MEDIA_PREFIX = '/media/ckeditor/'
 
 # Specify absolute path to your ckeditor media upload directory.
 # Make sure you have write permissions for the path, i.e/home/media/media.lawrence.com/uploads/
-CKEDITOR_UPLOAD_PATH = '%suploads/' % MEDIA_ROOT
+CKEDITOR_UPLOAD_PATH = os.path.join(MEDIA_ROOT, "uploads")
 
 CKEDITOR_CONFIGS = {
     'default': {'toolbar_Full': [
@@ -339,6 +341,12 @@ CELERY_QUEUES = {
         'exchange': 'celery',
         'binding_key': 'sentry'
     },
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    }
 }
 
 # Debug toolbar. Uncomment if required.

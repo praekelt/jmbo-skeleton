@@ -15,7 +15,9 @@ DATABASES = {
     }
 }
 
-MEDIA_ROOT = '%s/../skeleton-media/' % BUILDOUT_PATH
+MEDIA_ROOT = abspath("..",  "skeleton-media")
+STATIC_ROOT = abspath("..",  "skeleton-static")
+CKEDITOR_UPLOAD_PATH = os.path.join(MEDIA_ROOT, "uploads")
 
 CACHES = {
     'default': {
@@ -24,8 +26,6 @@ CACHES = {
         'KEY_PREFIX': 'skeleton_live',
     }
 }
-
-CKEDITOR_UPLOAD_PATH = '%s/../skeleton-media/uploads/' % BUILDOUT_PATH
 
 COMPRESS_ENABLED = True
 
