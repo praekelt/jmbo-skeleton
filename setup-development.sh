@@ -10,12 +10,14 @@ DB_SETUP=$1
 echo "Ensuring required system libraries are installed. You may be prompted for your password."
 sudo apt-get install python-virtualenv python-dev \
 libjpeg-dev zlib1g-dev build-essential git-core \
---no-upgrade
+sqlite spatialite-bin --no-upgrade
 
-echo "Setting up sandboxed Python environment."
-rm -rf ve
-virtualenv ve
-./ve/bin/pip install -r requirements.pip
+if [ ! -d "ve" ]; then
+    echo "Setting up sandboxed Python environment."
+    rm -rf ve
+    virtualenv ve
+    ./ve/bin/pip install -r requirements.pip
+fi
 
 APP_NAME=${PWD##*/}
 

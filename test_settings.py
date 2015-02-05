@@ -1,4 +1,6 @@
-from skeleton.settings import *
+from os.path import expanduser
+
+from project.settings import *
 
 
 DATABASES = {

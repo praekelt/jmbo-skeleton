@@ -157,7 +157,7 @@ INSTALLED_APPS = (
     'registration',
     'snippetscream',
 
-    'atlas',
+    #'atlas',
     'captcha',
     'ckeditor',
     'compressor',
