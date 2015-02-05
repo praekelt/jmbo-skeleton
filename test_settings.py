@@ -5,7 +5,7 @@ from project.settings import *
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.sqlite',
+        'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'skeleton',
         'USER': 'test',
         'PASSWORD': '',
