@@ -133,9 +133,11 @@ sudo -u $USER $DJANGO_MANAGE migrate --settings=project.settings_${DEPLOY_TYPE}_
 sudo -u $USER $DJANGO_MANAGE load_photosizes --settings=project.settings_${DEPLOY_TYPE}_base
 sudo -u $USER $DJANGO_MANAGE loaddata ${APP_NAME}/fixtures/sites.json --settings=project.settings_${DEPLOY_TYPE}_base
 
-# Static files
+# Static files. Settings file is quite hardcoded.
 sudo -u $USER rm -rf static
-sudo -u $USER $DJANGO_MANAGE collectstatic --noinput -v 0 --settings=project.settings_${DEPLOY_TYPE}_base
+sudo -u $USER $DJANGO_MANAGE collectstatic --noinput -v 0 --settings=project.settings_${DEPLOY_TYPE}_basic_site
+sudo -u $USER $DJANGO_MANAGE collectstatic --noinput -v 0 --settings=project.settings_${DEPLOY_TYPE}_smart_site
+sudo -u $USER $DJANGO_MANAGE collectstatic --noinput -v 0 --settings=project.settings_${DEPLOY_TYPE}_web_site
 
 # Generate config files
 sudo -u $USER ${DEPLOY_DIR}/python/bin/python scripts/generate-configs.py config.yaml

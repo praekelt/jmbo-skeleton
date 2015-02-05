@@ -24,6 +24,8 @@ CACHES = {
     }
 }
 
+INSTALLED_APPS += ("atlas",)
+
 ALLOWED_HOSTS = [
     ".site.com"
 ]

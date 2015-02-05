@@ -1,5 +1,5 @@
 from project.settings import *
 
 
-FOUNDRY['layers'] = ('smart', 'basic')
+LAYERS['layers'] = ('smart', 'basic')
 SITE_ID = 4

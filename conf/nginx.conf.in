@@ -43,8 +43,8 @@ server {
         expires 31d;
     }
 
-    location ^~ /static/ {
-        alias   {{ deploy_root }}/{{ app_name }}-static/;
+    location ^~ /static/web/ {
+        alias   {{ deploy_root }}/{{ app_name }}-static/web/;
         expires 31d;
     }
 

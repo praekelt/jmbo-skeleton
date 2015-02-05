@@ -29,6 +29,8 @@ CACHES = {
 
 COMPRESS_ENABLED = True
 
+INSTALLED_APPS += ("atlas",)
+
 SENTRY_DSN = 'ENTER_YOUR_SENTRY_DSN_HERE'
 SENTRY_CLIENT = 'raven.contrib.django.celery.CeleryClient'
 

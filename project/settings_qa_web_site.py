@@ -1,4 +1,6 @@
 from project.settings_qa_base import *
 
 
-FOUNDRY['layers'] = ('web', 'basic',)
+LAYERS['layers'] = ('web', 'basic',)
+STATIC_ROOT = abspath("..",  "skeleton-static", "web")
+STATIC_URL = '/static/web/'
