@@ -5,6 +5,7 @@ next
 ----
 #. Deprecate buildout in favour of pip.
 #. Move settings into a projects directory to avoid clutter.
+#. Minimum version of `jmbo-foundry` is now 2.0.
 
 0.9
 ---
