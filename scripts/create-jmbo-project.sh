@@ -57,6 +57,7 @@ touch ${PROJECT_DIR}/CHANGELOG.rst
 touch ${PROJECT_DIR}/README.rst
 cp -r scripts ${PROJECT_DIR}/
 cp -r project ${PROJECT_DIR}/
+cp -r fed ${PROJECT_DIR}/
 cp -r conf ${PROJECT_DIR}/
 cp -r skeleton ${PROJECT_DIR}/${APP}
 

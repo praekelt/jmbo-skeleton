@@ -1,4 +1,4 @@
 from project.settings import *
 
 
-LAYERS['layers'] = ('web', 'basic',)
+LAYERS['layers'] = ('basic', 'web')

@@ -1,5 +1,5 @@
 from project.settings import *
 
 
-LAYERS['layers'] = ('smart', 'basic')
+LAYERS['layers'] = ('basic', 'smart')
 SITE_ID = 4
