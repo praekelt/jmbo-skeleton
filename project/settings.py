@@ -162,6 +162,8 @@ INSTALLED_APPS = (
     'export',
     'generate',
     'googlesearch',
+    'grappelli.dashboard',
+    'grappelli',
     'gunicorn',
     'object_tools',
     'pagination',

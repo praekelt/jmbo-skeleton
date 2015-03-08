@@ -12,10 +12,11 @@ setup(
     packages = find_packages(),
     install_requires = [
         'jmbo-foundry>=1.2.4',
-        'raven',
         'django_compressor',
         'django-debug-toolbar',
+        'django-grappelli<2.6',
         'gunicorn',
+        'raven',
     ],
     include_package_data=True,
     tests_require=[
