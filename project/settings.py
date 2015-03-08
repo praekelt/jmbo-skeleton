@@ -13,7 +13,6 @@ LAYERS = {
 }
 
 # Paths
-# Paths
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 def abspath(*args):
@@ -144,6 +143,7 @@ INSTALLED_APPS = (
     #'show',            # requires jmbo_calendar
     #'jmbo_twitter',
 
+    # Minimal set of apps required by Jmbo
     'contact',
     'post',
     'jmbo_analytics',
@@ -154,18 +154,13 @@ INSTALLED_APPS = (
     'photologue',
     'secretballot',
 
-    # todo: attempt to get rid of these four
-    'section',
-    'gizmo',
-    'registration',
-    'snippetscream',
-
-    #'atlas',
+    #'atlas',   # disabled by default until spatialite is easily installable
     'captcha',
     'ckeditor',
     'compressor',
     'dfp',
     'export',
+    'generate',
     'googlesearch',
     'gunicorn',
     'object_tools',
@@ -174,10 +169,10 @@ INSTALLED_APPS = (
     'preferences',
     'simple_autocomplete',
     'sites_groups',
+    'snippetscream',
     'social_auth',
     'south',
     'tastypie',
-    'generate',
 
     'django.contrib.auth',
     'django.contrib.comments',

@@ -13,7 +13,9 @@ setup(
     install_requires = [
         'jmbo-foundry>=1.2.4',
         'raven',
-        'django-celery',
+        'django_compressor',
+        'django-debug-toolbar',
+        'gunicorn',
     ],
     include_package_data=True,
     tests_require=[
