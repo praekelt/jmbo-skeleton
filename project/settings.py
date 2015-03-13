@@ -228,7 +228,6 @@ LOGIN_URL = '/login'
 
 LOGIN_REDIRECT_URL = '/'
 
-# todo: add setting to foundry paster
 AUTHENTICATION_BACKENDS = (
     'foundry.backends.MultiBackend',
     'django.contrib.auth.backends.ModelBackend',
