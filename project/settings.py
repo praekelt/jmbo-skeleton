@@ -162,7 +162,7 @@ INSTALLED_APPS = (
     'export',
     'generate',
     'googlesearch',
-    'grappelli.dashboard',
+    #'grappelli.dashboard', # uncomment if you have a custom dashboard
     'grappelli',
     'gunicorn',
     'object_tools',

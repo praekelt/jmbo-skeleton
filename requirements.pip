@@ -79,3 +79,4 @@ device-proxy==0.4.1
 genshi==0.7
 jinja2
 django-layers-hr==0.3
+django-grappelli==2.5.6
