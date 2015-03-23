@@ -163,7 +163,7 @@ INSTALLED_APPS = (
     'generate',
     'googlesearch',
     #'grappelli.dashboard', # uncomment if you have a custom dashboard
-    'grappelli',
+    # 'grappelli',          # unresolved issues with foundry, so wait on grappelli
     'gunicorn',
     'object_tools',
     'pagination',
@@ -184,7 +184,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.staticfiles',
-    'django.contrib.gis',
+    #'django.contrib.gis',   # disabled by default until spatialite is easily installable
     'django.contrib.sitemaps',
     'django.contrib.admin',
 
