@@ -190,6 +190,8 @@ INSTALLED_APPS = (
 
     'djcelery',
     'layers',
+    'raven.contrib.django',
+    'raven.contrib.django.celery',
 #    'debug_toolbar',
 
 )
