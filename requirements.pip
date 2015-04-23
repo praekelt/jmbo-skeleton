@@ -3,7 +3,6 @@
 -e git+https://github.com/praekelt/django-dfp.git@develop#egg=django-dfp
 -e git+https://github.com/praekelt/django-export.git@develop#egg=django-export
 -e git+https://github.com/praekelt/django-generate.git@develop#egg=django-generate
--e git+https://github.com/praekelt/django-googlesearch.git@feature/django-1.6#egg=django-googlesearch
 -e git+https://github.com/praekelt/django-likes.git@feature/django-1.6#egg=django-likes
 -e git+https://github.com/praekelt/django-object-tools.git@develop#egg=django-object-tools
 -e git+https://github.com/praekelt/django-photologue.git@develop#egg=django-photologue
@@ -78,5 +77,6 @@ zope.interface==4.1.2
 device-proxy==0.4.1
 genshi==0.7
 jinja2
-django-layers-hr==0.3
+django-layers-hr==0.4
 django-grappelli==2.5.6
+django-googlesearch==0.2

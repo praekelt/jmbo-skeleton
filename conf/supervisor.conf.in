@@ -60,7 +60,9 @@ user=www-data
 stdout_logfile={{ deploy_root }}/log/{{ app_name }}-django-celery.log
 stderr_logfile={{ deploy_root }}/log/{{ app_name }}-django-celery-error.log
 stopsignal=QUIT
-environment=PYTHON_EGG_CACHE='/var/www/.python-eggs'
+environment=
+    PYTHON_EGG_CACHE='/var/www/.python-eggs',
+    DJANGO_SETTINGS_MODULE=project.settings_live_admin_site
 
 [program:skeleton-celery-beat]
 command={{ deploy_root }}/python/bin/python manage.py celery beat --pidfile=/tmp/{{ app_name }}-django-celery-beat.pid --schedule=/tmp/{{ app_name }}-celery-beat-schedule
@@ -69,7 +71,9 @@ user=www-data
 stdout_logfile={{ deploy_root }}/log/{{ app_name }}-django-celery.log
 stderr_logfile={{ deploy_root }}/log/{{ app_name }}-django-celery-error.log
 stopsignal=QUIT
-environment=PYTHON_EGG_CACHE='/var/www/.python-eggs'
+environment=
+    PYTHON_EGG_CACHE='/var/www/.python-eggs',
+    DJANGO_SETTINGS_MODULE=project.settings_live_admin_site
 
 [group:skeleton]
 programs=skeleton-admin-django,skeleton-basic-django,skeleton-smart-django,skeleton-web-django,skeleton-deviceproxy,skeleton-celery-worker,skeleton-celery-beat
