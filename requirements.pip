@@ -1,22 +1,7 @@
--e git+https://github.com/praekelt/django-category.git@develop#egg=django-category
--e git+https://github.com/praekelt/django-export.git@develop#egg=django-export
--e git+https://github.com/praekelt/django-generate.git@develop#egg=django-generate
--e git+https://github.com/praekelt/django-object-tools.git@develop#egg=django-object-tools
--e git+https://github.com/praekelt/django-photologue.git@develop#egg=django-photologue
--e git+https://github.com/praekelt/django-preferences.git@develop#egg=django-preferences
--e git+https://github.com/praekelt/django-publisher.git@develop#egg=django-publisher
--e git+https://github.com/praekelt/django-recaptcha.git@develop#egg=django-recaptcha
--e git+https://github.com/praekelt/django-simple-autocomplete.git@develop#egg=django-simple-autocomplete
--e git+https://github.com/praekelt/django-sites-groups.git@develop#egg=django-sites-groups
--e git+https://github.com/shaunsephton/django-snippetscream.git#egg=django-snippetscream
--e git+https://github.com/praekelt/jmbo-analytics.git@develop#egg=jmbo-analytics
--e git+https://github.com/praekelt/jmbo-chart.git@feature/django-1.6#egg=jmbo-chart
 -e git+https://github.com/praekelt/jmbo-competition.git@feature/django-1.6#egg=jmbo-competition
 -e git+https://github.com/praekelt/jmbo-downloads.git@feature/django-1.6#egg=jmbo-downloads
--e git+https://github.com/praekelt/jmbo-gallery.git@feature/django-1.6#egg=jmbo-gallery
 -e git+https://github.com/praekelt/jmbo-foundry.git@feature/django-1.6#egg=jmbo-foundry
 -e git+https://github.com/praekelt/jmbo-friends.git@feature/django-1.6#egg=jmbo-friends
--e git+https://github.com/praekelt/jmbo-music.git@feature/django-1.6#egg=jmbo-music
 -e git+https://github.com/praekelt/jmbo-poll.git@feature/django-1.6#egg=jmbo-poll
 -e git+https://github.com/praekelt/jmbo-show.git@feature/django-1.6#egg=jmbo-show
 -e git+https://github.com/praekelt/jmbo-sitemap.git@feature/django-1.6#egg=jmbo-sitemap
@@ -80,3 +65,18 @@ jmbo-contact=2.0.0a1
 jmbo-banner==0.6
 django-atlas==0.1
 jmbo-calendar==2.0.0a1
+jmbo-analytics==0.1
+django-category==0.1.1
+django-export==1.0.4
+django-generate==0.0.6
+django-object-tools==1.0.4
+django-photologue==3.1.1
+django-preferences==0.1
+django-publisher==0.0.3
+django-recaptcha==1.0.4
+django-simple-autocomplete==0.4
+django-sites-groups==0.1.2
+django-snippetscream==0.0.7
+jmbo-gallery==2.0.0a1
+jmbo-music==2.0.0a1
+jmbo-chart==2.0.0a1
