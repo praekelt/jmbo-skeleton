@@ -132,22 +132,22 @@ INSTALLED_APPS = (
     # Optional praekelt-maintained apps. Uncomment for development and
     # install with buildout or pip.
     #'banner',
-    #'jmbo_calendar',   # requires atlas
     #'chart',
     #'competition',
     #'downloads',
     #'friends',
     #'gallery',
+    #'jmbo_calendar',   # requires atlas
+    #'jmbo_sitemap',
+    #'jmbo_twitter',
     #'music',
     #'poll',
     #'show',            # requires jmbo_calendar
-    #'jmbo_twitter',
 
     # Minimal set of apps required by Jmbo
     'contact',
     'post',
     'jmbo_analytics',
-    'jmbo_sitemap',
     'jmbo',
     'category',
     'likes',
