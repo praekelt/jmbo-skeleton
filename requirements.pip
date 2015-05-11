@@ -1,5 +1,4 @@
 -e git+https://github.com/praekelt/jmbo-competition.git@feature/django-1.6#egg=jmbo-competition
--e git+https://github.com/praekelt/jmbo-foundry.git@feature/django-1.6#egg=jmbo-foundry
 -e git+https://github.com/praekelt/jmbo-show.git@feature/django-1.6#egg=jmbo-show
 -e git+https://github.com/praekelt/jmbo-sitemap.git@feature/django-1.6#egg=jmbo-sitemap
 -e git+https://github.com/praekelt/jmbo-twitter.git@feature/django-1.6#egg=jmbo-twitter
@@ -80,3 +79,4 @@ jmbo-chart==2.0.0a1
 jmbo-downloads==2.0.0a1
 jmbo-friends==2.0.0a1
 jmbo-poll==2.0.0a1
+jmbo-foundry==2.0.0a1
