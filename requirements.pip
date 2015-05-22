@@ -70,7 +70,7 @@ django-photologue==3.1.1
 django-preferences==0.1
 django-publisher==0.0.3
 django-recaptcha==1.0.4
-django-simple-autocomplete==0.4
+django-simple-autocomplete==0.5
 django-sites-groups==0.1.2
 django-snippetscream==0.0.7
 jmbo-gallery==2.0.0a1
@@ -79,4 +79,4 @@ jmbo-chart==2.0.0a1
 jmbo-downloads==2.0.0a1
 jmbo-friends==2.0.0a1
 jmbo-poll==2.0.0a1
-jmbo-foundry==2.0.0a1
+jmbo-foundry==2.0.0a3
