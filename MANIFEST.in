@@ -3,9 +3,9 @@ include CHANGELOG.rst
 include LICENSE
 include README.rst
 include demo.sh
-include *.cfg
-include bootstrap.py
-recursive-include buildout_templates *
+include setup-development.sh
+include *.conf.in
+include test_settings.py
 recursive-include scripts *
 recursive-include skeleton/static *
 recursive-include skeleton/fixtures *

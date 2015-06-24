@@ -1,0 +1,246 @@
+# Nginx config for basic, smart and web Django instances in conjunction with
+# device-proxy for device detection.
+
+map $host $web_domain {
+    default '{{ primary_web_server_name }}';
+}
+
+map $host $mobi_domain {
+    default '{{ primary_mobi_server_name }}';
+}
+
+map $host $domain_for_cookie {
+    default '{{ cookie_domain }}';
+}
+
+# Which mobi layer to serve when a non-mobi device visits the mobi site
+map $host $default_mobi_port {
+    default '{{ port_prefix }}31';
+}
+
+# Deviceproxy map (if present) always trumps cookie map
+map $http_x_ua_map $actual_ua_map {
+    basic 'basic';
+    smart 'smart';
+    web 'web';
+    default $cookie_ua_map;
+}
+
+map $cookie_ua_map $proxy_pass_port {
+    '' '{{ port_prefix }}02';
+    default '{{ port_prefix }}09';
+}
+
+server {
+    listen 80;
+    server_name {{ web_server_name }};
+    client_max_body_size 100m;
+    gzip_types application/x-javascript text/css;
+
+    # static resources
+    location ^~ /media/ {
+        alias   {{ deploy_root }}/{{ app_name }}-media/;
+        expires 31d;
+    }
+
+    location ^~ /static/web/ {
+        alias   {{ deploy_root }}/{{ app_name }}-static/web/;
+        expires 31d;
+    }
+
+    location ^~ /media/downloads/(.*) {
+	    internal;
+        alias {{ deploy_root }}/{{ app_name }}-media/downloads/$1;
+    }
+
+    location / {
+        if ($args ~ showsite=web) {
+            add_header Set-Cookie "ua_map=web;Domain=$domain_for_cookie;Path=/;Max-Age=3600";
+            set $actual_ua_map 'web';
+        }
+
+        if ($args ~ showsite=mobi) {
+            add_header Set-Cookie "ua_map=;Domain=$domain_for_cookie;Path=/;Max-Age=3600";
+	        set $actual_ua_map '';
+            rewrite ^/(.*)$ http://$mobi_domain/$1 last;
+        }
+
+        if ( $actual_ua_map ~ '(basic|smart)' ) {
+            rewrite ^/(.*)$ http://$mobi_domain/$1 last;
+        }
+
+        proxy_pass_header Server;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Scheme $scheme;
+        proxy_set_header X-Site-Type web;
+        proxy_connect_timeout 10;
+        proxy_read_timeout 10;
+        proxy_pass http://127.0.0.1:$proxy_pass_port;
+        proxy_intercept_errors on;
+        keepalive_timeout  0;
+    }
+
+    error_page 502 503 504 /50x.html;
+    location = /50x.html {
+        root /usr/share/nginx/www;
+    }
+    location = /50x.png {
+        root /usr/share/nginx/www;
+    }
+
+    # logging
+    access_log  {{ deploy_root }}/log/{{ app_name }}-web.log;
+    error_log   {{ deploy_root }}/log/{{ app_name }}-web-error.log;
+
+}
+
+
+server {
+    listen 80;
+    server_name {{ mobi_server_name }};
+    client_max_body_size 100m;
+    gzip_types application/x-javascript text/css;
+
+    # static resources
+    location ^~ /media/ {
+        alias   {{ deploy_root }}/{{ app_name }}-media/;
+        expires 31d;
+    }
+
+    # todo: use genshi template and for loop
+    location ^~ /static/basic/ {
+        alias   {{ deploy_root }}/{{ app_name }}-static/basic/;
+        expires 31d;
+    }
+
+    location ^~ /static/smart/ {
+        alias   {{ deploy_root }}/{{ app_name }}-static/smart/;
+        expires 31d;
+    }
+
+    location ^~ /media/downloads/(.*) {
+	    internal;
+	    alias {{ deploy_root }}/{{ app_name }}-media/downloads/$1;
+    }
+
+    location / {
+        if ($args ~ showsite=web){
+            add_header Set-Cookie "ua_map=web;Domain=$domain_for_cookie;Path=/;Max-Age=3600";
+            rewrite ^/(.*)$ http://$web_domain/$1 last;
+        }
+
+        if ($args ~ showsite=mobi) {
+            add_header Set-Cookie "ua_map=;Domain=$domain_for_cookie;Path=/;Max-Age=3600";
+        }
+
+        proxy_pass_header Server;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Scheme $scheme;
+        proxy_set_header X-Site-Type mobi;
+        proxy_connect_timeout 10;
+        proxy_read_timeout 10;
+        proxy_pass http://127.0.0.1:$proxy_pass_port;
+        proxy_intercept_errors on;
+        keepalive_timeout  0;
+    }
+
+    error_page 502 503 504 /50x.html;
+    location = /50x.html {
+        root /usr/share/nginx/www;
+    }
+    location = /50x.png {
+        root /usr/share/nginx/www;
+    }
+
+    # logging
+    access_log  {{ deploy_root }}/log/{{ app_name }}-mobi.log;
+    error_log   {{ deploy_root }}/log/{{ app_name }}-mobi-error.log;
+
+}
+
+
+# Router
+server {
+    # xx09 chosen so no changes to deviceproxy.yaml required
+    listen {{ port_prefix }}09;
+    client_max_body_size 100m;
+
+    location / {
+
+	    # Note: do if statements first because of Nginx if-statement weirdness
+
+        # Default to upstream web port
+        set $port '{{ port_prefix }}11';
+
+        # Patterns to be used later to determine whether to redirect to mobi
+	    set $redirect_pattern_basic 'xxxxxx';
+        set $redirect_pattern_smart 'xxxxxx';
+        if ( $http_x_site_type = 'web' ) {
+            set $redirect_pattern_basic 'basic';
+            set $redirect_pattern_smart 'smart';
+        }
+        if ( $http_x_site_type = 'mobi' ) {
+	        set $port $default_mobi_port;
+        }
+
+        # Determine upstream port. Only for mobi.
+	    if ( $actual_ua_map = 'basic' ) {
+		    set $port '{{ port_prefix }}21';
+        }
+	    if ( $actual_ua_map = 'smart' ) {
+		    set $port '{{ port_prefix }}31';
+        }
+
+        # http_x_ua_map is ua-map header received from deviceproxy
+        if ( $http_x_ua_map ){
+            add_header Set-Cookie "ua_map=$http_x_ua_map;Domain=$domain_for_cookie;Path=/;Max-Age=3600";
+        }
+
+        # Redirect to mobi if required. Sadly nginx can't use a variable in an
+        # if-regex hence the verbosity.
+        if ( $actual_ua_map = $redirect_pattern_basic ) {
+            rewrite ^/(.*)$ http://$mobi_domain/$1 last;
+        }
+	    if ( $actual_ua_map = $redirect_pattern_smart ) {
+            rewrite ^/(.*)$ http://$mobi_domain/$1 last;
+        }
+
+        proxy_pass_header Server;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Scheme $scheme;
+        proxy_connect_timeout 10;
+        proxy_read_timeout 10;
+        proxy_pass http://127.0.0.1:$port;
+        proxy_intercept_errors on;
+        keepalive_timeout  0;
+        proxy_ignore_headers Set-Cookie;
+        #proxy_cache thecache;
+        proxy_cache_key $port$host$request_uri$is_args$args$cookie_is_authenticated;
+        proxy_cache_valid 200 404 1m;
+        proxy_cache_use_stale updating;
+        proxy_cache_lock on;
+        add_header X-Cached $upstream_cache_status;
+    }
+
+    error_page 502 503 504 /50x.html;
+    location = /50x.html {
+        root /usr/share/nginx/www;
+    }
+    location = /50x.png {
+        root /usr/share/nginx/www;
+    }
+
+    # logging
+    access_log  {{ deploy_root }}/log/{{ app_name }}-router.log rt_cache;
+    error_log   {{ deploy_root }}/log/{{ app_name }}-router-error.log;
+
+}

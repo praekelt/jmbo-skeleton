@@ -1,6 +1,12 @@
 Changelog
 =========
 
+next
+----
+#. Deprecate buildout in favour of pip.
+#. Move settings into a projects directory to avoid clutter.
+#. Minimum supported version of `jmbo-foundry` is now 2.0.
+
 0.9
 ---
 #. Deprecate haproxy since a load balancer at another point in the chain does a better job.

@@ -12,12 +12,15 @@ setup(
     packages = find_packages(),
     install_requires = [
         'jmbo-foundry>=1.2.4',
-        'raven<3.0.0',
-        'django-celery',
+        'django_compressor',
+        'django-debug-toolbar',
+        'django-grappelli<2.6',
+        'gunicorn',
+        'raven',
     ],
     include_package_data=True,
     tests_require=[
-        'django-setuptest>=0.1.4',
+        'django-setuptest>=0.1.6',
     ],
     test_suite="setuptest.setuptest.SetupTestSuite",
     classifiers=[

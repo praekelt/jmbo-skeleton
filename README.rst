@@ -1,7 +1,7 @@
-Jmbo Skeleton Readme
-====================
+Jmbo Skeleton
+=============
 
-Create a Jmbo project environment quickly. Includes a Jmbo demo application. 
+Create a Jmbo project environment quickly. Includes a Jmbo demo application.
 
 Demo
 ----
