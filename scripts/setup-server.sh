@@ -40,6 +40,7 @@ sudo sed -i "13i proxy_cache_path /var/cache/nginx/thecache levels=1:2 keys_zone
 sudo mkdir -p /var/cache/nginx/thecache
 # todo. Set max bucket size.
 DIRNAME=`dirname $0`
+sudo mkdir -p /usr/share/nginx/www/
 sudo cp ${DIRNAME}/resources/50x.html /usr/share/nginx/www/
 sudo cp ${DIRNAME}/resources/50x.png /usr/share/nginx/www/
 
