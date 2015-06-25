@@ -9,4 +9,5 @@ nginx:
     port_prefix: PORT_PREFIX_PLACEHOLDER
 
 supervisor:
-    app_name: PORT_PREFIX_PLACEHOLDER
+    app_name: skeleton
+    port_prefix: PORT_PREFIX_PLACEHOLDER

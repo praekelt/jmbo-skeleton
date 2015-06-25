@@ -1,5 +1,5 @@
 [program:skeleton-admin-django]
-command={{ deploy_root }}/python/bin/gunicorn wsgi -w 4 --max-requests=10000 --bind 127.0.0.1:9091
+command={{ deploy_root }}/python/bin/gunicorn wsgi -w 4 --max-requests=10000 --bind 127.0.0.1:{{ port_prefix }}91
 directory={{ deploy_root }}/{{ app_name }}/
 user=www-data
 stdout_logfile={{ deploy_root }}/log/{{ app_name }}-django-admin.log
@@ -10,7 +10,7 @@ environment=
     DJANGO_SETTINGS_MODULE=project.settings_live_admin_site
 
 [program:skeleton-basic-django]
-command={{ deploy_root }}/python/bin/gunicorn wsgi -w 4 --max-requests=10000 --bind 127.0.0.1:9021
+command={{ deploy_root }}/python/bin/gunicorn wsgi -w 4 --max-requests=10000 --bind 127.0.0.1:{{ port_prefix }}21
 directory={{ deploy_root }}/{{ app_name }}/
 user=www-data
 stdout_logfile={{ deploy_root }}/log/{{ app_name }}-django-basic.log
@@ -21,7 +21,7 @@ environment=
     DJANGO_SETTINGS_MODULE=project.settings_live_basic_site
 
 [program:skeleton-smart-django]
-command={{ deploy_root }}/python/bin/gunicorn wsgi -w 4 --max-requests=10000 --bind 127.0.0.1:9031
+command={{ deploy_root }}/python/bin/gunicorn wsgi -w 4 --max-requests=10000 --bind 127.0.0.1:{{ port_prefix }}31
 directory={{ deploy_root }}/{{ app_name }}/
 user=www-data
 stdout_logfile={{ deploy_root }}/log/{{ app_name }}-django-smart.log
@@ -32,7 +32,7 @@ environment=
     DJANGO_SETTINGS_MODULE=project.settings_live_smart_site
 
 [program:skeleton-web-django]
-command={{ deploy_root }}/python/bin/gunicorn wsgi -w 4 --max-requests=10000 --bind 127.0.0.1:9011
+command={{ deploy_root }}/python/bin/gunicorn wsgi -w 4 --max-requests=10000 --bind 127.0.0.1:{{ port_prefix }}11
 directory={{ deploy_root }}/{{ app_name }}/
 user=www-data
 stdout_logfile={{ deploy_root }}/log/{{ app_name }}-django-web.log
