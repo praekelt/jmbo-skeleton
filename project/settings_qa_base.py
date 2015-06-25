@@ -27,5 +27,5 @@ CACHES = {
 INSTALLED_APPS += ("atlas", "django.contrib.gis")
 
 ALLOWED_HOSTS = [
-    ".site.com"
+    "*"
 ]

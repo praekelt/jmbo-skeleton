@@ -35,5 +35,5 @@ SENTRY_DSN = 'ENTER_YOUR_SENTRY_DSN_HERE'
 SENTRY_CLIENT = 'raven.contrib.django.celery.CeleryClient'
 
 ALLOWED_HOSTS = [
-    ".site.com"
+    "*"
 ]
