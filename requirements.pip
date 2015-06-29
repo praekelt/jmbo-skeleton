@@ -50,7 +50,7 @@ device-proxy==0.4.3
 genshi==0.7
 jinja2
 django-layers-hr==0.4
-django-grappelli==2.5.6
+django-grappelli==2.5.7
 django-googlesearch==0.2
 django-likes==0.2
 django-dfp==0.4.1

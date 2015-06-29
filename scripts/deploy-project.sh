@@ -146,7 +146,7 @@ sudo -u $USER ${DEPLOY_DIR}/python/bin/python scripts/generate-configs.py config
 for f in `ls $WORKING_DIR`
 do
     # Delete target directories that contain source. The others (log, media etc are updated).
-    if [[ $f == log ]] || [[ $f == *-media-* ]] || [[ $f == media-* ]]; then
+    if [[ $f == log ]] || [[ $f == *-media-* ]] || [[ $f == *-media ]]; then
         sudo -u $USER cp -r -u ${WORKING_DIR}/${f} $DEPLOY_DIR/
     else
         # Delete target if it exists
