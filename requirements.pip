@@ -72,7 +72,7 @@ django-recaptcha==1.0.4
 django-simple-autocomplete==0.5
 django-sites-groups==0.1.2
 django-snippetscream==0.0.7
-jmbo-gallery==2.0.0
+jmbo-gallery==2.0.2
 jmbo-music==2.0.0
 jmbo-chart==2.0.0
 jmbo-downloads==2.0.0
