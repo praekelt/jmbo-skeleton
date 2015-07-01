@@ -11,7 +11,7 @@ setup(
     url='',
     packages = find_packages(),
     install_requires = [
-        'jmbo-foundry>=1.2.4',
+        'jmbo-foundry>=2.0.3',
         'django_compressor',
         'django-debug-toolbar',
         'django-grappelli<2.6',
