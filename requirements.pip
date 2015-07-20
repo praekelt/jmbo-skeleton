@@ -54,7 +54,7 @@ django-grappelli==2.5.7
 django-googlesearch==0.2
 django-likes==0.2
 django-dfp==0.4.1
-jmbo==2.0.5
+jmbo==2.0.6
 jmbo-post==2.0.0
 jmbo-contact==2.0.0
 jmbo-banner==0.6
