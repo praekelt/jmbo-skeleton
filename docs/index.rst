@@ -1,12 +1,12 @@
 Documentation
 =============
 
-**Jmbo Skeleton generates skeleton code for the development of a Jmbo based project.** 
+**Jmbo Skeleton generates skeleton code for the development of a Jmbo based project.**
 
 This documentation covers version |version| of |jmbo-skeleton|.
 
 .. note::
-    |jmbo| |version| requires Django 1.6. More on :ref:`versions`.
+    |jmbo-skeleton| |version| requires Django 1.6. More on :ref:`versions`.
 
 Installation & Setup
 --------------------
@@ -15,24 +15,6 @@ Installation & Setup
    :maxdepth: 2
    
    quickstart
-   customization
-
-Dashboard
----------
-
-.. toctree::
-   :maxdepth: 2
-   
-   dashboard_setup
-   dashboard_api
-
-Internals
----------
-
-.. toctree::
-   :maxdepth: 2
-   
-   internals
 
 Help
 ----
