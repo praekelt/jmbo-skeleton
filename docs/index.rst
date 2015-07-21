@@ -12,7 +12,7 @@ Installation & Setup
 --------------------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    
    quickstart
 
@@ -20,10 +20,8 @@ Help
 ----
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    
-   help
-   contributing
    changelog
 
 Code
