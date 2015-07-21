@@ -32,7 +32,10 @@ then
 fi
 
 # Extract app name. Convention is repo has form jmbo-foo or jmbo.foo.
-INDEX=`expr index "$EGG" [-.]`
+
+# --- MacOS hotfix: 'expr index' removed in favor of regex
+
+INDEX=`echo ${EGG#*[-.]}`
 APP=${EGG:${INDEX}}
 
 # Create the project
@@ -72,22 +75,29 @@ for f in project/settings_*.py; do
 done
 
 # Change strings in the newly copied source
-sed -i s/name=\'jmbo-skeleton\'/name=\'${EGG}\'/ ${PROJECT_DIR}/setup.py
-sed -i "s/PORT_PREFIX_PLACEHOLDER/${PORT}/g" ${PROJECT_DIR}/deviceproxy_*.yaml
-sed -i "s/PORT_PREFIX_PLACEHOLDER/${PORT}/g" ${PROJECT_DIR}/config.yaml
-sed -i "s/skeleton/${APP}/g" ${PROJECT_DIR}/config.yaml
+
+# --- MacOS hotfix: sed -i expects first argument to be backup extension. 
+#     Passing "" will set zero-length backup extension. 
+
+sed -i "" "s/name='jmbo-skeleton'/name='${EGG}'/" ${PROJECT_DIR}/setup.py
+sed -i "" "s/PORT_PREFIX_PLACEHOLDER/${PORT}/g" ${PROJECT_DIR}/deviceproxy_*.yaml
+sed -i "" "s/PORT_PREFIX_PLACEHOLDER/${PORT}/g" ${PROJECT_DIR}/config.yaml
+sed -i "" "s/skeleton/${APP}/g" ${PROJECT_DIR}/config.yaml
 
 # Replace the word skeleton with the app name
-sed -i s/skeleton/${APP}/g ${PROJECT_DIR}/*.py
-sed -i s/skeleton/${APP}/g ${PROJECT_DIR}/project/*.py
-sed -i s/skeleton/${APP}/g ${PROJECT_DIR}/conf/*.conf.in
-sed -i s/skeleton/${APP}/g ${PROJECT_DIR}/MANIFEST.in
-sed -i s/skeleton/${APP}/g ${APP_DIR}/*.py
-sed -i s/skeleton/${APP}/g ${APP_DIR}/migrations/*.py
+sed -i "" "s/skeleton/${APP}/g" ${PROJECT_DIR}/*.py
+sed -i "" "s/skeleton/${APP}/g" ${PROJECT_DIR}/project/*.py
+sed -i "" "s/skeleton/${APP}/g" ${PROJECT_DIR}/conf/*.conf.in
+sed -i "" "s/skeleton/${APP}/g" ${PROJECT_DIR}/MANIFEST.in
+sed -i "" "s/skeleton/${APP}/g" ${APP_DIR}/*.py
+sed -i "" "s/skeleton/${APP}/g" ${APP_DIR}/migrations/*.py
 
 # Set the secret key
-SECRET_KEY=`date +%s | sha256sum | head -c 56`
-sed -i "s/SECRET_KEY_PLACEHOLDER/${SECRET_KEY}/" ${PROJECT_DIR}/project/settings.py
+
+# --- MacOS hotfix: use shasum -a 256 instead of sha256sum (which does not exist on MacOS)
+
+SECRET_KEY=`date +%s | shasum -a 256 | head -c 56`
+sed -i "" "s/SECRET_KEY_PLACEHOLDER/${SECRET_KEY}/" ${PROJECT_DIR}/project/settings.py
 
 # Indicate version of jmbo-skeleton used to create project
 VERSION=`sed "5q;d" setup.py | awk -F= '{print $2}'`

@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='jmbo-skeleton',
+    name='jmbo-app',
     version='0.9',
     description='Create a Jmbo project environment quickly. Includes a Jmbo demo application.',
     long_description = open('README.rst', 'r').read() + open('AUTHORS.rst', 'r').read() + open('CHANGELOG.rst', 'r').read(),
