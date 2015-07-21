@@ -1,3 +1,6 @@
+Skeleton structure
+------------------
+
 The skeleton contains a number of directories and files.
 
 conf

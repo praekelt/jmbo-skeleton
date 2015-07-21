@@ -20,7 +20,7 @@ Skeleton structure
 ------------------
 
 .. toctree::
-   :maxdepth: 1
+   :hidden:
    
    structure
 
