@@ -8,8 +8,8 @@ This documentation covers version |version| of |jmbo-skeleton|.
 .. note::
     |jmbo-skeleton| |version| requires Django 1.6. More on :ref:`versions`.
 
-Installation
-------------
+Quickstart
+----------
 
 .. toctree::
    :maxdepth: 1
