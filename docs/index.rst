@@ -8,13 +8,21 @@ This documentation covers version |version| of |jmbo-skeleton|.
 .. note::
     |jmbo-skeleton| |version| requires Django 1.6. More on :ref:`versions`.
 
-Installation & Setup
---------------------
+Installation
+------------
 
 .. toctree::
    :maxdepth: 1
    
    quickstart
+
+Skeleton structure
+------------------
+
+.. toctree::
+   :maxdepth: 1
+   
+   structure
 
 Help
 ----
@@ -34,5 +42,5 @@ https://github.com/praekelt/jmbo-skeleton
 Versions and Compatibility
 --------------------------
 
-* Jmbo 2.x: Compatible with Jmbo 2.x and Django 1.6
+* Jmbo Skeleton 2.x: Compatible with Jmbo 2.x and Django 1.6
 

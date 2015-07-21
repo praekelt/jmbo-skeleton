@@ -1,20 +1,6 @@
 Jmbo Skeleton
 =============
 
-Create a Jmbo project environment quickly. Includes a Jmbo demo application.
-
-Demo
-----
-
-From the terminal::
-
- ./demo.sh
-
-
-Jmbo project environment
-------------------------
-
-From the terminal::
-
- ./scripts/create-jmbo-project.sh
+Jmbo Skeleton generates skeleton code for the development of a Jmbo based project. Documentation
+at http://jmbo-skeleton.readthedocs.org.
 
