@@ -53,14 +53,15 @@ class TestCase(BaseTestCase):
 
     def test_common_urls(self):
         """High-level test to confirm common set of URLs render"""
-        urls = (
+        urls = [
             (reverse('join'), 200),
             (reverse('login'), 200),
             (reverse('logout'), 302),
             (reverse('password_reset'), 200),
             (reverse('terms-and-conditions'), 200),
-            ('/sitemap.xml', 200),
-        )
+        ]
+        if 'jmbo_sitemap' in settings.INSTALLED_APPS:
+            urls.append(('/sitemap.xml', 200))
         for url, code in urls:
             print "Checking path %s" % url
             response = self.client.get(url)
@@ -91,6 +92,15 @@ class TestCase(BaseTestCase):
                 pass
             else:
                 if issubclass(model_class, Download):
+                    continue
+
+            # Skip over ViewProxy because it has no detail view
+            try:
+                from foundry.models import ViewProxy
+            except ImportError:
+                pass
+            else:
+                if issubclass(model_class, ViewProxy):
                     continue
 
             if (model_class is not None) \
