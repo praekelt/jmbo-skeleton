@@ -165,6 +165,60 @@ server {
 }
 
 
+server {
+    listen 80;
+    server_name {{ admin_server_name }};
+    client_max_body_size 100m;
+    gzip_types application/x-javascript text/css;
+
+    rewrite ^/$ /admin/ redirect;
+
+    # static resources
+    location ^~ /media/ {
+        alias   {{ deploy_root }}/{{ app_name }}-media/;
+        expires 31d;
+    }
+
+    location ^~ /static/web/ {
+        alias   {{ deploy_root }}/{{ app_name }}-static/web/;
+        expires 31d;
+    }
+
+    location ^~ /media/downloads/(.*) {
+	    internal;
+        alias {{ deploy_root }}/{{ app_name }}-media/downloads/$1;
+    }
+
+    location / {
+        proxy_pass_header Server;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Scheme $scheme;
+        proxy_set_header X-Site-Type web;
+        proxy_connect_timeout 300;
+        proxy_read_timeout 300;
+        proxy_pass http://127.0.0.1:{{ port_prefix }}91;
+        proxy_intercept_errors on;
+        keepalive_timeout  0;
+    }
+
+    error_page 502 503 504 /50x.html;
+    location = /50x.html {
+        root /usr/share/nginx/www;
+    }
+    location = /50x.png {
+        root /usr/share/nginx/www;
+    }
+
+    # logging
+    access_log  {{ deploy_root }}/log/{{ app_name }}-admin.log;
+    error_log   {{ deploy_root }}/log/{{ app_name }}-admin-error.log;
+
+}
+
+
 # Router
 server {
     # xx09 chosen so no changes to deviceproxy.yaml required
