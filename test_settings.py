@@ -1,9 +1,11 @@
-from skeleton.settings import *
+from os.path import expanduser
+
+from project.settings import *
 
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'skeleton',
         'USER': 'test',
         'PASSWORD': '',
@@ -12,8 +14,11 @@ DATABASES = {
     }
 }
 
+CKEDITOR_UPLOAD_PATH = expanduser('~')
+
 # Disable celery
 CELERY_ALWAYS_EAGER = True
 BROKER_BACKEND = 'memory'
 
-# Need this last line until django-setuptest is improved.
+# xxx: get tests to pass with migrations
+SOUTH_TESTS_MIGRATE = False

@@ -1,20 +1,10 @@
-Jmbo Skeleton Readme
-====================
+Jmbo Skeleton
+=============
+**Jmbo Skeleton generates skeleton code for the development of a Jmbo based project.**
 
-Create a Jmbo project environment quickly. Includes a Jmbo demo application. 
+.. figure:: https://travis-ci.org/praekelt/jmbo-skeleton.svg?branch=develop
+   :align: center
+   :alt: Travis
 
-Demo
-----
-
-From the terminal::
-
- ./demo.sh
-
-
-Jmbo project environment
-------------------------
-
-From the terminal::
-
- ./scripts/create-jmbo-project.sh
+Documentation at http://jmbo-skeleton.readthedocs.org.
 

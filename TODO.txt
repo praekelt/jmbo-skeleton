@@ -1,4 +1,0 @@
-chartupdate Cron job
-jmbo-twitter and jmbo-facebook
-Need latest releases of all products.
-When banner 0.1 released update settings with dfp and urls.py

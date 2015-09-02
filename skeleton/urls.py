@@ -1,8 +1,6 @@
-from django.conf.urls.defaults import patterns, url, include
-
-from foundry.urls import *
-
-urlpatterns += patterns('',
+from django.conf.urls import patterns, url, include
 
 
-)   
+urlpatterns = patterns("",
+
+)

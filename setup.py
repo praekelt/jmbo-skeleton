@@ -2,22 +2,25 @@ from setuptools import setup, find_packages
 
 setup(
     name='jmbo-skeleton',
-    version='0.9',
+    version='2.0.0',
     description='Create a Jmbo project environment quickly. Includes a Jmbo demo application.',
     long_description = open('README.rst', 'r').read() + open('AUTHORS.rst', 'r').read() + open('CHANGELOG.rst', 'r').read(),
-    author='Praekelt Foundation',
+    author='Praekelt Consulting',
     author_email='dev@praekelt.com',
     license='BSD',
     url='',
     packages = find_packages(),
     install_requires = [
-        'jmbo-foundry>=1.2.2.3',
-        'raven<3.0.0',
-        'django-celery',
+        'jmbo-foundry>=2.0.3',
+        'django_compressor',
+        'django-debug-toolbar',
+        'django-grappelli<2.6',
+        'gunicorn',
+        'raven',
     ],
     include_package_data=True,
     tests_require=[
-        'django-setuptest>=0.1.4',
+        'django-setuptest>=0.1.6',
     ],
     test_suite="setuptest.setuptest.SetupTestSuite",
     classifiers=[

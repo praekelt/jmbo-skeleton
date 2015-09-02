@@ -6,7 +6,7 @@ health_path: /logo
 
 # Change the handler to suit your type of site. See handler.py.
 handlers:
-  - wurfl: handler.ScientiaMobileCloudResolutionHandler
+  - wurfl: handler.MyHandler
 
 wurfl:
   # All keys in Memcached are prefixed with this
