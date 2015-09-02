@@ -7,6 +7,7 @@ next
 #. Move settings into a projects directory to avoid clutter.
 #. Minimum supported version of `jmbo-foundry` is now 2.0.
 #. All configs massively reworked.
+#. local_settings.py support.
 #. Add documentation.
 
 0.9
