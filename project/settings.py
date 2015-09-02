@@ -154,7 +154,7 @@ INSTALLED_APPS = (
     'photologue',
     'secretballot',
 
-    #'atlas',   # disabled by default until spatialite is easily installable
+    #'atlas',   # disabled by default because database support is hard
     'captcha',
     'ckeditor',
     'compressor',

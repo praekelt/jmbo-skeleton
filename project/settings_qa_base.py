@@ -24,7 +24,8 @@ CACHES = {
     }
 }
 
-INSTALLED_APPS += ("atlas", "django.contrib.gis")
+# Uncomment to use atlas. Remember to change the database engine to GIS aware.
+#INSTALLED_APPS += ("atlas", "django.contrib.gis")
 
 ALLOWED_HOSTS = [
     "*"
