@@ -53,6 +53,21 @@ server {
         alias {{ deploy_root }}/{{ app_name }}-media/downloads/$1;
     }
 
+    location /admin {
+        proxy_pass_header Server;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Scheme $scheme;
+        proxy_set_header X-Site-Type web;
+        proxy_connect_timeout 10;
+        proxy_read_timeout 300;
+        proxy_pass http://127.0.0.1:{{ port_prefix }}91;
+        proxy_intercept_errors on;
+        keepalive_timeout  0;
+    }
+
     location / {
         if ($args ~ showsite=web) {
             add_header Set-Cookie "ua_map=web;Domain=$domain_for_cookie;Path=/;Max-Age=3600";
