@@ -256,20 +256,6 @@ STATICFILES_FINDERS = (
     'compressor.finders.CompressorFinder',
 )
 
-ADMIN_APPS_EXCLUDE = (
-    'Cal',
-    'Event',
-    'Photologue',
-    'Publisher',
-    'Registration',
-    'Auth',
-)
-
-ADMIN_MODELS_EXCLUDE = (
-    'Groups',
-    'Video files',
-)
-
 JMBO_ANALYTICS = {
     'google_analytics_id': 'xxx',
 }

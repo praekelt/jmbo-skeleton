@@ -21,7 +21,7 @@ postgresql libjpeg-dev zlib1g-dev build-essential git-core \
 memcached supervisor nginx postgresql-server-dev-all libxslt1-dev \
 libproj0 libproj-dev libgeos-dev libgdal1-dev libgeoip1 \
 libgeoip-dev postgis unzip \
-redis-server postgresql-9.4-postgis-2.1 --no-upgrade
+redis-server --no-upgrade
 # todo: that postgresql-9.4-postgis-2.1 exact version is a problem. Needs
 # softcoding or meta-package.
 
