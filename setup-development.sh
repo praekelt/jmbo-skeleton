@@ -10,7 +10,7 @@ DB_SETUP=$1
 echo "Ensuring required system libraries are installed. You may be prompted for your password."
 sudo apt-get install python-virtualenv python-dev \
 libjpeg-dev zlib1g-dev build-essential git-core \
-sqlite spatialite-bin --no-upgrade
+sqlite spatialite-bin libxslt1-dev --no-upgrade
 
 if [ ! -d "ve" ]; then
     echo "Setting up sandboxed Python environment."
