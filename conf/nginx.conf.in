@@ -293,7 +293,7 @@ server {
         keepalive_timeout  0;
         proxy_ignore_headers Set-Cookie;
         #proxy_cache thecache;
-        proxy_cache_key $port$host$request_uri$is_args$args$cookie_is_authenticated;
+        proxy_cache_key $port$scheme$host$request_uri$is_args$args$cookie_is_authenticated;
         proxy_cache_valid 200 404 1m;
         proxy_cache_use_stale updating;
         proxy_cache_lock on;
