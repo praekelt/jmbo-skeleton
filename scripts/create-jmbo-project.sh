@@ -43,7 +43,7 @@ mkdir $PROJECT_DIR
 # Copy requisite bits
 cp .gitignore ${PROJECT_DIR}/
 cp setup.py ${PROJECT_DIR}/
-cp requirements.pip ${PROJECT_DIR}/
+cp requirements.txt ${PROJECT_DIR}/
 cp setup-development.sh ${PROJECT_DIR}/
 cp handler.py ${PROJECT_DIR}/
 cp deviceproxy.yaml.in ${PROJECT_DIR}/deviceproxy_${SITE}.yaml
