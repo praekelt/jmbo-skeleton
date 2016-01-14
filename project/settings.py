@@ -164,7 +164,6 @@ INSTALLED_APPS = (
     'googlesearch',
     #'grappelli.dashboard', # uncomment if you have a custom dashboard
     # 'grappelli',          # unresolved issues with foundry, so wait on grappelli
-    'gunicorn',
     'object_tools',
     'pagination',
     'publisher',
