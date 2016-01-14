@@ -5,7 +5,7 @@ language: python
 env:
   - TOXENV=django16
 
-#install:
-#  - pip install -r requirements.pip --use-mirrors
+install:
+  - pip install tox
 
 script: tox
