@@ -16,7 +16,7 @@ if [ ! -d "ve" ]; then
     echo "Setting up sandboxed Python environment."
     rm -rf ve
     virtualenv ve
-    ./ve/bin/pip install -r requirements.pip
+    ./ve/bin/pip install -r requirements.txt
 fi
 
 APP_NAME=${PWD##*/}

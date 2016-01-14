@@ -48,7 +48,7 @@ handler.py
 Module containing logic to distunguish between basic, smart and web devices using information
 supplied by device-proxy.
 
-requirements.pip
+requirements.txt
 ----------------
 
 Versions of products required for the project.

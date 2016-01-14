@@ -3,5 +3,5 @@ A new release of skeleton typically requires:
 1.  New minimum version of jmbo-foundry in setup.py
 2.  Change "depends_on" in skeleton/migrations/0001_initial.py to latest foundry
     migration.
-3.  Run pip install, then pip freeze and update requirements.pip with
+3.  Run pip install, then pip freeze and update requirements.txt with
     info printed to stdout.

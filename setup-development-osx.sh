@@ -5,7 +5,7 @@ brew install libgeoip
 echo "Setting up sandboxed Python environment."
 rm -rf ve
 virtualenv ve
-./ve/bin/pip install -r requirements.pip
+./ve/bin/pip install -r requirements.txt
 
 APP_NAME=${PWD##*/}
 

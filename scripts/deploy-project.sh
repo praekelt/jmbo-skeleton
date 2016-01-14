@@ -74,7 +74,7 @@ fi
 
 # Pip
 cd /${WORKING_DIR}/${APP_NAME}
-PIP_FILE=requirements.pip
+PIP_FILE=requirements.txt
 DESIRED_PIP_FILE=requirements_${DEPLOY_TYPE}.pip
 if [ -e "${DESIRED_PIP_FILE}" ]; then
     PIP_FILE=${DESIRED_PIP_FILE}
