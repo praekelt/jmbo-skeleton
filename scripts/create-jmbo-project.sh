@@ -52,6 +52,8 @@ cp test_settings.py ${PROJECT_DIR}/
 cp manage.py ${PROJECT_DIR}/
 cp wsgi.py ${PROJECT_DIR}/
 cp MANIFEST.in ${PROJECT_DIR}/
+cp tox.ini ${PROJECT_DIR}/
+cp .travis.yml ${PROJECT_DIR}/
 touch ${PROJECT_DIR}/AUTHORS.rst
 touch ${PROJECT_DIR}/CHANGELOG.rst
 touch ${PROJECT_DIR}/README.rst
@@ -82,6 +84,8 @@ sed -i s/skeleton/${APP}/g ${PROJECT_DIR}/*.py
 sed -i s/skeleton/${APP}/g ${PROJECT_DIR}/project/*.py
 sed -i s/skeleton/${APP}/g ${PROJECT_DIR}/conf/*.conf.in
 sed -i s/skeleton/${APP}/g ${PROJECT_DIR}/MANIFEST.in
+sed -i s/skeleton/${APP}/g ${PROJECT_DIR}/tox.ini
+sed -i s/skeleton/${APP}/g ${PROJECT_DIR}/.travis.yml
 sed -i s/skeleton/${APP}/g ${APP_DIR}/*.py
 sed -i s/skeleton/${APP}/g ${APP_DIR}/migrations/*.py
 

@@ -1,22 +1,11 @@
 sudo: false
 
-#addons:
-#    postgresql: "9.3"
-
 language: python
-
-#python:
-#  - "2.7"
 
 env:
   - TOXENV=django16
 
-install:
-  - pip install -r requirements.pip --use-mirrors
-
-#before_script:
-#    - psql -U postgres -c "create database jmbo_spatial encoding 'UTF8'"
-#    - psql -U postgres jmbo_spatial -c "CREATE EXTENSION postgis;"
-#    - psql -U postgres jmbo_spatial -c "CREATE EXTENSION postgis_topology;"
+#install:
+#  - pip install -r requirements.pip --use-mirrors
 
 script: tox
