@@ -21,4 +21,5 @@ CELERY_ALWAYS_EAGER = True
 BROKER_BACKEND = 'memory'
 
 # xxx: get tests to pass with migrations
+# remove this line
 SOUTH_TESTS_MIGRATE = False
