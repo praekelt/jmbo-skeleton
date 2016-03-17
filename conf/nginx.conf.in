@@ -23,6 +23,8 @@ map $http_x_ua_map $actual_ua_map {
     basic 'basic';
     smart 'smart';
     web 'web';
+    ~showsite=web 'web';
+    ~showsite=mobi '';
     default $cookie_ua_map;
 }
 
@@ -71,12 +73,10 @@ server {
     location / {
         if ($args ~ showsite=web) {
             add_header Set-Cookie "ua_map=web;Domain=$domain_for_cookie;Path=/;Max-Age=3600";
-            set $actual_ua_map 'web';
         }
 
         if ($args ~ showsite=mobi) {
             add_header Set-Cookie "ua_map=;Domain=$domain_for_cookie;Path=/;Max-Age=3600";
-	        set $actual_ua_map '';
             rewrite ^/(.*)$ http://$mobi_domain/$1 last;
         }
 
